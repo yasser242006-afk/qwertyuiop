@@ -188,7 +188,7 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .toast.error{border-right-color:var(--danger);}
 .toast.success{border-right-color:var(--success);}
 
-/* Year select overlay (first entry, reused for sidebar change) */
+/* Year select overlay (opened manually from sidebar) */
 .year-select-overlay{position:fixed;inset:0;z-index:600;background:rgba(15,23,42,.6);backdrop-filter:blur(4px);
   display:none;align-items:center;justify-content:center;padding:20px;}
 .year-select-overlay.show{display:flex;animation:fadeSlide .3s ease;}
@@ -221,11 +221,12 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
       <div id="topbar-avatar-wrap"><img id="topbar-avatar" class="cover-thumb" src="" alt="" style="display:none"></div>
       <div class="topbar-name-wrap">
         <span class="topbar-name" id="topbar-name">...</span>
-        <span class="topbar-role">الأدمن - المنصة</span>
+        <span class="topbar-role" id="topbar-email">...</span>
       </div>
     </div>
     <div class="topbar-left">
-      <button class="icon-btn" title="بوابة الطلاب" onclick="window.open('https://your-student-portal-link.example/', '_blank')"><i class="fas fa-graduation-cap"></i></button>
+      <!-- زر القائمة (تلات شرط) بيفتح القائمة الجانبية، وموجود قبل زر الجرس -->
+      <button class="icon-btn" id="menu-btn" title="القائمة" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
       <button class="icon-btn" id="bell-btn" onclick="toggleNotifications()"><i class="fas fa-bell"></i><span class="badge" id="notif-badge" style="display:none">0</span></button>
     </div>
   </header>
@@ -266,7 +267,7 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
       <div class="menu-item" onclick="switchView('gradesadmin', this)"><i class="fas fa-chart-simple"></i><span>درجات الطلاب</span></div>
       <div class="menu-item" onclick="switchView('attendanceadmin', this)"><i class="fas fa-qrcode"></i><span>الحضور و الغياب</span></div>
 
-      <div class="label" style="margin-top:12px;">الحساب</div>
+      <div class="label" style="margin-top:12px;">الإعدادات</div>
       <div class="menu-item" onclick="adminLogout()" style="color:var(--danger);"><i class="fas fa-right-from-bracket"></i><span>تسجيل خروج</span></div>
     </nav>
   </aside>
@@ -364,7 +365,7 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 
   </main>
 
-  <!-- Year select overlay (first-time on empty selection) -->
+  <!-- Year select overlay (opened only manually from the sidebar button now) -->
   <div id="year-select-overlay" class="year-select-overlay">
     <div class="year-select-box">
       <i class="fas fa-layer-group" style="font-size:40px;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
@@ -409,7 +410,7 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
       <div class="center-modal-body">
         <div class="mega-counter"><div class="num" id="logouts-mega-num">0</div><div class="lbl">إجمالي عمليات تسجيل الخروج المسجّلة</div></div>
         <div id="logouts-breakdown"></div>
-        <p style="font-size:11px;color:var(--text-light);margin-top:10px;text-align:center;">هذا القسم يحتاج جدول <code>login_events</code> — راجع الملاحظات المرفقة بالأسفل.</p>
+        <p style="font-size:11px;color:var(--text-light);margin-top:10px;text-align:center;">هذا القسم يحتاج جدول <code>login_events</code> يتم تسجيله من صفحة الطالب عند الخروج — راجع الملاحظات المرفقة بالأسفل.</p>
       </div>
     </div>
   </div>
@@ -478,8 +479,10 @@ async function init(){
 }
 
 function renderAdminProfileUI(){
+  // اسم الحساب (مش الإيميل) في الأعلى، والإيميل بيظهر تحته كسطر ثانوي
   const name = adminProfile.full_name || adminUser.email;
   document.getElementById('topbar-name').innerText = name;
+  document.getElementById('topbar-email').innerText = adminUser.email;
   document.getElementById('sidebar-name').innerText = name;
   document.getElementById('sidebar-email').innerText = adminUser.email;
 
@@ -504,9 +507,8 @@ function renderAdminProfileUI(){
   const yearMap = {'1':'الفرقة الأولى','2':'الفرقة الثانية','3':'الفرقة الثالثة','4':'الفرقة الرابعة'};
   document.getElementById('year-field-label').innerText = adminProfile.selected_year ? yearMap[adminProfile.selected_year] : 'لم تُحدد';
 
-  if(!adminProfile.selected_year){
-    document.getElementById('year-select-overlay').classList.add('show');
-  }
+  // ملحوظة: تم إلغاء الفتح التلقائي لمودال اختيار الفرقة عند الدخول.
+  // الأدمن بيدخل عادي على طول، ويختار الفرقة وقت ما يحب من زر "اختيار الفرقة" في القائمة الجانبية.
 }
 
 function updateYearGuard(){
@@ -744,7 +746,7 @@ async function loadHomeStats(){
   }catch(e){}
 
   try{
-    // جدول login_events اختياري (راجع الملاحظات)
+    // جدول login_events اختياري (راجع الملاحظات) - لازم يتغذى من صفحة الطالب عند الخروج
     const { count: logoutCount } = await _supabase.from('login_events').select('*', { count:'exact', head:true }).eq('action','logout');
     document.getElementById('stat-logout-count').innerText = logoutCount ?? 0;
   }catch(e){ document.getElementById('stat-logout-count').innerText = 0; }
