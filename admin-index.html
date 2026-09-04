@@ -699,13 +699,21 @@ async function publishPost(){
     const durationHours = parseInt(document.getElementById('post-duration').value);
     const expiresAt = durationHours > 0 ? new Date(Date.now() + durationHours*60*60*1000).toISOString() : null;
 
-    const { error } = await _supabase.from('posts').insert({
+        const { error } = await _supabase.from('posts').insert({
       content: text,
       image_url: imageUrl,
       academic_year: adminProfile.selected_year,
       expires_at: expiresAt
     });
     if(error) throw error;
+
+    /* === تعديل: إرسال إشعار لطلاب الفرقة عند نشر منشور جديد === */
+    await _supabase.from('notifications').insert({
+      title: 'منشور جديد',
+      message: text ? text.slice(0,60) : 'تم نشر صورة جديدة',
+      academic_year: adminProfile.selected_year
+    });
+    /* === نهاية تعديل === */
 
     document.getElementById('post-text').value = '';
     removePostImage();
