@@ -27,7 +27,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 @keyframes fadeSlide{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
 @keyframes popIn{from{transform:scale(.9);opacity:0;}to{transform:scale(1);opacity:1;}}
 
-/* Topbar - same as student portal */
 .topbar{position:sticky;top:0;z-index:40;background:var(--bg-card);border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;padding:10px 16px;box-shadow:var(--shadow-sm);}
 .topbar-right{display:flex;align-items:center;gap:10px;cursor:pointer;}
@@ -42,7 +41,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .badge{position:absolute;top:2px;left:2px;background:var(--danger);color:#fff;font-size:10px;font-weight:800;
   min-width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;padding:0 3px;}
 
-/* Notifications dropdown */
 #notif-dropdown{position:fixed;top:60px;left:12px;width:320px;max-width:90vw;background:var(--bg-card);
   border-radius:var(--radius-md);box-shadow:var(--shadow-lg);border:1px solid var(--border);z-index:60;
   display:none;max-height:70vh;overflow:auto;}
@@ -56,7 +54,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
   color:var(--primary);font-family:var(--font-family);font-weight:700;font-size:12px;cursor:pointer;}
 .notif-toggle-btn:hover{background:var(--bg);}
 
-/* Sidebar - same as student portal */
 #sidebar-overlay{position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:70;display:none;}
 #sidebar-overlay.open{display:block;}
 #sidebar{position:fixed;top:0;right:-320px;width:300px;max-width:85vw;height:100%;background:var(--bg-card);
@@ -84,7 +81,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .menu-item i{width:20px;text-align:center;color:var(--primary);}
 .menu-item.disabled{opacity:.45;cursor:not-allowed;}
 
-/* Year select field (opens modal, not native <select>) */
 .year-field-btn{
   width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
   padding:12px 14px;border-radius:var(--radius-sm);border:2px solid var(--border);background:var(--bg);
@@ -94,7 +90,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .year-field-btn .right{display:flex;align-items:center;gap:8px;}
 .year-field-btn i.fa-chevron-left{color:var(--text-light);font-size:11px;}
 
-/* Image action menu */
 #image-menu{position:fixed;z-index:95;background:var(--bg-card);border-radius:var(--radius-sm);box-shadow:var(--shadow-lg);
   border:1px solid var(--border);display:none;overflow:hidden;min-width:170px;}
 #image-menu.open{display:block;}
@@ -103,18 +98,15 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 #image-menu button:hover{background:var(--bg);}
 #image-menu button.danger{color:var(--danger);}
 
-/* Main */
 #main-content{max-width:760px;margin:0 auto;padding:16px 12px 60px;}
 .view{display:none;}
 .view.active{display:block;}
 .page-title{font-size:18px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 .page-title i{color:var(--primary);}
 
-/* Year guard banner */
 .guard-banner{background:#fef9c3;border:1px solid #fde68a;color:#a16207;padding:12px 16px;border-radius:var(--radius-md);
   font-size:13px;display:flex;align-items:center;gap:10px;margin-bottom:16px;}
 
-/* Composer */
 .composer-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:16px;margin-bottom:10px;}
 .composer-card textarea{
   width:100%;min-height:90px;border:none;resize:vertical;font-family:var(--font-family);font-size:14px;
@@ -135,7 +127,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 
 .section-divider{border:none;border-top:1px solid var(--border);margin:22px 0;}
 
-/* Stats grid */
 .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;box-shadow:var(--shadow-sm);
   cursor:pointer;transition:var(--transition);display:flex;flex-direction:column;gap:8px;}
@@ -144,7 +135,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .stat-card .value{font-size:24px;font-weight:800;color:var(--text);}
 .stat-card .label{font-size:12px;color:var(--text-secondary);font-weight:600;}
 
-/* Generic center modal */
 .center-modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(4px);z-index:500;
   display:none;align-items:center;justify-content:center;padding:16px;}
 .center-modal-overlay.open{display:flex;animation:fadeSlide .2s ease;}
@@ -188,7 +178,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .toast.error{border-right-color:var(--danger);}
 .toast.success{border-right-color:var(--success);}
 
-/* Year select overlay (opened manually from sidebar) */
 .year-select-overlay{position:fixed;inset:0;z-index:600;background:rgba(15,23,42,.6);backdrop-filter:blur(4px);
   display:none;align-items:center;justify-content:center;padding:20px;}
 .year-select-overlay.show{display:flex;animation:fadeSlide .3s ease;}
@@ -224,11 +213,12 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
         <span class="topbar-role" id="topbar-email">...</span>
       </div>
     </div>
+    <!-- === تعديل: تبديل ترتيب زر الجرس وزر القائمة (الجرس أولاً ثم القائمة) === -->
     <div class="topbar-left">
-      <!-- زر القائمة (تلات شرط) بيفتح القائمة الجانبية، وموجود قبل زر الجرس -->
-      <button class="icon-btn" id="menu-btn" title="القائمة" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
       <button class="icon-btn" id="bell-btn" onclick="toggleNotifications()"><i class="fas fa-bell"></i><span class="badge" id="notif-badge" style="display:none">0</span></button>
+      <button class="icon-btn" id="menu-btn" title="القائمة" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
     </div>
+    <!-- === نهاية تعديل === -->
   </header>
 
   <!-- Notifications dropdown -->
@@ -463,8 +453,29 @@ async function init(){
     adminUser = session.user;
 
     const { data: profile, error } = await _supabase.from('admin_users').select('*').eq('id', adminUser.id).maybeSingle();
-    if(error || !profile){ await _supabase.auth.signOut(); window.location.href = 'admin-login.html'; return; }
-    adminProfile = profile;
+    if(error){ await _supabase.auth.signOut(); window.location.href = 'admin-login.html'; return; }
+
+    /* === تعديل: أول مرة يدخل الأدمن، ننشئ صف جديد بالاسم والصورة من جوجل بدل ما نرجعه لصفحة تسجيل الدخول === */
+    if(!profile){
+      const avatarFromProvider = adminUser?.user_metadata?.avatar_url || adminUser?.user_metadata?.picture || null;
+      const nameFromProvider = adminUser?.user_metadata?.full_name || adminUser.email;
+      const { data: newProfile, error: insertErr } = await _supabase.from('admin_users')
+        .insert([{ id: adminUser.id, email: adminUser.email, full_name: nameFromProvider, avatar_url: avatarFromProvider }])
+        .select().single();
+      if(insertErr || !newProfile){ await _supabase.auth.signOut(); window.location.href = 'admin-login.html'; return; }
+      adminProfile = newProfile;
+    } else {
+      adminProfile = profile;
+      /* === تعديل: لو الصف موجود بس من غير صورة، نجيبها من جوجل ونحدثها === */
+      if(!adminProfile.avatar_url){
+        const avatarFromProvider = adminUser?.user_metadata?.avatar_url || adminUser?.user_metadata?.picture;
+        if(avatarFromProvider){
+          const { error: updErr } = await _supabase.from('admin_users').update({ avatar_url: avatarFromProvider }).eq('id', adminUser.id);
+          if(!updErr) adminProfile.avatar_url = avatarFromProvider;
+        }
+      }
+    }
+    /* === نهاية تعديل === */
 
     renderAdminProfileUI();
     updateYearGuard();
@@ -479,7 +490,6 @@ async function init(){
 }
 
 function renderAdminProfileUI(){
-  // اسم الحساب (مش الإيميل) في الأعلى، والإيميل بيظهر تحته كسطر ثانوي
   const name = adminProfile.full_name || adminUser.email;
   document.getElementById('topbar-name').innerText = name;
   document.getElementById('topbar-email').innerText = adminUser.email;
@@ -506,9 +516,6 @@ function renderAdminProfileUI(){
 
   const yearMap = {'1':'الفرقة الأولى','2':'الفرقة الثانية','3':'الفرقة الثالثة','4':'الفرقة الرابعة'};
   document.getElementById('year-field-label').innerText = adminProfile.selected_year ? yearMap[adminProfile.selected_year] : 'لم تُحدد';
-
-  // ملحوظة: تم إلغاء الفتح التلقائي لمودال اختيار الفرقة عند الدخول.
-  // الأدمن بيدخل عادي على طول، ويختار الفرقة وقت ما يحب من زر "اختيار الفرقة" في القائمة الجانبية.
 }
 
 function updateYearGuard(){
@@ -546,7 +553,11 @@ async function confirmYearSelection(){
   btn.disabled = true; btn.innerText = 'جاري الحفظ...';
   const { error } = await _supabase.from('admin_users').update({ selected_year: pendingYearChoice }).eq('id', adminUser.id);
   btn.disabled = false; btn.innerText = 'تأكيد الاختيار';
-  if(error){ showToast('حدث خطأ أثناء حفظ الفرقة', 'error'); return; }
+  if(error){
+    console.error('خطأ حفظ الفرقة:', error); /* === تعديل: طباعة تفاصيل الخطأ في الكونسول للتشخيص === */
+    showToast('حدث خطأ أثناء حفظ الفرقة: ' + error.message, 'error');
+    return;
+  }
   adminProfile.selected_year = pendingYearChoice;
   document.getElementById('year-select-overlay').classList.remove('show');
   renderAdminProfileUI();
@@ -607,8 +618,6 @@ async function deleteAdminImage(){
 let allAdminNotifs = [];
 let adminNotifExpanded = false;
 
-// جدول لازم ينشأ: create table admin_notifications (id uuid default gen_random_uuid() primary key,
-//   type text, message text, is_read boolean default false, created_at timestamptz default now());
 async function refreshAdminNotifications(){
   const { data, error } = await _supabase.from('admin_notifications').select('*')
     .order('created_at', { ascending:false }).limit(100);
@@ -651,7 +660,6 @@ document.addEventListener('click', (e)=>{
   const bell = document.getElementById('bell-btn');
   if(dd && bell && dd.classList.contains('open') && !dd.contains(e.target) && !bell.contains(e.target)) dd.classList.remove('open');
 });
-// تنظيف الإشعارات الأقدم من 24 ساعة (تشغيلها عند كل تحميل صفحة)
 async function cleanOldNotifications(){
   const cutoff = new Date(Date.now() - 24*60*60*1000).toISOString();
   await _supabase.from('admin_notifications').delete().lt('created_at', cutoff);
@@ -691,7 +699,6 @@ async function publishPost(){
     const durationHours = parseInt(document.getElementById('post-duration').value);
     const expiresAt = durationHours > 0 ? new Date(Date.now() + durationHours*60*60*1000).toISOString() : null;
 
-    // ملحوظة: جدول posts يحتاج عمود جديد: alter table posts add column expires_at timestamptz;
     const { error } = await _supabase.from('posts').insert({
       content: text,
       image_url: imageUrl,
@@ -746,7 +753,6 @@ async function loadHomeStats(){
   }catch(e){}
 
   try{
-    // جدول login_events اختياري (راجع الملاحظات) - لازم يتغذى من صفحة الطالب عند الخروج
     const { count: logoutCount } = await _supabase.from('login_events').select('*', { count:'exact', head:true }).eq('action','logout');
     document.getElementById('stat-logout-count').innerText = logoutCount ?? 0;
   }catch(e){ document.getElementById('stat-logout-count').innerText = 0; }
@@ -791,7 +797,6 @@ async function drawSiteStatsChart(){
 async function loadRegisteredBreakdown(){
   const { count } = await _supabase.from('yasser_ayman').select('*', { count:'exact', head:true });
   animateCounter('registered-mega-num', count || 0);
-  // إن وُجد عمود signup_provider سيتم احتساب التوزيع تلقائياً هنا
   try{
     const { data } = await _supabase.from('yasser_ayman').select('signup_provider');
     if(data && data.length && data[0].signup_provider !== undefined){
