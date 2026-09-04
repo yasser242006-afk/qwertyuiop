@@ -900,12 +900,14 @@ async function adminLogout(){
 /* ================== أدوات مساعدة ================== */
 function showToast(message, type='info'){
   const container = document.getElementById('toast-container');
+  if(!container) return;
+  container.innerHTML = ''; /* === تعديل: مسح أي رسالة قديمة قبل عرض الجديدة === */
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
   toast.innerText = message;
   container.appendChild(toast);
   setTimeout(()=>toast.remove(), 3500);
-}
+      }
 function escapeHtml(str){
   if(!str) return '';
   const d = document.createElement('div');
