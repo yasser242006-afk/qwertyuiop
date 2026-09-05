@@ -235,7 +235,13 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 /* =========================================================
    غيّر الرمز ده لأي 6 حروف/أرقام تحبها (إنجليزي/أرقام فقط)
    ========================================================= */
-const GATE_ACCESS_CODE = 'YS2026';
+let GATE_ACCESS_CODE = 'YS2026'; // قيمة احتياطية لو تعذر الاتصال بقاعدة البيانات
+async function loadGateCode(){
+  try{
+    const { data } = await _supabase.from('site_settings').select('value').eq('key','gate_code').maybeSingle();
+    if(data && data.value) GATE_ACCESS_CODE = data.value;
+  }catch(e){}
+}
 
 const MAX_ATTEMPTS = 3;
 const LOCKOUT_SECONDS = 30;
