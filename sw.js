@@ -4,9 +4,8 @@ const urlsToCache = [
   'login.html',
   'admin-index.html',
   'manifest.json',
-  // أضف أي ملفات ثابتة أخرى (CSS, JS, images)
+  'manifest-admin.json',
 ];
-
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
