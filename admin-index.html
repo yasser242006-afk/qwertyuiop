@@ -699,15 +699,17 @@ async function publishPost(){
     const durationHours = parseInt(document.getElementById('post-duration').value);
     const expiresAt = durationHours > 0 ? new Date(Date.now() + durationHours*60*60*1000).toISOString() : null;
 
-        const { error } = await _supabase.from('posts').insert({
+            const { error } = await _supabase.from('posts').insert({
       content: text,
       image_url: imageUrl,
       academic_year: adminProfile.selected_year,
-      expires_at: expiresAt
+      expires_at: expiresAt,
+      admin_name: adminProfile.full_name || adminUser.email, /* === تعديل: حفظ اسم الأدمن مع البوست === */
+      admin_avatar_url: adminProfile.avatar_url || null /* === تعديل: حفظ صورة الأدمن مع البوست === */
     });
     if(error) throw error;
 
-    /* === تعديل: إرسال إشعار لطلاب الفرقة عند نشر منشور جديد === */
+    /* === تعديل: إشعار فعلي لطلاب الفرقة عند نشر منشور جديد === */
     await _supabase.from('notifications').insert({
       title: 'منشور جديد',
       message: text ? text.slice(0,60) : 'تم نشر صورة جديدة',
