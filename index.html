@@ -256,11 +256,10 @@ let lockoutInterval = null;
    ); */
 
 window.addEventListener('DOMContentLoaded', async () => {
-  /* === تعديل: تطبيق نفس الوضع الداكن المحفوظ من لوحة التحكم === */
   if(localStorage.getItem('admin-theme') === 'dark'){
     document.body.classList.add('login-dark');
   }
-  /* === نهاية تعديل === */
+  await loadGateCode();
   setupCodeInputs();
   await checkExistingSession();
   document.getElementById('loading-screen').style.display = 'none';
