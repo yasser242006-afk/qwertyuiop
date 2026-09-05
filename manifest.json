@@ -1,11 +1,12 @@
- {
-  "name": " ادمن الموقع ",
-  "short_name": " ادمن الموقع ",
-  "start_url": ".",
+{
+  "name": "لوحة تحكم الأدمن - بوابة الطلاب",
+  "short_name": "لوحة الأدمن",
+  "start_url": "admin-index.html",
+  "scope": ".",
   "display": "standalone",
   "background_color": "#4f46e5",
   "theme_color": "#4f46e5",
-  "description": " ادمن الموقع - بوابة الطلاب  ",
+  "description": "لوحة تحكم الإدارة الخاصة ببوابة الطلاب",
   "icons": [
     {
       "src": "https://i.supaimg.com/965e0c3e-50d9-4ba0-97dc-487d00fde583/a734394a-d076-42d6-9ef0-4d58416835e7.png",
@@ -20,4 +21,4 @@
       "purpose": "any maskable"
     }
   ]
- }
+}
