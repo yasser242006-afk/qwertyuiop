@@ -839,6 +839,30 @@ async function saveAdminName(){
   showToast('تم حفظ البيانات بنجاح', 'success');
 }
 
+  async function changeGateCode(){
+  const oldPass = document.getElementById('gate-old-pass').value.trim().toUpperCase();
+  const newPass = document.getElementById('gate-new-pass').value.trim().toUpperCase();
+  const confirmPass = document.getElementById('gate-confirm-pass').value.trim().toUpperCase();
+
+  if(!oldPass || !newPass || !confirmPass){ showToast('برجاء ملء كل الحقول', 'error'); return; }
+  if(newPass !== confirmPass){ showToast('كلمة السر الجديدة غير متطابقة', 'error'); return; }
+  if(newPass.length < 4){ showToast('كلمة السر الجديدة قصيرة جداً', 'error'); return; }
+
+  const { data: current, error: fetchErr } = await _supabase.from('site_settings').select('value').eq('key','gate_code').maybeSingle();
+  if(fetchErr){ showToast('تعذر التحقق من كلمة السر الحالية', 'error'); return; }
+
+  const currentCode = current?.value || 'YS2026';
+  if(oldPass !== currentCode){ showToast('كلمة السر القديمة غير صحيحة', 'error'); return; }
+
+  const { error: updateErr } = await _supabase.from('site_settings').upsert({ key:'gate_code', value:newPass });
+  if(updateErr){ showToast('حدث خطأ أثناء تغيير كلمة السر', 'error'); return; }
+
+  document.getElementById('gate-old-pass').value = '';
+  document.getElementById('gate-new-pass').value = '';
+  document.getElementById('gate-confirm-pass').value = '';
+  showToast('تم تغيير كلمة السر بنجاح', 'success');
+  }
+
 /* ================== لون الأزرار (صفحة الإعدادات) ================== */
 function changeAdminColor(color, btn){
   document.querySelectorAll('.admin-color-option').forEach(b => b.style.borderColor = 'transparent');
