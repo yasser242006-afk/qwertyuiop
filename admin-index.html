@@ -113,17 +113,32 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
   outline:none;background:transparent;color:var(--text);line-height:1.7;
 }
 .composer-preview{position:relative;margin-top:10px;border-radius:var(--radius-md);overflow:hidden;display:none;}
-.composer-preview img{width:100%;max-height:220px;object-fit:cover;display:block;}
+.composer-preview img{width:100%;max-height:220px;object-fit:cover;display:block;cursor:pointer;}
 .composer-preview .remove-img{position:absolute;top:8px;left:8px;width:30px;height:30px;border-radius:50%;background:rgba(15,23,42,.6);
   color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .composer-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);flex-wrap:wrap;}
 .composer-actions-left{display:flex;align-items:center;gap:8px;}
-.composer-icon-btn{width:38px;height:38px;border-radius:50%;border:none;background:var(--bg);color:var(--primary);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;}
+.composer-icon-btn{width:38px;height:38px;border-radius:50%;border:none;background:var(--bg);color:var(--primary);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:var(--transition);}
 .duration-select{padding:8px 12px;border:2px solid var(--border);border-radius:20px;font-family:var(--font-family);font-size:12px;font-weight:700;color:var(--text-secondary);background:var(--bg);outline:none;cursor:pointer;}
 .publish-btn{padding:9px 22px;border-radius:20px;border:none;background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  color:#fff;font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:var(--transition);}
+  color:#fff;font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:var(--transition);min-width:112px;}
 .publish-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(79,70,229,.3);}
 .publish-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
+
+/* لوحة الخيارات الإضافية (تظهر عند الضغط على +) */
+.composer-extra-panel{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);
+  padding:12px;margin:10px 0 16px;display:none;gap:8px;
+}
+.composer-extra-panel.open{display:flex;animation:fadeSlide .2s ease;}
+.composer-extra-btn{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 6px;border-radius:var(--radius-md);
+  border:2px solid var(--border);background:var(--bg);cursor:pointer;font-family:var(--font-family);font-weight:700;font-size:11px;color:var(--text);transition:var(--transition);
+}
+.composer-extra-btn:hover{border-color:var(--primary-light);color:var(--primary);background:rgba(79,70,229,.05);}
+.composer-extra-btn i{font-size:18px;color:var(--primary);}
+.composer-extra-btn.danger i, .composer-extra-btn.danger{color:var(--danger);}
+.composer-extra-btn.danger:hover{border-color:var(--danger);background:rgba(239,68,68,.06);}
 
 .section-divider{border:none;border-top:1px solid var(--border);margin:22px 0;}
 
@@ -196,6 +211,20 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
   background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;
   font-family:var(--font-family);font-weight:700;font-size:14px;cursor:pointer;transition:var(--transition);}
 .year-confirm-btn:disabled{opacity:.5;cursor:not-allowed;}
+
+/* Lightbox لعرض الصور بالحجم الكامل */
+.image-lightbox-overlay{position:fixed;inset:0;background:rgba(15,23,42,.85);z-index:700;display:none;align-items:center;justify-content:center;padding:20px;}
+.image-lightbox-overlay.open{display:flex;animation:fadeSlide .2s ease;}
+.image-lightbox-overlay img{max-width:92vw;max-height:88vh;border-radius:var(--radius-md);box-shadow:var(--shadow-lg);object-fit:contain;}
+.image-lightbox-close{position:absolute;top:18px;left:18px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);
+  color:#fff;border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+
+.postpicker-item{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:10px;}
+.postpicker-item img{width:48px;height:48px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--bg);}
+.postpicker-item .content{flex:1;min-width:0;font-size:12px;color:var(--text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.postpicker-item button{padding:7px 12px;border-radius:var(--radius-sm);border:none;font-family:var(--font-family);font-weight:700;font-size:11px;cursor:pointer;flex-shrink:0;}
+.postpicker-item button.edit-choice{background:var(--primary);color:#fff;}
+.postpicker-item button.delete-choice{background:var(--danger);color:#fff;}
 </style>
 </head>
 <body>
@@ -258,6 +287,9 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
       <div class="menu-item" onclick="switchView('attendanceadmin', this)"><i class="fas fa-qrcode"></i><span>الحضور و الغياب</span></div>
 
       <div class="label" style="margin-top:12px;">الإعدادات</div>
+      <div class="menu-item" onclick="switchView('settings', this)"><i class="fas fa-gear"></i><span>الإعدادات</span></div>
+      <div class="menu-item" onclick="goToStudentPortal()"><i class="fas fa-graduation-cap"></i><span>موقع الطلاب</span></div>
+      <div class="menu-item" onclick="installAdminPWA()"><i class="fas fa-download"></i><span>تثبيت التطبيق</span></div>
       <div class="menu-item" onclick="adminLogout()" style="color:var(--danger);"><i class="fas fa-right-from-bracket"></i><span>تسجيل خروج</span></div>
     </nav>
   </aside>
@@ -284,12 +316,12 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
       <div class="composer-card">
         <textarea id="post-text" placeholder="اكتب منشور جديد لطلاب هذه الفرقة..."></textarea>
         <div class="composer-preview" id="post-preview">
-          <img id="post-preview-img" src="">
-          <button class="remove-img" onclick="removePostImage()"><i class="fas fa-xmark"></i></button>
+          <img id="post-preview-img" src="" onclick="openImageLightbox(this.src)">
+          <button class="remove-img" onclick="removePostImage(event)"><i class="fas fa-xmark"></i></button>
         </div>
         <div class="composer-row">
           <div class="composer-actions-left">
-            <button class="composer-icon-btn" title="إضافة صورة" onclick="document.getElementById('post-image-input').click()"><i class="fas fa-image"></i></button>
+            <button class="composer-icon-btn" id="composer-toggle-btn" title="خيارات إضافية" onclick="toggleComposerExtra()"><i class="fas fa-plus" id="composer-toggle-icon"></i></button>
             <input type="file" id="post-image-input" accept="image/*" style="display:none">
             <select id="post-duration" class="duration-select">
               <option value="24">يُحذف بعد 24 ساعة</option>
@@ -300,6 +332,19 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
           </div>
           <button class="publish-btn" id="publish-btn" onclick="publishPost()"><i class="fas fa-paper-plane"></i> نشر</button>
         </div>
+      </div>
+
+      <!-- لوحة الخيارات الإضافية (صورة / تعديل بوست / مسح بوست) -->
+      <div class="composer-extra-panel" id="composer-extra-panel">
+        <button class="composer-extra-btn" onclick="document.getElementById('post-image-input').click()">
+          <i class="fas fa-image"></i><span>إضافة صورة</span>
+        </button>
+        <button class="composer-extra-btn" onclick="openPostPicker('edit')">
+          <i class="fas fa-pen"></i><span>تعديل بوست</span>
+        </button>
+        <button class="composer-extra-btn danger" onclick="openPostPicker('delete')">
+          <i class="fas fa-trash"></i><span>مسح بوست</span>
+        </button>
       </div>
 
       <hr class="section-divider">
@@ -351,6 +396,76 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
     <section class="view" id="view-attendanceadmin">
       <div class="page-title"><i class="fas fa-qrcode"></i> الحضور و الغياب</div>
       <div class="empty-state"><i class="fas fa-hammer"></i><p>هذا القسم هيتبني في الخطوة الجاية</p></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="view" id="view-settings">
+      <div class="page-title"><i class="fas fa-gear"></i> الإعدادات</div>
+
+      <!-- بيانات الحساب -->
+      <div style="background:var(--bg-card);border-radius:var(--radius-md);padding:16px;margin-bottom:16px;border:1px solid var(--border);">
+        <h4 style="font-weight:700;margin-bottom:14px;"><i class="fas fa-user-pen"></i> بيانات الحساب</h4>
+        <div style="text-align:center;margin-bottom:16px;">
+          <div class="avatar-wrap" style="margin:0 auto;">
+            <img id="settings-avatar" src="" alt="" style="display:none">
+            <div id="settings-letter-avatar" class="letter-avatar" style="display:none"></div>
+            <div class="avatar-edit-btn" onclick="openImageMenu(event)"><i class="fas fa-pen"></i></div>
+          </div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">الاسم</label>
+          <input type="text" id="settings-name-input" style="width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:14px;background:var(--bg);color:var(--text);outline:none;">
+        </div>
+        <div style="margin-bottom:16px;">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">البريد الإلكتروني</label>
+          <input type="text" id="settings-email-input" disabled style="width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:14px;background:var(--border);color:var(--text-light);outline:none;">
+        </div>
+        <button class="publish-btn" style="width:100%;justify-content:center;min-width:0;" onclick="saveAdminName()"><i class="fas fa-check"></i> حفظ التعديلات</button>
+      </div>
+
+      <!-- تغيير لون الأزرار -->
+      <div style="background:var(--bg-card);border-radius:var(--radius-md);padding:16px;margin-bottom:16px;border:1px solid var(--border);">
+        <h4 style="font-weight:700;margin-bottom:10px;"><i class="fas fa-palette"></i> تغيير لون الأزرار</h4>
+        <div style="display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;">
+          <button class="admin-color-option" data-color="#4f46e5" style="background:#4f46e5;width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer;flex-shrink:0;" onclick="changeAdminColor('#4f46e5', this)"></button>
+          <button class="admin-color-option" data-color="#dc2626" style="background:#dc2626;width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer;flex-shrink:0;" onclick="changeAdminColor('#dc2626', this)"></button>
+          <button class="admin-color-option" data-color="#16a34a" style="background:#16a34a;width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer;flex-shrink:0;" onclick="changeAdminColor('#16a34a', this)"></button>
+          <button class="admin-color-option" data-color="#2563eb" style="background:#2563eb;width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer;flex-shrink:0;" onclick="changeAdminColor('#2563eb', this)"></button>
+          <button class="admin-color-option" data-color="#d946ef" style="background:#d946ef;width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer;flex-shrink:0;" onclick="changeAdminColor('#d946ef', this)"></button>
+          <button class="admin-color-option" data-color="#f97316" style="background:#f97316;width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer;flex-shrink:0;" onclick="changeAdminColor('#f97316', this)"></button>
+          <button class="admin-color-option" data-color="#0f766e" style="background:#0f766e;width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer;flex-shrink:0;" onclick="changeAdminColor('#0f766e', this)"></button>
+          <button class="admin-color-option" data-color="#7c3aed" style="background:#7c3aed;width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer;flex-shrink:0;" onclick="changeAdminColor('#7c3aed', this)"></button>
+          <button class="admin-color-option" data-color="#be185d" style="background:#be185d;width:36px;height:36px;border-radius:50%;border:3px solid transparent;cursor:pointer;flex-shrink:0;" onclick="changeAdminColor('#be185d', this)"></button>
+        </div>
+      </div>
+
+      <!-- الوضع الداكن / الفاتح -->
+      <div style="background:var(--bg-card);border-radius:var(--radius-md);padding:16px;margin-bottom:16px;border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
+        <div><h4 style="font-weight:700;"><i class="fas fa-moon"></i> الوضع الداكن</h4><span style="font-size:12px;color:var(--text-secondary);">فعّل المظهر الداكن أو الفاتح</span></div>
+        <button id="admin-theme-toggle-btn" onclick="toggleAdminTheme()" style="background:var(--bg);border:2px solid var(--border);border-radius:40px;padding:6px 12px;display:flex;align-items:center;gap:8px;font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;">
+          <span id="admin-theme-icon"><i class="fas fa-sun"></i></span>
+          <span id="admin-theme-label">فاتح</span>
+        </button>
+      </div>
+
+      <!-- تثبيت التطبيق -->
+      <div style="background:var(--bg-card);border-radius:var(--radius-md);padding:16px;margin-bottom:16px;border:1px solid var(--border);">
+        <h4 style="font-weight:700;margin-bottom:6px;"><i class="fas fa-download"></i> تثبيت التطبيق</h4>
+        <p style="font-size:12px;color:var(--text-secondary);margin-bottom:10px;">ثبّت لوحة التحكم كتطبيق على جهازك للوصول السريع.</p>
+        <button id="admin-install-btn" onclick="installAdminPWA()" style="padding:8px 20px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-family);font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+          <i class="fas fa-download"></i> تثبيت التطبيق
+        </button>
+      </div>
+
+      <!-- روابط سريعة -->
+      <div style="display:flex;gap:10px;">
+        <button onclick="goToStudentPortal()" style="flex:1;padding:12px 10px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+          <i class="fas fa-graduation-cap"></i> بوابة الطلاب
+        </button>
+        <button onclick="adminLogout()" style="flex:1;padding:12px 10px;background:var(--danger);color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+          <i class="fas fa-right-from-bracket"></i> تسجيل خروج
+        </button>
+      </div>
     </section>
 
   </main>
@@ -429,6 +544,53 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
     </div>
   </div>
 
+  <!-- Post picker modal (للتعديل أو المسح) -->
+  <div class="center-modal-overlay" id="modal-postpicker">
+    <div class="center-modal-box">
+      <div class="center-modal-head"><h3 id="postpicker-title"><i class="fas fa-list"></i> اختر منشور</h3><button onclick="closePostPicker()"><i class="fas fa-xmark"></i></button></div>
+      <div class="center-modal-body" id="postpicker-list"></div>
+    </div>
+  </div>
+
+  <!-- Edit post modal -->
+  <div class="center-modal-overlay" id="modal-editpost">
+    <div class="center-modal-box">
+      <div class="center-modal-head"><h3><i class="fas fa-pen"></i> تعديل المنشور</h3><button onclick="closeEditPostModal()"><i class="fas fa-xmark"></i></button></div>
+      <div class="center-modal-body">
+        <textarea id="edit-post-text" placeholder="محتوى المنشور..." style="width:100%;min-height:100px;border:2px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;font-family:var(--font-family);font-size:14px;outline:none;background:var(--bg);color:var(--text);resize:vertical;"></textarea>
+        <div id="edit-post-image-wrap" style="margin-top:12px;display:none;position:relative;">
+          <img id="edit-post-image-img" src="" style="width:100%;max-height:220px;object-fit:cover;border-radius:var(--radius-md);cursor:pointer;" onclick="openImageLightbox(this.src)">
+          <button onclick="removeEditPostImage()" style="position:absolute;top:8px;left:8px;width:30px;height:30px;border-radius:50%;background:rgba(15,23,42,.6);color:#fff;border:none;cursor:pointer;"><i class="fas fa-xmark"></i></button>
+        </div>
+        <input type="file" id="edit-post-image-input" accept="image/*" style="display:none">
+        <button onclick="document.getElementById('edit-post-image-input').click()" style="width:100%;margin-top:12px;padding:10px;border-radius:var(--radius-sm);border:2px dashed var(--border);background:var(--bg);color:var(--primary);font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;"><i class="fas fa-image"></i> تغيير / إضافة صورة</button>
+        <button class="publish-btn" style="width:100%;justify-content:center;min-width:0;margin-top:14px;" onclick="saveEditedPost()"><i class="fas fa-check"></i> حفظ التعديلات</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image lightbox -->
+  <div class="image-lightbox-overlay" id="image-lightbox-overlay" onclick="closeImageLightbox()">
+    <button class="image-lightbox-close" onclick="closeImageLightbox(); event.stopPropagation();"><i class="fas fa-xmark"></i></button>
+    <img id="image-lightbox-img" src="" onclick="event.stopPropagation();">
+  </div>
+
+  <!-- Install instructions modal (fallback) -->
+  <div id="install-instructions-overlay" class="center-modal-overlay">
+    <div class="center-modal-box" style="max-width:380px;">
+      <div class="center-modal-head"><h3><i class="fas fa-download"></i> تثبيت التطبيق</h3><button onclick="closeInstallInstructions()"><i class="fas fa-xmark"></i></button></div>
+      <div class="center-modal-body" style="text-align:center;">
+        <i class="fas fa-mobile-screen-button" style="font-size:44px;color:var(--primary);margin-bottom:14px;"></i>
+        <div style="text-align:right;font-size:13px;line-height:2.1;color:var(--text);background:var(--bg);padding:12px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);">
+          <p><strong>١.</strong> اضغط على زر <strong>القائمة</strong> في المتصفح (الثلاث نقاط).</p>
+          <p><strong>٢.</strong> اختر <strong>"إضافة إلى الشاشة الرئيسية"</strong> أو <strong>"Install App"</strong>.</p>
+          <p><strong>٣.</strong> اتبع الخطوات لتثبيت التطبيق.</p>
+        </div>
+        <button onclick="closeInstallInstructions()" style="margin-top:16px;padding:10px 34px;background:var(--primary);color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-family);font-weight:700;font-size:14px;cursor:pointer;">موافق</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast-container" id="toast-container"></div>
 </div>
 
@@ -438,10 +600,17 @@ const SUPABASE_URL = 'https://bzkbamohnjjzwxlvnodm.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_u48RJaZLVcDk-rXmzsl0NQ_N9egVFEb';
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+/* رابط بوابة الطلاب - عدّله لو اسم الملف مختلف عندك */
+const STUDENT_PORTAL_URL = 'index.html';
+
 let adminUser = null;
 let adminProfile = null;
 let pendingYearChoice = null;
 let selectedPostImageFile = null;
+let postPickerMode = null; /* 'edit' أو 'delete' */
+let currentEditingPostId = null;
+let editPostImageFile = null;
+let editPostRemoveImage = false;
 
 /* ================== تهيئة الصفحة ================== */
 window.addEventListener('DOMContentLoaded', init);
@@ -479,6 +648,8 @@ async function init(){
 
     renderAdminProfileUI();
     updateYearGuard();
+    loadSavedAdminColor();
+    loadSavedAdminTheme();
     await refreshAdminNotifications();
     await loadHomeStats();
   }catch(e){
@@ -500,11 +671,15 @@ function renderAdminProfileUI(){
   const topbarImg = document.getElementById('topbar-avatar');
   const sideImg = document.getElementById('sidebar-avatar');
   const sideLetter = document.getElementById('sidebar-letter-avatar');
+  const settingsImg = document.getElementById('settings-avatar');
+  const settingsLetter = document.getElementById('settings-letter-avatar');
 
   if(adminProfile.avatar_url){
     topbarImg.src = adminProfile.avatar_url; topbarImg.style.display='block';
     sideImg.src = adminProfile.avatar_url; sideImg.style.display='block';
     sideLetter.style.display = 'none';
+    if(settingsImg){ settingsImg.src = adminProfile.avatar_url; settingsImg.style.display='block'; }
+    if(settingsLetter){ settingsLetter.style.display = 'none'; }
   } else {
     const letter = (name || 'A').trim().charAt(0);
     topbarImg.style.display='none';
@@ -512,7 +687,14 @@ function renderAdminProfileUI(){
     sideImg.style.display='none';
     sideLetter.style.display='flex';
     sideLetter.innerText = letter;
+    if(settingsImg){ settingsImg.style.display='none'; }
+    if(settingsLetter){ settingsLetter.style.display='flex'; settingsLetter.innerText = letter; }
   }
+
+  const nameInput = document.getElementById('settings-name-input');
+  const emailInput = document.getElementById('settings-email-input');
+  if(nameInput) nameInput.value = adminProfile.full_name || '';
+  if(emailInput) emailInput.value = adminUser.email || '';
 
   const yearMap = {'1':'الفرقة الأولى','2':'الفرقة الثانية','3':'الفرقة الثالثة','4':'الفرقة الرابعة'};
   document.getElementById('year-field-label').innerText = adminProfile.selected_year ? yearMap[adminProfile.selected_year] : 'لم تُحدد';
@@ -579,6 +761,11 @@ function switchView(view, el){
   document.getElementById('sidebar-overlay').classList.remove('open');
 }
 
+/* ================== زر الانتقال لموقع الطلاب ================== */
+function goToStudentPortal(){
+  window.location.href = STUDENT_PORTAL_URL;
+}
+
 /* ================== صورة الأدمن ================== */
 function openImageMenu(e){
   e.stopPropagation();
@@ -612,6 +799,97 @@ async function deleteAdminImage(){
   adminProfile.avatar_url = null;
   renderAdminProfileUI();
   showToast('تم حذف الصورة', 'success');
+}
+
+/* ================== حفظ اسم الأدمن (صفحة الإعدادات) ================== */
+async function saveAdminName(){
+  const nameInput = document.getElementById('settings-name-input');
+  const newName = nameInput.value.trim();
+  if(!newName){ showToast('برجاء إدخال الاسم', 'error'); return; }
+  const { error } = await _supabase.from('admin_users').update({ full_name: newName }).eq('id', adminUser.id);
+  if(error){ showToast('حدث خطأ أثناء حفظ الاسم', 'error'); return; }
+  adminProfile.full_name = newName;
+  renderAdminProfileUI();
+  showToast('تم حفظ البيانات بنجاح', 'success');
+}
+
+/* ================== لون الأزرار (صفحة الإعدادات) ================== */
+function changeAdminColor(color, btn){
+  document.querySelectorAll('.admin-color-option').forEach(b => b.style.borderColor = 'transparent');
+  if(btn) btn.style.borderColor = 'var(--text)';
+  document.documentElement.style.setProperty('--primary', color);
+  localStorage.setItem('admin-primary-color', color);
+  showToast('تم تغيير اللون الأساسي', 'success');
+}
+function loadSavedAdminColor(){
+  const saved = localStorage.getItem('admin-primary-color');
+  if(saved){
+    document.documentElement.style.setProperty('--primary', saved);
+    document.querySelectorAll('.admin-color-option').forEach(b=>{
+      if(b.dataset.color === saved) b.style.borderColor = 'var(--text)';
+    });
+  }
+}
+
+/* ================== الوضع الداكن (صفحة الإعدادات) ================== */
+function toggleAdminTheme(){
+  const isDark = document.body.classList.toggle('admin-dark');
+  applyAdminThemeVars(isDark);
+  localStorage.setItem('admin-theme', isDark ? 'dark' : 'light');
+}
+function applyAdminThemeVars(isDark){
+  const icon = document.getElementById('admin-theme-icon');
+  const label = document.getElementById('admin-theme-label');
+  if(isDark){
+    if(icon) icon.innerHTML = '<i class="fas fa-moon"></i>';
+    if(label) label.innerText = 'داكن';
+    document.body.style.setProperty('--bg', '#0f172a');
+    document.body.style.setProperty('--bg-card', '#1e293b');
+    document.body.style.setProperty('--text', '#f8fafc');
+    document.body.style.setProperty('--text-secondary', '#94a3b8');
+    document.body.style.setProperty('--border', '#334155');
+    document.body.style.setProperty('--shadow-sm', '0 2px 10px rgba(0,0,0,0.3)');
+    document.body.style.setProperty('--shadow-lg', '0 10px 40px rgba(0,0,0,0.5)');
+  } else {
+    if(icon) icon.innerHTML = '<i class="fas fa-sun"></i>';
+    if(label) label.innerText = 'فاتح';
+    document.body.style.setProperty('--bg', '#f8fafc');
+    document.body.style.setProperty('--bg-card', '#ffffff');
+    document.body.style.setProperty('--text', '#0f172a');
+    document.body.style.setProperty('--text-secondary', '#64748b');
+    document.body.style.setProperty('--border', '#e2e8f0');
+    document.body.style.setProperty('--shadow-sm', '0 2px 10px rgba(0,0,0,0.06)');
+    document.body.style.setProperty('--shadow-lg', '0 10px 40px rgba(0,0,0,0.12)');
+  }
+}
+function loadSavedAdminTheme(){
+  const theme = localStorage.getItem('admin-theme');
+  if(theme === 'dark'){
+    document.body.classList.add('admin-dark');
+    applyAdminThemeVars(true);
+  }
+}
+
+/* ================== تثبيت التطبيق (PWA) ================== */
+let adminDeferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e)=>{
+  e.preventDefault();
+  adminDeferredPrompt = e;
+});
+function installAdminPWA(){
+  if(adminDeferredPrompt){
+    adminDeferredPrompt.prompt();
+    adminDeferredPrompt.userChoice.then((choice)=>{
+      if(choice.outcome === 'accepted'){ showToast('تم تثبيت التطبيق بنجاح 🎉', 'success'); }
+      else { showToast('تم إلغاء التثبيت', 'info'); }
+      adminDeferredPrompt = null;
+    });
+  } else {
+    document.getElementById('install-instructions-overlay').classList.add('open');
+  }
+}
+function closeInstallInstructions(){
+  document.getElementById('install-instructions-overlay').classList.remove('open');
 }
 
 /* ================== الإشعارات ================== */
@@ -666,6 +944,14 @@ async function cleanOldNotifications(){
 }
 cleanOldNotifications();
 
+/* ================== لوحة الخيارات الإضافية في صندوق النشر ================== */
+function toggleComposerExtra(){
+  const panel = document.getElementById('composer-extra-panel');
+  const icon = document.getElementById('composer-toggle-icon');
+  const isOpen = panel.classList.toggle('open');
+  icon.className = isOpen ? 'fas fa-xmark' : 'fas fa-plus';
+}
+
 /* ================== صندوق النشر ================== */
 document.getElementById('post-image-input').addEventListener('change', (e)=>{
   const file = e.target.files[0];
@@ -675,7 +961,8 @@ document.getElementById('post-image-input').addEventListener('change', (e)=>{
   document.getElementById('post-preview-img').src = URL.createObjectURL(file);
   preview.style.display = 'block';
 });
-function removePostImage(){
+function removePostImage(e){
+  if(e) e.stopPropagation();
   selectedPostImageFile = null;
   document.getElementById('post-image-input').value = '';
   document.getElementById('post-preview').style.display = 'none';
@@ -686,6 +973,8 @@ async function publishPost(){
   if(!text && !selectedPostImageFile){ showToast('اكتب محتوى المنشور أو أضف صورة', 'error'); return; }
 
   const btn = document.getElementById('publish-btn');
+  /* === تعديل: تثبيت عرض الزر عشان مايتحركش مكانه أثناء التحميل === */
+  btn.style.width = btn.offsetWidth + 'px';
   btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر...';
 
   try{
@@ -725,6 +1014,114 @@ async function publishPost(){
     showToast('حدث خطأ أثناء النشر', 'error');
   }finally{
     btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> نشر';
+    btn.style.width = ''; /* === تعديل: إرجاع العرض الطبيعي بعد الانتهاء === */
+  }
+}
+
+/* ================== Lightbox لعرض الصور ================== */
+function openImageLightbox(src){
+  if(!src) return;
+  document.getElementById('image-lightbox-img').src = src;
+  document.getElementById('image-lightbox-overlay').classList.add('open');
+}
+function closeImageLightbox(){
+  document.getElementById('image-lightbox-overlay').classList.remove('open');
+  document.getElementById('image-lightbox-img').src = '';
+}
+
+/* ================== اختيار منشور للتعديل / المسح ================== */
+async function openPostPicker(mode){
+  postPickerMode = mode;
+  document.getElementById('postpicker-title').innerHTML = mode === 'edit'
+    ? '<i class="fas fa-pen"></i> اختر منشور لتعديله'
+    : '<i class="fas fa-trash"></i> اختر منشور لمسحه';
+  const list = document.getElementById('postpicker-list');
+  list.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i></div>';
+  document.getElementById('modal-postpicker').classList.add('open');
+
+  const year = adminProfile.selected_year;
+  if(!year){ list.innerHTML = '<div class="empty-state"><i class="fas fa-hand-pointer"></i><p>اختر الفرقة أولاً</p></div>'; return; }
+
+  const { data: posts, error } = await _supabase.from('posts').select('*').eq('academic_year', year).order('created_at', { ascending:false });
+  if(error || !posts || posts.length === 0){ list.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>لا توجد منشورات</p></div>'; return; }
+
+  list.innerHTML = posts.map(p => `
+    <div class="postpicker-item">
+      ${p.image_url ? `<img src="${escapeHtml(p.image_url)}">` : `<div style="width:48px;height:48px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--text-light);flex-shrink:0;"><i class="fas fa-file-lines"></i></div>`}
+      <div class="content">${escapeHtml((p.content||'منشور بصورة').slice(0,60))}</div>
+      ${mode === 'edit'
+        ? `<button class="edit-choice" onclick="startEditPost('${p.id}')"><i class="fas fa-pen"></i></button>`
+        : `<button class="delete-choice" onclick="deletePostAdmin('${p.id}')"><i class="fas fa-trash"></i></button>`}
+    </div>
+  `).join('');
+}
+function closePostPicker(){ document.getElementById('modal-postpicker').classList.remove('open'); }
+
+async function deletePostAdmin(postId){
+  if(!confirm('هل أنت متأكد من مسح هذا المنشور نهائياً؟')) return;
+  const { error } = await _supabase.from('posts').delete().eq('id', postId);
+  if(error){ showToast('تعذر مسح المنشور', 'error'); return; }
+  showToast('تم مسح المنشور بنجاح', 'success');
+  closePostPicker();
+  await loadHomeStats();
+}
+
+async function startEditPost(postId){
+  const { data: post, error } = await _supabase.from('posts').select('*').eq('id', postId).maybeSingle();
+  if(error || !post){ showToast('تعذر تحميل المنشور', 'error'); return; }
+  currentEditingPostId = postId;
+  editPostImageFile = null;
+  editPostRemoveImage = false;
+  document.getElementById('edit-post-text').value = post.content || '';
+  const imgWrap = document.getElementById('edit-post-image-wrap');
+  const img = document.getElementById('edit-post-image-img');
+  if(post.image_url){ img.src = post.image_url; imgWrap.style.display = 'block'; }
+  else { img.src = ''; imgWrap.style.display = 'none'; }
+  closePostPicker();
+  document.getElementById('modal-editpost').classList.add('open');
+}
+function closeEditPostModal(){
+  document.getElementById('modal-editpost').classList.remove('open');
+  currentEditingPostId = null;
+  document.getElementById('edit-post-image-input').value = '';
+}
+document.getElementById('edit-post-image-input').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  editPostImageFile = file;
+  editPostRemoveImage = false;
+  const imgWrap = document.getElementById('edit-post-image-wrap');
+  const img = document.getElementById('edit-post-image-img');
+  img.src = URL.createObjectURL(file);
+  imgWrap.style.display = 'block';
+});
+function removeEditPostImage(){
+  editPostImageFile = null;
+  editPostRemoveImage = true;
+  document.getElementById('edit-post-image-input').value = '';
+  document.getElementById('edit-post-image-wrap').style.display = 'none';
+  document.getElementById('edit-post-image-img').src = '';
+}
+async function saveEditedPost(){
+  if(!currentEditingPostId) return;
+  const newText = document.getElementById('edit-post-text').value.trim();
+  try{
+    const updateData = { content: newText };
+    if(editPostImageFile){
+      const ext = editPostImageFile.name.split('.').pop();
+      const path = `posts/${Date.now()}.${ext}`;
+      const { error: upErr } = await _supabase.storage.from('avatars').upload(path, editPostImageFile, { upsert:true });
+      if(!upErr){ const { data } = _supabase.storage.from('avatars').getPublicUrl(path); updateData.image_url = data.publicUrl; }
+    } else if(editPostRemoveImage){
+      updateData.image_url = null;
+    }
+    const { error } = await _supabase.from('posts').update(updateData).eq('id', currentEditingPostId);
+    if(error) throw error;
+    showToast('تم حفظ التعديلات بنجاح', 'success');
+    closeEditPostModal();
+    await loadHomeStats();
+  }catch(e){
+    showToast('حدث خطأ أثناء حفظ التعديلات', 'error');
   }
 }
 
