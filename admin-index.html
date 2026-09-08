@@ -1049,11 +1049,15 @@ async function publishPost(){
     if(error) throw error;
 
     /* === تعديل: إشعار فعلي لطلاب الفرقة عند نشر منشور جديد === */
-    await _supabase.from('notifications').insert({
-      title: 'منشور جديد',
-      message: text ? text.slice(0,60) : 'تم نشر صورة جديدة',
-      academic_year: adminProfile.selected_year
-    });
+    const { error: notifErr } = await _supabase.from('notifications').insert({
+  title: 'منشور جديد',
+  message: text ? text.slice(0,60) : 'تم نشر صورة جديدة',
+  academic_year: adminProfile.selected_year
+});
+if (notifErr) {
+  console.error('فشل إرسال الإشعار:', notifErr);
+  showToast('تم النشر لكن فشل إرسال الإشعار: ' + notifErr.message, 'error');
+         }
     /* === نهاية تعديل === */
 
     document.getElementById('post-text').value = '';
