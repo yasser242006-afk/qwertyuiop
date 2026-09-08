@@ -229,6 +229,29 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 
   .admin-color-scroll-row{ scrollbar-width:none; -ms-overflow-style:none; }
 .admin-color-scroll-row::-webkit-scrollbar{ display:none; height:0; } 
+
+  /* === صندوق تأكيد استبدال المنشور === */
+.admin-confirm-overlay{
+  position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeSlide .3s ease;
+}
+.admin-confirm-box{
+  background:var(--bg-card);border-radius:24px;max-width:400px;width:100%;padding:32px 28px 24px;
+  box-shadow:var(--shadow-lg);border:1px solid var(--border);animation:popIn .35s cubic-bezier(.34,1.56,.64,1);text-align:center;
+}
+.admin-confirm-box .icon{font-size:48px;margin-bottom:12px;color:var(--warn);}
+.admin-confirm-box .icon.danger{color:var(--danger);}
+.admin-confirm-box h3{font-size:18px;font-weight:800;margin-bottom:8px;color:var(--text);}
+.admin-confirm-box p{font-size:14px;color:var(--text-secondary);margin-bottom:20px;line-height:1.6;}
+.admin-confirm-box .buttons{display:flex;gap:12px;justify-content:center;}
+.admin-confirm-box .buttons button{
+  padding:10px 28px;border-radius:var(--radius-sm);font-family:var(--font-family);font-weight:700;font-size:14px;
+  border:none;cursor:pointer;transition:var(--transition);min-width:100px;
+}
+.admin-confirm-box .buttons .btn-cancel{background:var(--bg);color:var(--text-secondary);border:2px solid var(--border);}
+.admin-confirm-box .buttons .btn-cancel:hover{background:var(--border);}
+.admin-confirm-box .buttons .btn-confirm{background:var(--danger);color:#fff;}
+.admin-confirm-box .buttons .btn-confirm:hover{transform:scale(1.02);box-shadow:0 4px 15px rgba(239,68,68,.3);}
 </style>
 </head>
 <body>
@@ -1022,8 +1045,24 @@ async function publishPost(){
   const text = document.getElementById('post-text').value.trim();
   if(!text && !selectedPostImageFile){ showToast('اكتب محتوى المنشور أو أضف صورة', 'error'); return; }
 
-  const btn = document.getElementById('publish-btn');
-  /* === تعديل: تثبيت عرض الزر عشان مايتحركش مكانه أثناء التحميل === */
+  /* === تعديل: التحقق من وجود منشور سابق لنفس الفرقة والتأكيد قبل الاستبدال === */
+  const { data: existingPosts } = await _supabase.from('posts').select('id').eq('academic_year', adminProfile.selected_year);
+  if(existingPosts && existingPosts.length > 0){
+    const confirmed = await showAdminConfirm({
+      title: 'يوجد منشور بالفعل',
+      message: 'يوجد منشور منشور حالياً لهذه الفرقة. نشر منشور جديد سيؤدي إلى حذف المنشور القديم نهائياً. هل تريد المتابعة؟',
+      confirmText: 'نشر واستبدال',
+      cancelText: 'إلغاء',
+      icon: 'fas fa-triangle-exclamation',
+      iconClass: 'danger'
+    });
+    if(!confirmed) return;
+    const oldIds = existingPosts.map(p => p.id);
+    await _supabase.from('posts').delete().in('id', oldIds);
+  }
+  /* === نهاية تعديل === */
+
+  const btn = document.getElementById('publish-btn');  /* === تعديل: تثبيت عرض الزر عشان مايتحركش مكانه أثناء التحميل === */
   btn.style.width = btn.offsetWidth + 'px';
   btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر...';
 
@@ -1384,6 +1423,39 @@ function timeAgo(iso){
     if(hours < 24) return `منذ ${hours} ساعة`;
     return new Date(iso).toLocaleDateString('ar-EG');
   }catch(e){ return ''; }
+}
+
+
+
+  /* === صندوق تأكيد جميل بدل confirm() الافتراضي === */
+function showAdminConfirm(options){
+  return new Promise((resolve) => {
+    const {
+      title = 'تأكيد', message = 'هل أنت متأكد؟',
+      confirmText = 'تأكيد', cancelText = 'إلغاء',
+      icon = 'fas fa-triangle-exclamation', iconClass = 'danger'
+    } = options;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'admin-confirm-overlay';
+    overlay.innerHTML = `
+      <div class="admin-confirm-box">
+        <div class="icon ${iconClass}"><i class="${icon}"></i></div>
+        <h3>${title}</h3>
+        <p>${message}</p>
+        <div class="buttons">
+          <button class="btn-cancel">${cancelText}</button>
+          <button class="btn-confirm">${confirmText}</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const cleanup = () => overlay.remove();
+    overlay.querySelector('.btn-cancel').addEventListener('click', () => { cleanup(); resolve(false); });
+    overlay.querySelector('.btn-confirm').addEventListener('click', () => { cleanup(); resolve(true); });
+    overlay.addEventListener('click', (e) => { if(e.target === overlay){ cleanup(); resolve(false); } });
+  });
 }
 </script>
 </body>
