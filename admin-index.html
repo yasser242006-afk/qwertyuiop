@@ -1851,14 +1851,14 @@ function selectQformType(btn){
 }
 function renderQformOptionsArea(type, existing){
   const area = document.getElementById('qform-options-area');
-  if(type === 'true_false'){
+    if(type === 'true_false'){
     const correct = existing?.correct_answer || 'true';
     area.innerHTML = `
       <div class="exam-field-label">الإجابة الصحيحة</div>
-      <div class="qform-option-row"><input type="radio" name="tf-correct" value="true" ${correct==='true'?'checked':''}> <span>صح</span></div>
-      <div class="qform-option-row"><input type="radio" name="tf-correct" value="false" ${correct==='false'?'checked':''}> <span>غلط</span></div>
+      <div class="qform-option-row"><input type="radio" name="tf-correct" value="true" ${correct==='true'?'checked':''}> <span style="font-weight:700;">صح</span></div>
+      <div class="qform-option-row"><input type="radio" name="tf-correct" value="false" ${correct==='false'?'checked':''}> <span style="font-weight:700;">غلط</span></div>
     `;
-  } else if(type === 'mcq'){
+    } else if(type === 'mcq'){
     const opts = existing?.options || ['','','',''];
     const correctIdx = existing ? opts.indexOf(existing.correct_answer) : 0;
     area.innerHTML = `
