@@ -455,6 +455,35 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .exam-time-box span{
   font-size:10.5px;
 }
+
+
+  /* === تصغير حقول الوقت (بداية/نهاية الامتحان) === */
+.exam-time-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.exam-time-box{
+  padding:10px 8px;
+  min-width:0;
+  overflow:hidden;
+}
+.exam-time-box span{
+  font-size:10.5px;
+}
+.exam-time-box input[type="datetime-local"]{
+  font-size:11px !important;
+  padding:4px 0 !important;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  box-sizing:border-box;
+  border:none;
+  background:transparent;
+  color:var(--text);
+  font-family:var(--font-family);
+  outline:none;
+}
 </style>
 </head>
 <body>
