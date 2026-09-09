@@ -308,6 +308,112 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .save-exam-btn{width:100%;padding:14px;border-radius:var(--radius-sm);border:none;background:linear-gradient(135deg,var(--success),#059669);color:#fff;font-family:var(--font-family);font-weight:800;font-size:14px;cursor:pointer;margin-top:6px;}
 .save-exam-btn:disabled{opacity:.5;cursor:not-allowed;}
 /* === نهاية إضافة === */
+
+
+
+
+
+
+
+
+
+  /* === تعديل: تصميم أحلى وأوضح لصندوق إعداد الامتحان === */
+.exam-setup-card{background:linear-gradient(180deg, var(--bg-card), var(--bg));border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px 20px;box-shadow:var(--shadow-lg);margin-bottom:16px;}
+.exam-field-label{font-size:13px;font-weight:800;margin:18px 0 10px;color:var(--text);display:flex;align-items:center;gap:8px;}
+.exam-field-label:first-child{margin-top:0;}
+.exam-field-label::before{content:'';width:4px;height:14px;border-radius:3px;background:linear-gradient(180deg,var(--primary),var(--secondary));}
+
+.exam-select-wrap{position:relative;}
+.exam-select-wrap select{
+  width:100%;padding:14px 44px 14px 16px;border:2px solid var(--border);border-radius:var(--radius-md);
+  font-family:var(--font-family);font-size:14px;font-weight:600;background:var(--bg);color:var(--text);outline:none;
+  appearance:none;-webkit-appearance:none;cursor:pointer;transition:var(--transition);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.04);
+}
+.exam-select-wrap select:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(79,70,229,.12);}
+.exam-select-wrap select:hover{border-color:var(--primary-light);}
+.exam-select-wrap i{position:absolute;top:50%;right:16px;transform:translateY(-50%);color:var(--primary);font-size:14px;pointer-events:none;transition:var(--transition);}
+
+.exam-time-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.exam-time-box{
+  display:flex;flex-direction:column;gap:8px;background:var(--bg);border:2px solid var(--border);
+  border-radius:var(--radius-md);padding:12px 14px;transition:var(--transition);
+}
+.exam-time-box:focus-within{border-color:var(--primary);box-shadow:0 0 0 4px rgba(79,70,229,.12);}
+.exam-time-box span{font-size:11px;color:var(--primary);font-weight:800;display:flex;align-items:center;gap:6px;}
+.exam-time-box span::before{content:'\f017';font-family:'Font Awesome 6 Free';font-weight:900;font-size:11px;}
+.exam-time-box input{padding:6px 2px;border:none;background:transparent;font-family:var(--font-family);font-size:13px;font-weight:700;color:var(--text);outline:none;}
+
+.type-chip-grid{display:flex;flex-wrap:wrap;gap:10px;}
+.type-chip{
+  padding:11px 18px;border-radius:16px;border:2px solid var(--border);background:var(--bg);
+  font-family:var(--font-family);font-size:12.5px;font-weight:700;color:var(--text-secondary);cursor:pointer;
+  transition:var(--transition);display:flex;align-items:center;gap:7px;
+}
+.type-chip:hover{border-color:var(--primary-light);color:var(--primary);}
+.type-chip.active{
+  border-color:var(--primary);background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+  color:#fff;box-shadow:0 4px 12px rgba(79,70,229,.35);transform:translateY(-1px);
+}
+
+.exam-confirm-btn{
+  width:100%;margin-top:22px;padding:15px;border-radius:var(--radius-md);border:none;
+  background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;
+  font-family:var(--font-family);font-weight:800;font-size:14.5px;cursor:pointer;transition:var(--transition);
+  box-shadow:0 4px 14px rgba(79,70,229,.3);
+}
+.exam-confirm-btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none;}
+.exam-confirm-btn:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(79,70,229,.4);}
+/* === نهاية تعديل === */
+
+.exam-builder-head{display:flex;align-items:center;justify-content:space-between;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:16px;}
+.exam-builder-head .info{font-size:12px;color:var(--text-secondary);}
+.exam-builder-head .info b{color:var(--text);}
+.exam-builder-head button{background:none;border:none;color:var(--danger);font-family:var(--font-family);font-weight:700;font-size:12px;cursor:pointer;}
+
+.question-draft-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:10px;}
+.question-draft-card .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.question-draft-card .qtype-tag{font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;background:rgba(79,70,229,.1);color:var(--primary);}
+.question-draft-card .del-q{background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;}
+.question-draft-card .qtext{font-size:13px;font-weight:600;margin:6px 0;}
+.question-draft-card .qoptions{font-size:12px;color:var(--text-secondary);line-height:1.8;}
+.question-draft-card .qoptions .correct{color:var(--success);font-weight:800;}
+.question-draft-card .qpoints{font-size:11px;color:var(--text-light);margin-top:6px;}
+
+.add-question-btn{width:100%;padding:13px;border-radius:var(--radius-sm);border:2px dashed var(--primary);background:none;color:var(--primary);font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;}
+.add-question-btn:hover{background:rgba(79,70,229,.05);}
+
+.qform-card{background:var(--bg-card);border:2px solid var(--primary-light);border-radius:var(--radius-md);padding:16px;margin-bottom:14px;}
+.qform-card textarea{width:100%;min-height:70px;padding:11px 12px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;resize:vertical;margin-top:8px;}
+.qform-card textarea:focus{border-color:var(--primary);}
+
+/* === تعديل: تصميم أحلى لصف اختيار الإجابة الصحيحة (radio) === */
+.qform-option-row{
+  display:flex;align-items:center;gap:10px;margin-top:10px;padding:6px 10px 6px 6px;
+  border:2px solid var(--border);border-radius:var(--radius-md);background:var(--bg);transition:var(--transition);
+}
+.qform-option-row:has(input:checked){border-color:var(--success);background:rgba(16,185,129,.06);}
+.qform-option-row input[type=radio]{
+  appearance:none;-webkit-appearance:none;width:22px;height:22px;border-radius:50%;
+  border:2.5px solid var(--border);flex-shrink:0;cursor:pointer;position:relative;transition:var(--transition);
+}
+.qform-option-row input[type=radio]:checked{border-color:var(--success);background:var(--success);}
+.qform-option-row input[type=radio]:checked::after{
+  content:'\f00c';font-family:'Font Awesome 6 Free';font-weight:900;color:#fff;font-size:10px;
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+}
+.qform-option-row input[type=text]{flex:1;padding:9px 12px;border:none;background:transparent;font-family:var(--font-family);font-size:13px;color:var(--text);outline:none;}
+/* === نهاية تعديل === */
+
+.qform-points-row{display:flex;align-items:center;gap:10px;margin-top:12px;}
+.qform-points-row input{width:80px;padding:8px 10px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;text-align:center;}
+.qform-actions{display:flex;gap:8px;margin-top:14px;}
+.qform-actions button{flex:1;padding:10px;border-radius:var(--radius-sm);font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;border:none;}
+.qform-actions .save-btn{background:var(--primary);color:#fff;}
+.qform-actions .cancel-btn{background:var(--bg);color:var(--text-secondary);border:2px solid var(--border);}
+
+.save-exam-btn{width:100%;padding:14px;border-radius:var(--radius-sm);border:none;background:linear-gradient(135deg,var(--success),#059669);color:#fff;font-family:var(--font-family);font-weight:800;font-size:14px;cursor:pointer;margin-top:6px;}
+.save-exam-btn:disabled{opacity:.5;cursor:not-allowed;}
 </style>
 </head>
 <body>
@@ -1884,8 +1990,8 @@ async function saveFullExam(){
     document.querySelectorAll('#exam-type-chips .type-chip').forEach(c=>c.classList.remove('active'));
     onExamSetupChange();
   }catch(e){
-    console.error(e);
-    showToast('حدث خطأ أثناء حفظ الامتحان', 'error');
+    console.error('خطأ حفظ الامتحان:', e); /* === تعديل: طباعة تفاصيل الخطأ === */
+    showToast('حدث خطأ: ' + (e.message || e.details || 'غير معروف'), 'error');
   }finally{
     btn.disabled = false; btn.innerHTML = '<i class="fas fa-cloud-arrow-up"></i> حفظ الامتحان (<span id="qcount-label">0</span> سؤال)';
     renderDraftQuestionsList();
