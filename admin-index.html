@@ -252,6 +252,62 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .admin-confirm-box .buttons .btn-cancel:hover{background:var(--border);}
 .admin-confirm-box .buttons .btn-confirm{background:var(--danger);color:#fff;}
 .admin-confirm-box .buttons .btn-confirm:hover{transform:scale(1.02);box-shadow:0 4px 15px rgba(239,68,68,.3);}
+
+  /* === إضافة: تصميم صفحة إنشاء أسئلة الامتحانات === */
+.exam-setup-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:16px;}
+.exam-field-label{font-size:13px;font-weight:800;margin:14px 0 8px;color:var(--text);}
+.exam-field-label:first-child{margin-top:0;}
+.exam-select-wrap{position:relative;}
+.exam-select-wrap select{width:100%;padding:12px 40px 12px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);
+  font-family:var(--font-family);font-size:14px;background:var(--bg);color:var(--text);outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;transition:var(--transition);}
+.exam-select-wrap select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(79,70,229,.1);}
+.exam-select-wrap i{position:absolute;top:50%;right:14px;transform:translateY(-50%);color:var(--primary);font-size:13px;pointer-events:none;}
+.exam-time-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.exam-time-box{display:flex;flex-direction:column;gap:6px;}
+.exam-time-box span{font-size:11px;color:var(--text-secondary);font-weight:700;}
+.exam-time-box input{padding:11px 12px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;}
+.exam-time-box input:focus{border-color:var(--primary);}
+.type-chip-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.type-chip{padding:9px 16px;border-radius:20px;border:2px solid var(--border);background:var(--bg);font-family:var(--font-family);font-size:12px;font-weight:700;color:var(--text-secondary);cursor:pointer;transition:var(--transition);}
+.type-chip.active{border-color:var(--primary);background:linear-gradient(135deg,rgba(79,70,229,.14),rgba(14,165,233,.08));color:var(--primary);}
+.exam-confirm-btn{width:100%;margin-top:18px;padding:13px;border-radius:var(--radius-sm);border:none;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;font-family:var(--font-family);font-weight:700;font-size:14px;cursor:pointer;transition:var(--transition);}
+.exam-confirm-btn:disabled{opacity:.5;cursor:not-allowed;}
+.exam-confirm-btn:not(:disabled):hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(79,70,229,.3);}
+
+.exam-builder-head{display:flex;align-items:center;justify-content:space-between;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:16px;}
+.exam-builder-head .info{font-size:12px;color:var(--text-secondary);}
+.exam-builder-head .info b{color:var(--text);}
+.exam-builder-head button{background:none;border:none;color:var(--danger);font-family:var(--font-family);font-weight:700;font-size:12px;cursor:pointer;}
+
+.question-draft-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:10px;}
+.question-draft-card .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.question-draft-card .qtype-tag{font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;background:rgba(79,70,229,.1);color:var(--primary);}
+.question-draft-card .del-q{background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;}
+.question-draft-card .qtext{font-size:13px;font-weight:600;margin:6px 0;}
+.question-draft-card .qoptions{font-size:12px;color:var(--text-secondary);line-height:1.8;}
+.question-draft-card .qoptions .correct{color:var(--success);font-weight:800;}
+.question-draft-card .qpoints{font-size:11px;color:var(--text-light);margin-top:6px;}
+
+.add-question-btn{width:100%;padding:13px;border-radius:var(--radius-sm);border:2px dashed var(--primary);background:none;color:var(--primary);font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;}
+.add-question-btn:hover{background:rgba(79,70,229,.05);}
+
+.qform-card{background:var(--bg-card);border:2px solid var(--primary-light);border-radius:var(--radius-md);padding:16px;margin-bottom:14px;}
+.qform-card textarea{width:100%;min-height:70px;padding:11px 12px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;resize:vertical;margin-top:8px;}
+.qform-card textarea:focus{border-color:var(--primary);}
+.qform-option-row{display:flex;align-items:center;gap:8px;margin-top:8px;}
+.qform-option-row input[type=radio]{width:18px;height:18px;accent-color:var(--primary);flex-shrink:0;}
+.qform-option-row input[type=text]{flex:1;padding:9px 12px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;}
+.qform-option-row input[type=text]:focus{border-color:var(--primary);}
+.qform-points-row{display:flex;align-items:center;gap:10px;margin-top:12px;}
+.qform-points-row input{width:80px;padding:8px 10px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;text-align:center;}
+.qform-actions{display:flex;gap:8px;margin-top:14px;}
+.qform-actions button{flex:1;padding:10px;border-radius:var(--radius-sm);font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;border:none;}
+.qform-actions .save-btn{background:var(--primary);color:#fff;}
+.qform-actions .cancel-btn{background:var(--bg);color:var(--text-secondary);border:2px solid var(--border);}
+
+.save-exam-btn{width:100%;padding:14px;border-radius:var(--radius-sm);border:none;background:linear-gradient(135deg,var(--success),#059669);color:#fff;font-family:var(--font-family);font-weight:800;font-size:14px;cursor:pointer;margin-top:6px;}
+.save-exam-btn:disabled{opacity:.5;cursor:not-allowed;}
+/* === نهاية إضافة === */
 </style>
 </head>
 <body>
@@ -412,10 +468,73 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
     </section>
 
     <!-- Placeholders for upcoming sections -->
-    <section class="view" id="view-exams">
+      <section class="view" id="view-exams">
       <div class="page-title"><i class="fas fa-file-circle-question"></i> أسئلة الامتحانات</div>
-      <div class="empty-state"><i class="fas fa-hammer"></i><p>هذا القسم هيتبني في الخطوة الجاية</p></div>
-    </section>
+
+      <div id="year-guard-exams" class="guard-banner" style="display:none;">
+        <i class="fas fa-circle-exclamation"></i> برجاء اختيار الفرقة أولاً من القائمة الجانبية.
+      </div>
+
+      <!-- خطوة 1: إعداد الامتحان -->
+      <div id="exam-step1" class="exam-setup-card">
+        <div class="exam-field-label">المادة</div>
+        <div class="exam-select-wrap">
+          <select id="exam-subject-select" onchange="onExamSetupChange()"><option value="">اختر المادة</option></select>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+
+        <div class="exam-field-label">الترم</div>
+        <div class="term-toggle">
+          <button class="active" data-term="1" onclick="setExamSetupTerm('1', this)">الترم الأول</button>
+          <button data-term="2" onclick="setExamSetupTerm('2', this)">الترم الثاني</button>
+        </div>
+
+        <div class="exam-field-label">نوع الامتحان</div>
+        <div class="exam-type-tabs" style="margin-bottom:0;">
+          <button class="active" data-etype="quiz" onclick="setExamSetupType('quiz', this)">كويز</button>
+          <button data-etype="midterm" onclick="setExamSetupType('midterm', this)">ميدترم</button>
+          <button data-etype="final" onclick="setExamSetupType('final', this)">فاينال</button>
+        </div>
+
+        <div class="exam-field-label">مواعيد الامتحان</div>
+        <div class="exam-time-row">
+          <div class="exam-time-box"><span>بداية الامتحان</span><input type="datetime-local" id="exam-start-time" onchange="onExamSetupChange()"></div>
+          <div class="exam-time-box"><span>نهاية الامتحان</span><input type="datetime-local" id="exam-end-time" onchange="onExamSetupChange()"></div>
+        </div>
+
+        <div class="exam-field-label">أنواع الأسئلة المسموح بإضافتها</div>
+        <div class="type-chip-grid" id="exam-type-chips">
+          <button type="button" class="type-chip" data-qtype="true_false" onclick="toggleQuestionTypeChip(this)"><i class="fas fa-check-double"></i> صح وغلط</button>
+          <button type="button" class="type-chip" data-qtype="mcq" onclick="toggleQuestionTypeChip(this)"><i class="fas fa-list-ul"></i> اختياري</button>
+          <button type="button" class="type-chip" data-qtype="fill_blank" onclick="toggleQuestionTypeChip(this)"><i class="fas fa-pen"></i> أكمل</button>
+          <button type="button" class="type-chip" data-qtype="essay" onclick="toggleQuestionTypeChip(this)"><i class="fas fa-align-right"></i> إجباري (مقالي)</button>
+          <button type="button" class="type-chip" id="chip-all-types" onclick="toggleAllQuestionTypes()"><i class="fas fa-layer-group"></i> الأربعة مع بعض</button>
+        </div>
+
+        <button class="exam-confirm-btn" id="exam-setup-confirm-btn" disabled onclick="confirmExamSetup()">
+          <i class="fas fa-check"></i> موافق - الانتقال لإضافة الأسئلة
+        </button>
+      </div>
+
+      <!-- خطوة 2: بناء الأسئلة -->
+      <div id="exam-step2" style="display:none;">
+        <div class="exam-builder-head">
+          <div class="info"><b id="builder-subject-label"></b> — <span id="builder-meta-label"></span></div>
+          <button onclick="backToExamSetup()"><i class="fas fa-rotate-right"></i> تعديل الإعداد</button>
+        </div>
+
+        <div id="questions-draft-list"></div>
+
+        <button class="add-question-btn" id="add-question-trigger-btn" onclick="openQuestionForm()"><i class="fas fa-plus"></i> إضافة سؤال</button>
+
+        <div id="qform-container"></div>
+
+        <button class="save-exam-btn" id="save-exam-btn" onclick="saveFullExam()" disabled><i class="fas fa-cloud-arrow-up"></i> حفظ الامتحان (<span id="qcount-label">0</span> سؤال)</button>
+      </div>
+      </section>
+
+
+    
     <section class="view" id="view-gradesadmin">
       <div class="page-title"><i class="fas fa-chart-simple"></i> درجات الطلاب</div>
       <div class="empty-state"><i class="fas fa-hammer"></i><p>هذا القسم هيتبني في الخطوة الجاية</p></div>
@@ -808,6 +927,7 @@ function switchView(view, el){
   if(el) el.classList.add('active');
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebar-overlay').classList.remove('open');
+  if(view === 'exams') renderExamSubjectOptions(); /* === تعديل: تحميل المواد عند فتح صفحة الأسئلة === */
 }
 
 /* ================== زر الانتقال لموقع الطلاب ================== */
@@ -1457,6 +1577,320 @@ function showAdminConfirm(options){
     overlay.addEventListener('click', (e) => { if(e.target === overlay){ cleanup(); resolve(false); } });
   });
 }
+
+
+
+
+
+
+  /* ================== أسئلة الامتحانات ================== */
+const LECTURE_SUBJECTS_ADMIN = {
+  '1': {
+    '1': ['مقدمة في الحاسبات', 'مقدمة في نظم التشغيل', 'مراسلات و مصطلحات إنجليزية', 'مبادئ الإقتصاد', 'مبادئ تنظيم وإدارة'],
+    '2': ['اساسيات في البرمجه الهيكليه', 'حزم التطبيقات المكتبية', 'الرياضيات و التامين', 'مبادئ محاسبة', 'مبادئ سلوك التنظيمي', 'إدارة عامة']
+  },
+  '2': {
+    '1': ['قواعد البيانات (1)', 'البرمجة الهيكلية المتقدمة', 'محاسبة شركات', 'دراسات إقتصادية بلغة إنجليزية', 'إدارة الانتاج و العمليات'],
+    '2': ['تسويق', 'قانون تجاري', 'نظم معلومات إدارية', 'إحصاء', 'رياضيات تمويل', 'تطبيقات الانترنت و الوسائط المتعددة']
+  },
+  '3': {
+    '1': ['قواعد البيانات (2)','حزم الإحصاء وبحوث العمليات','تحليل نظم المعلومات','التجارة الإلكترونية','محاسبة الضرائب','دراسات إدارية بلغة انجليزية'],
+    '2': ['تصميم نظم المعلومات','محاسبة تكاليف','اقتصاد كلي','إدارة مشتريات و مخازن','تصميم مواقع الويب']
+  },
+  '4': {
+    '1': ['نظم دعم القرار','نظم المعلومات الجغرافية','إدراة المواد البشرية','محاسبة إدراية','دراسات محاسبية بلغة انجليزية'],
+    '2': ['تطبيقات الحاسب في اعداد التقارير','شبكات و امن المعلومات','نظم معلومات محاسبية','دراسات جدوي إقتصادية','ادارة المؤسسات المالية و التمويل','مشروع التخرج']
+  }
+};
+
+let examSetupTerm = '1';
+let examSetupType = 'quiz';
+let selectedQuestionTypes = [];
+let currentExamMeta = null;
+let draftQuestions = [];
+let editingQuestionIndex = null;
+
+function renderExamSubjectOptions(){
+  const sel = document.getElementById('exam-subject-select');
+  if(!sel) return;
+  const year = adminProfile?.selected_year;
+  const guard = document.getElementById('year-guard-exams');
+  if(!year){
+    if(guard) guard.style.display = 'flex';
+    sel.innerHTML = '<option value="">اختر الفرقة أولاً</option>';
+    return;
+  }
+  if(guard) guard.style.display = 'none';
+  const subjects = LECTURE_SUBJECTS_ADMIN[year]?.[examSetupTerm] || [];
+  const prev = sel.value;
+  sel.innerHTML = '<option value="">اختر المادة</option>' + subjects.map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+  if(subjects.includes(prev)) sel.value = prev;
+}
+
+function setExamSetupTerm(term, el){
+  examSetupTerm = term;
+  document.querySelectorAll('#exam-step1 .term-toggle button').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderExamSubjectOptions();
+  onExamSetupChange();
+}
+function setExamSetupType(type, el){
+  examSetupType = type;
+  document.querySelectorAll('#exam-step1 .exam-type-tabs button').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  onExamSetupChange();
+}
+function toggleQuestionTypeChip(btn){
+  const type = btn.dataset.qtype;
+  btn.classList.toggle('active');
+  if(selectedQuestionTypes.includes(type)) selectedQuestionTypes = selectedQuestionTypes.filter(t=>t!==type);
+  else selectedQuestionTypes.push(type);
+  syncAllTypesChip();
+  onExamSetupChange();
+}
+function toggleAllQuestionTypes(){
+  const allTypes = ['true_false','mcq','fill_blank','essay'];
+  const allActive = allTypes.every(t=>selectedQuestionTypes.includes(t));
+  document.querySelectorAll('#exam-type-chips .type-chip[data-qtype]').forEach(chip=>{
+    chip.classList.toggle('active', !allActive);
+  });
+  selectedQuestionTypes = allActive ? [] : [...allTypes];
+  syncAllTypesChip();
+  onExamSetupChange();
+}
+function syncAllTypesChip(){
+  const allTypes = ['true_false','mcq','fill_blank','essay'];
+  const allActive = allTypes.every(t=>selectedQuestionTypes.includes(t));
+  document.getElementById('chip-all-types')?.classList.toggle('active', allActive);
+}
+function onExamSetupChange(){
+  const subject = document.getElementById('exam-subject-select').value;
+  const start = document.getElementById('exam-start-time').value;
+  const end = document.getElementById('exam-end-time').value;
+  const valid = subject && start && end && selectedQuestionTypes.length > 0 && adminProfile?.selected_year;
+  document.getElementById('exam-setup-confirm-btn').disabled = !valid;
+}
+
+function confirmExamSetup(){
+  const subject = document.getElementById('exam-subject-select').value;
+  const start = document.getElementById('exam-start-time').value;
+  const end = document.getElementById('exam-end-time').value;
+  if(!subject || !start || !end || selectedQuestionTypes.length === 0){ showToast('استكمل كل بيانات الإعداد أولاً', 'error'); return; }
+  if(new Date(end) <= new Date(start)){ showToast('موعد النهاية يجب أن يكون بعد موعد البداية', 'error'); return; }
+
+  currentExamMeta = {
+    subject_name: subject,
+    term: examSetupTerm,
+    exam_type: examSetupType,
+    academic_year: adminProfile.selected_year,
+    start_time: new Date(start).toISOString(),
+    end_time: new Date(end).toISOString(),
+    duration_seconds: Math.round((new Date(end) - new Date(start))/1000),
+    allowed_types: [...selectedQuestionTypes]
+  };
+  draftQuestions = [];
+
+  const termLabel = examSetupTerm === '1' ? 'الترم الأول' : 'الترم الثاني';
+  const typeLabel = { quiz:'كويز', midterm:'ميدترم', final:'فاينال' }[examSetupType];
+  document.getElementById('builder-subject-label').innerText = subject;
+  document.getElementById('builder-meta-label').innerText = `${termLabel} - ${typeLabel}`;
+
+  document.getElementById('exam-step1').style.display = 'none';
+  document.getElementById('exam-step2').style.display = 'block';
+  renderDraftQuestionsList();
+}
+function backToExamSetup(){
+  document.getElementById('exam-step2').style.display = 'none';
+  document.getElementById('exam-step1').style.display = 'block';
+  document.getElementById('qform-container').innerHTML = '';
+}
+
+function openQuestionForm(existingIndex = null){
+  editingQuestionIndex = existingIndex;
+  const existing = existingIndex !== null ? draftQuestions[existingIndex] : null;
+  const container = document.getElementById('qform-container');
+  const typeLabels = { true_false:'صح وغلط', mcq:'اختياري', fill_blank:'أكمل', essay:'إجباري (مقالي)' };
+  const availableTypes = currentExamMeta.allowed_types;
+
+  container.innerHTML = `
+    <div class="qform-card">
+      <div class="exam-field-label" style="margin-top:0;">نوع السؤال</div>
+      <div class="type-chip-grid">
+        ${availableTypes.map(t => `<button type="button" class="type-chip qform-type-chip ${existing?.type===t || (!existing && t===availableTypes[0]) ? 'active':''}" data-qtype="${t}" onclick="selectQformType(this)">${typeLabels[t]}</button>`).join('')}
+      </div>
+      <div class="exam-field-label">نص السؤال</div>
+      <textarea id="qform-text" placeholder="اكتب نص السؤال هنا...">${existing ? escapeHtml(existing.text) : ''}</textarea>
+      <div id="qform-options-area"></div>
+      <div class="qform-points-row">
+        <span style="font-size:12px;font-weight:700;color:var(--text-secondary);">درجة السؤال:</span>
+        <input type="number" id="qform-points" min="1" value="${existing ? existing.points : 5}">
+      </div>
+      <div class="qform-actions">
+        <button class="cancel-btn" onclick="closeQuestionForm()">إلغاء</button>
+        <button class="save-btn" onclick="saveQuestionDraft()">${existing ? 'حفظ التعديل' : 'إضافة السؤال'}</button>
+      </div>
+    </div>
+  `;
+  const initialType = existing ? existing.type : availableTypes[0];
+  renderQformOptionsArea(initialType, existing);
+}
+function closeQuestionForm(){
+  document.getElementById('qform-container').innerHTML = '';
+  editingQuestionIndex = null;
+}
+function selectQformType(btn){
+  document.querySelectorAll('.qform-type-chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  renderQformOptionsArea(btn.dataset.qtype, null);
+}
+function renderQformOptionsArea(type, existing){
+  const area = document.getElementById('qform-options-area');
+  if(type === 'true_false'){
+    const correct = existing?.correct_answer || 'true';
+    area.innerHTML = `
+      <div class="exam-field-label">الإجابة الصحيحة</div>
+      <div class="qform-option-row"><input type="radio" name="tf-correct" value="true" ${correct==='true'?'checked':''}> <span>صح</span></div>
+      <div class="qform-option-row"><input type="radio" name="tf-correct" value="false" ${correct==='false'?'checked':''}> <span>غلط</span></div>
+    `;
+  } else if(type === 'mcq'){
+    const opts = existing?.options || ['','','',''];
+    const correctIdx = existing ? opts.indexOf(existing.correct_answer) : 0;
+    area.innerHTML = `
+      <div class="exam-field-label">الاختيارات (حدد الإجابة الصحيحة)</div>
+      ${[0,1,2,3].map(i => `
+        <div class="qform-option-row">
+          <input type="radio" name="mcq-correct" value="${i}" ${i===correctIdx?'checked':''}>
+          <input type="text" class="mcq-option-input" data-idx="${i}" placeholder="الاختيار ${i+1}" value="${escapeHtml(opts[i]||'')}">
+        </div>
+      `).join('')}
+    `;
+  } else if(type === 'fill_blank'){
+    area.innerHTML = `
+      <div class="exam-field-label">الإجابة الصحيحة</div>
+      <input type="text" id="fillblank-answer" style="width:100%;padding:11px 12px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;" placeholder="اكتب الإجابة الصحيحة" value="${escapeHtml(existing?.correct_answer||'')}">
+    `;
+  } else if(type === 'essay'){
+    area.innerHTML = `
+      <div class="exam-field-label">نموذج إجابة (اختياري - للمراجعة اليدوية)</div>
+      <textarea id="essay-model-answer" placeholder="نموذج إجابة تسترشد به عند التصحيح (اختياري)">${escapeHtml(existing?.correct_answer||'')}</textarea>
+    `;
+  }
+}
+function saveQuestionDraft(){
+  const activeChip = document.querySelector('.qform-type-chip.active');
+  const type = activeChip.dataset.qtype;
+  const text = document.getElementById('qform-text').value.trim();
+  const points = parseInt(document.getElementById('qform-points').value) || 1;
+  if(!text){ showToast('اكتب نص السؤال', 'error'); return; }
+
+  let question = { type, text, points, options: null, correct_answer: null };
+
+  if(type === 'true_false'){
+    const checked = document.querySelector('input[name="tf-correct"]:checked');
+    if(!checked){ showToast('حدد الإجابة الصحيحة', 'error'); return; }
+    question.correct_answer = checked.value;
+    question.options = ['صح','غلط'];
+  } else if(type === 'mcq'){
+    const inputs = document.querySelectorAll('.mcq-option-input');
+    const opts = Array.from(inputs).map(i=>i.value.trim());
+    if(opts.some(o=>!o)){ showToast('اكتب كل الاختيارات الأربعة', 'error'); return; }
+    const correctRadio = document.querySelector('input[name="mcq-correct"]:checked');
+    if(!correctRadio){ showToast('حدد الإجابة الصحيحة', 'error'); return; }
+    question.options = opts;
+    question.correct_answer = opts[parseInt(correctRadio.value)];
+  } else if(type === 'fill_blank'){
+    const ans = document.getElementById('fillblank-answer').value.trim();
+    if(!ans){ showToast('اكتب الإجابة الصحيحة', 'error'); return; }
+    question.correct_answer = ans;
+  } else if(type === 'essay'){
+    question.correct_answer = document.getElementById('essay-model-answer').value.trim() || null;
+  }
+
+  if(editingQuestionIndex !== null){
+    draftQuestions[editingQuestionIndex] = question;
+  } else {
+    draftQuestions.push(question);
+  }
+  closeQuestionForm();
+  renderDraftQuestionsList();
+}
+function deleteQuestionDraft(index){
+  draftQuestions.splice(index, 1);
+  renderDraftQuestionsList();
+}
+function renderDraftQuestionsList(){
+  const list = document.getElementById('questions-draft-list');
+  const typeLabels = { true_false:'صح وغلط', mcq:'اختياري', fill_blank:'أكمل', essay:'إجباري' };
+  list.innerHTML = draftQuestions.map((q, i) => `
+    <div class="question-draft-card">
+      <div class="top">
+        <span class="qtype-tag">${typeLabels[q.type]}</span>
+        <div style="display:flex;gap:10px;">
+          <button class="del-q" onclick="openQuestionForm(${i})" style="color:var(--primary);"><i class="fas fa-pen"></i></button>
+          <button class="del-q" onclick="deleteQuestionDraft(${i})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+      <div class="qtext">${i+1}. ${escapeHtml(q.text)}</div>
+      ${q.type === 'mcq' ? `<div class="qoptions">${q.options.map(o=>`<div class="${o===q.correct_answer?'correct':''}">${o===q.correct_answer?'✓ ':''}${escapeHtml(o)}</div>`).join('')}</div>` : ''}
+      ${q.type === 'true_false' ? `<div class="qoptions"><span class="correct">الإجابة: ${q.correct_answer==='true'?'صح':'غلط'}</span></div>` : ''}
+      ${q.type === 'fill_blank' ? `<div class="qoptions">الإجابة: <span class="correct">${escapeHtml(q.correct_answer)}</span></div>` : ''}
+      <div class="qpoints">الدرجة: ${q.points}</div>
+    </div>
+  `).join('');
+  document.getElementById('qcount-label').innerText = draftQuestions.length;
+  document.getElementById('save-exam-btn').disabled = draftQuestions.length === 0;
+}
+
+async function saveFullExam(){
+  if(draftQuestions.length === 0) return;
+  const btn = document.getElementById('save-exam-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+  try{
+    const { data: examRow, error: examErr } = await _supabase.from('exams').insert({
+      subject_name: currentExamMeta.subject_name,
+      term: currentExamMeta.term,
+      exam_type: currentExamMeta.exam_type,
+      academic_year: currentExamMeta.academic_year,
+      start_time: currentExamMeta.start_time,
+      end_date: currentExamMeta.end_time,
+      duration_seconds: currentExamMeta.duration_seconds
+    }).select().single();
+    if(examErr) throw examErr;
+
+    const questionsToInsert = draftQuestions.map((q, idx) => ({
+      exam_id: examRow.id,
+      question_type: q.type,
+      question_text: q.text,
+      option1: q.options ? q.options[0] : null,
+      option2: q.options ? q.options[1] : null,
+      option3: q.options ? q.options[2] : null,
+      option4: q.options ? q.options[3] : null,
+      correct_answer: q.correct_answer,
+      points: q.points,
+      order_index: idx
+    }));
+    const { error: qErr } = await _supabase.from('questions').insert(questionsToInsert);
+    if(qErr) throw qErr;
+
+    showToast('تم حفظ الامتحان بنجاح', 'success');
+    draftQuestions = [];
+    currentExamMeta = null;
+    document.getElementById('exam-step2').style.display = 'none';
+    document.getElementById('exam-step1').style.display = 'block';
+    document.getElementById('exam-subject-select').value = '';
+    document.getElementById('exam-start-time').value = '';
+    document.getElementById('exam-end-time').value = '';
+    selectedQuestionTypes = [];
+    document.querySelectorAll('#exam-type-chips .type-chip').forEach(c=>c.classList.remove('active'));
+    onExamSetupChange();
+  }catch(e){
+    console.error(e);
+    showToast('حدث خطأ أثناء حفظ الامتحان', 'error');
+  }finally{
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-cloud-arrow-up"></i> حفظ الامتحان (<span id="qcount-label">0</span> سؤال)';
+    renderDraftQuestionsList();
+  }
+  }
 </script>
 </body>
 </html>
