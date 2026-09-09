@@ -414,6 +414,47 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 
 .save-exam-btn{width:100%;padding:14px;border-radius:var(--radius-sm);border:none;background:linear-gradient(135deg,var(--success),#059669);color:#fff;font-family:var(--font-family);font-weight:800;font-size:14px;cursor:pointer;margin-top:6px;}
 .save-exam-btn:disabled{opacity:.5;cursor:not-allowed;}
+
+
+
+
+                 /* === تنسيق أزرار الترم ونوع الامتحان في صفحة إنشاء الأسئلة === */
+#exam-step1 .term-toggle{
+  display:flex;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:4px;gap:4px;margin-bottom:4px;
+}
+#exam-step1 .term-toggle button{
+  flex:1;padding:10px;border:none;background:none;border-radius:8px;
+  font-family:var(--font-family);font-size:13px;font-weight:700;color:var(--text-secondary);cursor:pointer;transition:var(--transition);
+}
+#exam-step1 .term-toggle button.active{
+  background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;box-shadow:0 2px 8px rgba(79,70,229,.3);
+}
+
+#exam-step1 .exam-type-tabs{
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+#exam-step1 .exam-type-tabs button{
+  flex:1;min-width:80px;padding:10px 14px;border-radius:20px;border:2px solid var(--border);background:var(--bg);
+  font-family:var(--font-family);font-size:12.5px;font-weight:700;color:var(--text-secondary);cursor:pointer;transition:var(--transition);
+}
+#exam-step1 .exam-type-tabs button.active{
+  border-color:var(--primary);color:#fff;background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+  box-shadow:0 2px 8px rgba(79,70,229,.3);
+}
+
+/* === تصغير حقول الوقت (بداية/نهاية الامتحان) === */
+.exam-time-box input[type="datetime-local"]{
+  font-size:12px !important;
+  padding:4px 2px !important;
+  width:100%;
+}
+.exam-time-box{
+  padding:10px 12px;
+}
+.exam-time-box span{
+  font-size:10.5px;
+}
 </style>
 </head>
 <body>
