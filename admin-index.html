@@ -1931,9 +1931,10 @@ function saveQuestionDraft(){
   if(type === 'true_false'){
     const checked = document.querySelector('input[name="tf-correct"]:checked');
     if(!checked){ showToast('حدد الإجابة الصحيحة', 'error'); return; }
-    question.correct_answer = checked.value;
+    // ✅ التصحيح: نخزن النص الفعلي بدل true/false عشان يطابق إجابة الطالب
+    question.correct_answer = checked.value === 'true' ? 'صح' : 'غلط';
     question.options = ['صح','غلط'];
-  } else if(type === 'mcq'){
+      } else if(type === 'mcq'){
     const inputs = document.querySelectorAll('.mcq-option-input');
     const opts = Array.from(inputs).map(i=>i.value.trim());
     if(opts.some(o=>!o)){ showToast('اكتب كل الاختيارات الأربعة', 'error'); return; }
