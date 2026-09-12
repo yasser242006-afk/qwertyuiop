@@ -1336,12 +1336,13 @@ function removePostImage(e){
   document.getElementById('post-image-input').value = '';
   document.getElementById('post-preview').style.display = 'none';
 }
-async function publishPost(){
+
+
+  async function publishPost(){
   if(!adminProfile.selected_year){ showToast('برجاء اختيار الفرقة أولاً', 'error'); return; }
   const text = document.getElementById('post-text').value.trim();
   if(!text && !selectedPostImageFile){ showToast('اكتب محتوى المنشور أو أضف صورة', 'error'); return; }
 
-  /* === تعديل: التحقق من وجود منشور سابق لنفس الفرقة والتأكيد قبل الاستبدال === */
   const { data: existingPosts } = await _supabase.from('posts').select('id').eq('academic_year', adminProfile.selected_year);
   if(existingPosts && existingPosts.length > 0){
     const confirmed = await showAdminConfirm({
@@ -1356,9 +1357,8 @@ async function publishPost(){
     const oldIds = existingPosts.map(p => p.id);
     await _supabase.from('posts').delete().in('id', oldIds);
   }
-  /* === نهاية تعديل === */
 
-  const btn = document.getElementById('publish-btn');  /* === تعديل: تثبيت عرض الزر عشان مايتحركش مكانه أثناء التحميل === */
+  const btn = document.getElementById('publish-btn');
   btn.style.width = btn.offsetWidth + 'px';
   btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري النشر...';
 
@@ -1366,46 +1366,45 @@ async function publishPost(){
     let imageUrl = null;
     if(selectedPostImageFile){
       const ext = selectedPostImageFile.name.split('.').pop();
-      const path = `posts/${Date.now()}.${ext}`;
+      // ✅ التصحيح: المسار بيبدأ بـ adminUser.id
+      const path = `${adminUser.id}/post_${Date.now()}.${ext}`;
       const { error: upErr } = await _supabase.storage.from('avatars').upload(path, selectedPostImageFile, { upsert:true });
-      if(!upErr){ const { data } = _supabase.storage.from('avatars').getPublicUrl(path); imageUrl = data.publicUrl; }
+      if(upErr) throw new Error('فشل رفع الصورة: ' + upErr.message);
+      const { data } = _supabase.storage.from('avatars').getPublicUrl(path);
+      imageUrl = data.publicUrl;
     }
     const durationHours = parseInt(document.getElementById('post-duration').value);
     const expiresAt = durationHours > 0 ? new Date(Date.now() + durationHours*60*60*1000).toISOString() : null;
 
-            const { error } = await _supabase.from('posts').insert({
+    const { error } = await _supabase.from('posts').insert({
       content: text,
       image_url: imageUrl,
       academic_year: adminProfile.selected_year,
       expires_at: expiresAt,
-      admin_name: adminProfile.full_name || adminUser.email, /* === تعديل: حفظ اسم الأدمن مع البوست === */
-      admin_avatar_url: adminProfile.avatar_url || null /* === تعديل: حفظ صورة الأدمن مع البوست === */
+      admin_name: adminProfile.full_name || adminUser.email,
+      admin_avatar_url: adminProfile.avatar_url || null
     });
     if(error) throw error;
 
-    /* === تعديل: إشعار فعلي لطلاب الفرقة عند نشر منشور جديد === */
     const { error: notifErr } = await _supabase.from('notifications').insert({
-  title: 'منشور جديد',
-  message: text ? text.slice(0,60) : 'تم نشر صورة جديدة',
-  academic_year: adminProfile.selected_year
-});
-if (notifErr) {
-  console.error('فشل إرسال الإشعار:', notifErr);
-  showToast('تم النشر لكن فشل إرسال الإشعار: ' + notifErr.message, 'error');
-         }
-    /* === نهاية تعديل === */
+      title: 'منشور جديد',
+      message: text ? text.slice(0,60) : 'تم نشر صورة جديدة',
+      academic_year: adminProfile.selected_year
+    });
+    if (notifErr) console.error('فشل إرسال الإشعار:', notifErr);
 
     document.getElementById('post-text').value = '';
     removePostImage();
     showToast('تم نشر المنشور بنجاح', 'success');
     await loadHomeStats();
   }catch(e){
-    showToast('حدث خطأ أثناء النشر', 'error');
+    console.error('خطأ النشر:', e);
+    showToast('حدث خطأ أثناء النشر: ' + (e.message || 'غير معروف'), 'error');
   }finally{
     btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> نشر';
-    btn.style.width = ''; /* === تعديل: إرجاع العرض الطبيعي بعد الانتهاء === */
+    btn.style.width = '';
   }
-}
+  }
 
 /* ================== Lightbox لعرض الصور ================== */
 function openImageLightbox(src){
