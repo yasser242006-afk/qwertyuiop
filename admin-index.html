@@ -1494,7 +1494,10 @@ async function saveEditedPost(){
   if(!currentEditingPostId) return;
   const newText = document.getElementById('edit-post-text').value.trim();
   try{
-    const updateData = { content: newText };
+  const updateData = {
+  content: newText,
+  edited_at: new Date().toISOString()  // ✅ حفظ وقت التعديل
+};
     if(editPostImageFile){
       const ext = editPostImageFile.name.split('.').pop();
       const path = `posts/${Date.now()}.${ext}`;
