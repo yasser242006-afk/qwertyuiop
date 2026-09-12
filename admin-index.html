@@ -126,7 +126,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .publish-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(79,70,229,.3);}
 .publish-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none;}
 
-/* لوحة الخيارات الإضافية (تظهر عند الضغط على +) */
 .composer-extra-panel{
   background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);
   padding:12px;margin:10px 0 16px;display:none;gap:8px;
@@ -213,7 +212,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
   font-family:var(--font-family);font-weight:700;font-size:14px;cursor:pointer;transition:var(--transition);}
 .year-confirm-btn:disabled{opacity:.5;cursor:not-allowed;}
 
-/* Lightbox لعرض الصور بالحجم الكامل */
 .image-lightbox-overlay{position:fixed;inset:0;background:rgba(15,23,42,.85);z-index:700;display:none;align-items:center;justify-content:center;padding:20px;}
 .image-lightbox-overlay.open{display:flex;animation:fadeSlide .2s ease;}
 .image-lightbox-overlay img{max-width:92vw;max-height:88vh;border-radius:var(--radius-md);box-shadow:var(--shadow-lg);object-fit:contain;}
@@ -227,10 +225,9 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .postpicker-item button.edit-choice{background:var(--primary);color:#fff;}
 .postpicker-item button.delete-choice{background:var(--danger);color:#fff;}
 
-  .admin-color-scroll-row{ scrollbar-width:none; -ms-overflow-style:none; }
+.admin-color-scroll-row{ scrollbar-width:none; -ms-overflow-style:none; }
 .admin-color-scroll-row::-webkit-scrollbar{ display:none; height:0; } 
 
-  /* === صندوق تأكيد استبدال المنشور === */
 .admin-confirm-overlay{
   position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
   display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeSlide .3s ease;
@@ -253,71 +250,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .admin-confirm-box .buttons .btn-confirm{background:var(--danger);color:#fff;}
 .admin-confirm-box .buttons .btn-confirm:hover{transform:scale(1.02);box-shadow:0 4px 15px rgba(239,68,68,.3);}
 
-  /* === إضافة: تصميم صفحة إنشاء أسئلة الامتحانات === */
-.exam-setup-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:16px;}
-.exam-field-label{font-size:13px;font-weight:800;margin:14px 0 8px;color:var(--text);}
-.exam-field-label:first-child{margin-top:0;}
-.exam-select-wrap{position:relative;}
-.exam-select-wrap select{width:100%;padding:12px 40px 12px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);
-  font-family:var(--font-family);font-size:14px;background:var(--bg);color:var(--text);outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;transition:var(--transition);}
-.exam-select-wrap select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(79,70,229,.1);}
-.exam-select-wrap i{position:absolute;top:50%;right:14px;transform:translateY(-50%);color:var(--primary);font-size:13px;pointer-events:none;}
-.exam-time-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.exam-time-box{display:flex;flex-direction:column;gap:6px;}
-.exam-time-box span{font-size:11px;color:var(--text-secondary);font-weight:700;}
-.exam-time-box input{padding:11px 12px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;}
-.exam-time-box input:focus{border-color:var(--primary);}
-.type-chip-grid{display:flex;flex-wrap:wrap;gap:8px;}
-.type-chip{padding:9px 16px;border-radius:20px;border:2px solid var(--border);background:var(--bg);font-family:var(--font-family);font-size:12px;font-weight:700;color:var(--text-secondary);cursor:pointer;transition:var(--transition);}
-.type-chip.active{border-color:var(--primary);background:linear-gradient(135deg,rgba(79,70,229,.14),rgba(14,165,233,.08));color:var(--primary);}
-.exam-confirm-btn{width:100%;margin-top:18px;padding:13px;border-radius:var(--radius-sm);border:none;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;font-family:var(--font-family);font-weight:700;font-size:14px;cursor:pointer;transition:var(--transition);}
-.exam-confirm-btn:disabled{opacity:.5;cursor:not-allowed;}
-.exam-confirm-btn:not(:disabled):hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(79,70,229,.3);}
-
-.exam-builder-head{display:flex;align-items:center;justify-content:space-between;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:16px;}
-.exam-builder-head .info{font-size:12px;color:var(--text-secondary);}
-.exam-builder-head .info b{color:var(--text);}
-.exam-builder-head button{background:none;border:none;color:var(--danger);font-family:var(--font-family);font-weight:700;font-size:12px;cursor:pointer;}
-
-.question-draft-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:10px;}
-.question-draft-card .top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.question-draft-card .qtype-tag{font-size:10px;font-weight:800;padding:3px 10px;border-radius:12px;background:rgba(79,70,229,.1);color:var(--primary);}
-.question-draft-card .del-q{background:none;border:none;color:var(--danger);cursor:pointer;font-size:14px;}
-.question-draft-card .qtext{font-size:13px;font-weight:600;margin:6px 0;}
-.question-draft-card .qoptions{font-size:12px;color:var(--text-secondary);line-height:1.8;}
-.question-draft-card .qoptions .correct{color:var(--success);font-weight:800;}
-.question-draft-card .qpoints{font-size:11px;color:var(--text-light);margin-top:6px;}
-
-.add-question-btn{width:100%;padding:13px;border-radius:var(--radius-sm);border:2px dashed var(--primary);background:none;color:var(--primary);font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;}
-.add-question-btn:hover{background:rgba(79,70,229,.05);}
-
-.qform-card{background:var(--bg-card);border:2px solid var(--primary-light);border-radius:var(--radius-md);padding:16px;margin-bottom:14px;}
-.qform-card textarea{width:100%;min-height:70px;padding:11px 12px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;resize:vertical;margin-top:8px;}
-.qform-card textarea:focus{border-color:var(--primary);}
-.qform-option-row{display:flex;align-items:center;gap:8px;margin-top:8px;}
-.qform-option-row input[type=radio]{width:18px;height:18px;accent-color:var(--primary);flex-shrink:0;}
-.qform-option-row input[type=text]{flex:1;padding:9px 12px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;}
-.qform-option-row input[type=text]:focus{border-color:var(--primary);}
-.qform-points-row{display:flex;align-items:center;gap:10px;margin-top:12px;}
-.qform-points-row input{width:80px;padding:8px 10px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;text-align:center;}
-.qform-actions{display:flex;gap:8px;margin-top:14px;}
-.qform-actions button{flex:1;padding:10px;border-radius:var(--radius-sm);font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;border:none;}
-.qform-actions .save-btn{background:var(--primary);color:#fff;}
-.qform-actions .cancel-btn{background:var(--bg);color:var(--text-secondary);border:2px solid var(--border);}
-
-.save-exam-btn{width:100%;padding:14px;border-radius:var(--radius-sm);border:none;background:linear-gradient(135deg,var(--success),#059669);color:#fff;font-family:var(--font-family);font-weight:800;font-size:14px;cursor:pointer;margin-top:6px;}
-.save-exam-btn:disabled{opacity:.5;cursor:not-allowed;}
-/* === نهاية إضافة === */
-
-
-
-
-
-
-
-
-
-  /* === تعديل: تصميم أحلى وأوضح لصندوق إعداد الامتحان === */
 .exam-setup-card{background:linear-gradient(180deg, var(--bg-card), var(--bg));border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px 20px;box-shadow:var(--shadow-lg);margin-bottom:16px;}
 .exam-field-label{font-size:13px;font-weight:800;margin:18px 0 10px;color:var(--text);display:flex;align-items:center;gap:8px;}
 .exam-field-label:first-child{margin-top:0;}
@@ -334,15 +266,16 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .exam-select-wrap select:hover{border-color:var(--primary-light);}
 .exam-select-wrap i{position:absolute;top:50%;right:16px;transform:translateY(-50%);color:var(--primary);font-size:14px;pointer-events:none;transition:var(--transition);}
 
-.exam-time-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.exam-time-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .exam-time-box{
   display:flex;flex-direction:column;gap:8px;background:var(--bg);border:2px solid var(--border);
-  border-radius:var(--radius-md);padding:12px 14px;transition:var(--transition);
+  border-radius:var(--radius-md);padding:10px 12px;transition:var(--transition);min-width:0;overflow:hidden;
 }
 .exam-time-box:focus-within{border-color:var(--primary);box-shadow:0 0 0 4px rgba(79,70,229,.12);}
-.exam-time-box span{font-size:11px;color:var(--primary);font-weight:800;display:flex;align-items:center;gap:6px;}
+.exam-time-box span{font-size:10.5px;color:var(--primary);font-weight:800;display:flex;align-items:center;gap:6px;}
 .exam-time-box span::before{content:'\f017';font-family:'Font Awesome 6 Free';font-weight:900;font-size:11px;}
 .exam-time-box input{padding:6px 2px;border:none;background:transparent;font-family:var(--font-family);font-size:13px;font-weight:700;color:var(--text);outline:none;}
+.exam-time-box input[type="datetime-local"]{font-size:11px !important;padding:4px 0 !important;width:100%;max-width:100%;min-width:0;box-sizing:border-box;}
 
 .type-chip-grid{display:flex;flex-wrap:wrap;gap:10px;}
 .type-chip{
@@ -364,7 +297,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 }
 .exam-confirm-btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none;}
 .exam-confirm-btn:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(79,70,229,.4);}
-/* === نهاية تعديل === */
 
 .exam-builder-head{display:flex;align-items:center;justify-content:space-between;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:16px;}
 .exam-builder-head .info{font-size:12px;color:var(--text-secondary);}
@@ -387,7 +319,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .qform-card textarea{width:100%;min-height:70px;padding:11px 12px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;resize:vertical;margin-top:8px;}
 .qform-card textarea:focus{border-color:var(--primary);}
 
-/* === تعديل: تصميم أحلى لصف اختيار الإجابة الصحيحة (radio) === */
 .qform-option-row{
   display:flex;align-items:center;gap:10px;margin-top:10px;padding:6px 10px 6px 6px;
   border:2px solid var(--border);border-radius:var(--radius-md);background:var(--bg);transition:var(--transition);
@@ -403,7 +334,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
 }
 .qform-option-row input[type=text]{flex:1;padding:9px 12px;border:none;background:transparent;font-family:var(--font-family);font-size:13px;color:var(--text);outline:none;}
-/* === نهاية تعديل === */
 
 .qform-points-row{display:flex;align-items:center;gap:10px;margin-top:12px;}
 .qform-points-row input{width:80px;padding:8px 10px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;text-align:center;}
@@ -415,10 +345,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 .save-exam-btn{width:100%;padding:14px;border-radius:var(--radius-sm);border:none;background:linear-gradient(135deg,var(--success),#059669);color:#fff;font-family:var(--font-family);font-weight:800;font-size:14px;cursor:pointer;margin-top:6px;}
 .save-exam-btn:disabled{opacity:.5;cursor:not-allowed;}
 
-
-
-
-                 /* === تنسيق أزرار الترم ونوع الامتحان في صفحة إنشاء الأسئلة === */
 #exam-step1 .term-toggle{
   display:flex;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);
   padding:4px;gap:4px;margin-bottom:4px;
@@ -430,10 +356,7 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 #exam-step1 .term-toggle button.active{
   background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;box-shadow:0 2px 8px rgba(79,70,229,.3);
 }
-
-#exam-step1 .exam-type-tabs{
-  display:flex;gap:8px;flex-wrap:wrap;
-}
+#exam-step1 .exam-type-tabs{display:flex;gap:8px;flex-wrap:wrap;}
 #exam-step1 .exam-type-tabs button{
   flex:1;min-width:80px;padding:10px 14px;border-radius:20px;border:2px solid var(--border);background:var(--bg);
   font-family:var(--font-family);font-size:12.5px;font-weight:700;color:var(--text-secondary);cursor:pointer;transition:var(--transition);
@@ -443,47 +366,41 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
   box-shadow:0 2px 8px rgba(79,70,229,.3);
 }
 
-/* === تصغير حقول الوقت (بداية/نهاية الامتحان) === */
-.exam-time-box input[type="datetime-local"]{
-  font-size:12px !important;
-  padding:4px 2px !important;
-  width:100%;
-}
-.exam-time-box{
-  padding:10px 12px;
-}
-.exam-time-box span{
-  font-size:10.5px;
-}
+/* === أنماط صفحة الجدول والعشرة الأوائل والجوائز === */
+.schedule-admin-preview-box{position:relative;margin-bottom:14px;}
+.schedule-admin-preview-box img{width:100%;max-height:300px;object-fit:contain;border-radius:var(--radius-md);border:2px solid var(--border);background:var(--bg);}
+.schedule-admin-preview-box .remove-btn{position:absolute;top:8px;left:8px;width:32px;height:32px;border-radius:50%;background:rgba(15,23,42,.7);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 
+.top10-table{width:100%;border-collapse:separate;border-spacing:0;border-radius:12px;overflow:hidden;border:1px solid var(--border);font-size:12.5px;}
+.top10-table th{background:var(--primary);color:#fff;padding:10px 6px;text-align:center;font-weight:700;}
+.top10-table td{padding:8px 6px;text-align:center;border-top:1px solid var(--border);}
+.top10-table tr:nth-child(even) td{background:var(--bg);}
+.top10-table th:first-child{border-radius:0 12px 0 0;}
+.top10-table th:last-child{border-radius:12px 0 0 0;}
+.top10-table tr:last-child td:first-child{border-radius:0 0 0 12px;}
+.top10-table tr:last-child td:last-child{border-radius:0 0 12px 0;}
+.top10-rank{font-weight:800;color:var(--primary);}
+.rank-1{color:#f59e0b;font-size:18px;}
+.rank-2{color:#94a3b8;font-size:17px;}
+.rank-3{color:#d97706;font-size:16px;}
+.top10-search-btn{
+  width:48px;height:48px;flex-shrink:0;border-radius:var(--radius-sm);
+  border:2px solid var(--primary);background:var(--bg-card);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--transition);
+}
+.top10-search-btn i{color:var(--primary);transition:var(--transition);}
+.top10-search-btn:hover{background:var(--primary);}
+.top10-search-btn:hover i{color:#fff;}
 
-  /* === تصغير حقول الوقت (بداية/نهاية الامتحان) === */
-.exam-time-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+.qselect{
+  width:100%;padding:12px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);
+  font-family:var(--font-family);font-size:13px;background:var(--bg);color:var(--text);outline:none;
+  appearance:none;-webkit-appearance:none;cursor:pointer;transition:var(--transition);
 }
-.exam-time-box{
-  padding:10px 8px;
-  min-width:0;
-  overflow:hidden;
-}
-.exam-time-box span{
-  font-size:10.5px;
-}
-.exam-time-box input[type="datetime-local"]{
-  font-size:11px !important;
-  padding:4px 0 !important;
-  width:100%;
-  max-width:100%;
-  min-width:0;
-  box-sizing:border-box;
-  border:none;
-  background:transparent;
-  color:var(--text);
-  font-family:var(--font-family);
-  outline:none;
-}
+.qselect:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(79,70,229,.1);}
+
+.schedule-box{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-sm);}
+.schedule-box img{width:100%;display:block;}
 </style>
 </head>
 <body>
@@ -492,7 +409,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 
 <div id="app" style="display:none">
 
-  <!-- Topbar -->
   <header class="topbar">
     <div class="topbar-right" onclick="toggleSidebar()">
       <div id="topbar-avatar-wrap"><img id="topbar-avatar" class="cover-thumb" src="" alt="" style="display:none"></div>
@@ -501,21 +417,17 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
         <span class="topbar-role" id="topbar-email">...</span>
       </div>
     </div>
-    <!-- === تعديل: تبديل ترتيب زر الجرس وزر القائمة (الجرس أولاً ثم القائمة) === -->
     <div class="topbar-left">
       <button class="icon-btn" id="bell-btn" onclick="toggleNotifications()"><i class="fas fa-bell"></i><span class="badge" id="notif-badge" style="display:none">0</span></button>
       <button class="icon-btn" id="menu-btn" title="القائمة" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
     </div>
-    <!-- === نهاية تعديل === -->
   </header>
 
-  <!-- Notifications dropdown -->
   <div id="notif-dropdown">
     <div class="notif-header">الإشعارات</div>
     <div id="notif-list"></div>
   </div>
 
-  <!-- Sidebar -->
   <div id="sidebar-overlay" onclick="toggleSidebar()"></div>
   <aside id="sidebar">
     <div class="sidebar-head">
@@ -544,6 +456,12 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
       <div class="menu-item" onclick="switchView('exams', this)"><i class="fas fa-file-circle-question"></i><span>أسئلة الامتحانات</span></div>
       <div class="menu-item" onclick="switchView('gradesadmin', this)"><i class="fas fa-chart-simple"></i><span>درجات الطلاب</span></div>
       <div class="menu-item" onclick="switchView('attendanceadmin', this)"><i class="fas fa-qrcode"></i><span>الحضور و الغياب</span></div>
+      <!-- === جديد: الأزرار الجديدة === -->
+      <div class="menu-item" onclick="switchView('scheduleadmin', this)"><i class="fas fa-calendar-days"></i><span>الجدول الدراسي</span></div>
+      <div class="menu-item" onclick="switchView('yearchanges', this)"><i class="fas fa-arrows-rotate"></i><span>طلبات تغيير الفرقة</span></div>
+      <div class="menu-item" onclick="switchView('top10admin', this)"><i class="fas fa-trophy"></i><span>العشرة الأوائل</span></div>
+      <div class="menu-item" onclick="switchView('rewardsadmin', this)"><i class="fas fa-gift"></i><span>استلام الجايزة</span></div>
+      <!-- === نهاية الإضافة === -->
 
       <div class="label" style="margin-top:12px;">الإعدادات</div>
       <div class="menu-item" onclick="switchView('settings', this)"><i class="fas fa-gear"></i><span>الإعدادات</span></div>
@@ -553,7 +471,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
     </nav>
   </aside>
 
-  <!-- Image menu -->
   <div id="image-menu">
     <button onclick="viewAdminImage()"><i class="fas fa-eye"></i> عرض الصورة</button>
     <button onclick="triggerAdminImageChange()"><i class="fas fa-camera"></i> تغيير الصورة</button>
@@ -571,7 +488,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
         <i class="fas fa-circle-exclamation"></i> برجاء اختيار الفرقة أولاً من القائمة الجانبية قبل نشر أي محتوى.
       </div>
 
-      <!-- Composer -->
       <div class="composer-card">
         <textarea id="post-text" placeholder="اكتب منشور جديد لطلاب هذه الفرقة..."></textarea>
         <div class="composer-preview" id="post-preview">
@@ -593,7 +509,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
         </div>
       </div>
 
-      <!-- لوحة الخيارات الإضافية (صورة / تعديل بوست / مسح بوست) -->
       <div class="composer-extra-panel" id="composer-extra-panel">
         <button class="composer-extra-btn" onclick="document.getElementById('post-image-input').click()">
           <i class="fas fa-image"></i><span>إضافة صورة</span>
@@ -608,7 +523,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 
       <hr class="section-divider">
 
-      <!-- Stats grid -->
       <div class="stats-grid">
         <div class="stat-card" onclick="openStatModal('siteStats')">
           <div class="icon" style="background:linear-gradient(135deg,#4f46e5,#818cf8)"><i class="fas fa-chart-line"></i></div>
@@ -643,15 +557,14 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
       </div>
     </section>
 
-    <!-- Placeholders for upcoming sections -->
-      <section class="view" id="view-exams">
+    <!-- EXAMS -->
+    <section class="view" id="view-exams">
       <div class="page-title"><i class="fas fa-file-circle-question"></i> أسئلة الامتحانات</div>
 
       <div id="year-guard-exams" class="guard-banner" style="display:none;">
         <i class="fas fa-circle-exclamation"></i> برجاء اختيار الفرقة أولاً من القائمة الجانبية.
       </div>
 
-      <!-- خطوة 1: إعداد الامتحان -->
       <div id="exam-step1" class="exam-setup-card">
         <div class="exam-field-label">المادة</div>
         <div class="exam-select-wrap">
@@ -692,7 +605,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
         </button>
       </div>
 
-      <!-- خطوة 2: بناء الأسئلة -->
       <div id="exam-step2" style="display:none;">
         <div class="exam-builder-head">
           <div class="info"><b id="builder-subject-label"></b> — <span id="builder-meta-label"></span></div>
@@ -707,10 +619,8 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 
         <button class="save-exam-btn" id="save-exam-btn" onclick="saveFullExam()" disabled><i class="fas fa-cloud-arrow-up"></i> حفظ الامتحان (<span id="qcount-label">0</span> سؤال)</button>
       </div>
-      </section>
+    </section>
 
-
-    
     <section class="view" id="view-gradesadmin">
       <div class="page-title"><i class="fas fa-chart-simple"></i> درجات الطلاب</div>
       <div class="empty-state"><i class="fas fa-hammer"></i><p>هذا القسم هيتبني في الخطوة الجاية</p></div>
@@ -720,11 +630,85 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
       <div class="empty-state"><i class="fas fa-hammer"></i><p>هذا القسم هيتبني في الخطوة الجاية</p></div>
     </section>
 
+    <!-- === جديد: الجدول الدراسي === -->
+    <section class="view" id="view-scheduleadmin">
+      <div class="page-title"><i class="fas fa-calendar-days"></i> الجدول الدراسي</div>
+      <div id="scheduleadmin-guard" class="guard-banner" style="display:none;">
+        <i class="fas fa-circle-exclamation"></i> برجاء اختيار الفرقة أولاً من القائمة الجانبية.
+      </div>
+      <div class="exam-setup-card">
+        <div class="exam-field-label">الترم</div>
+        <div class="term-toggle" id="schedule-admin-term-toggle">
+          <button class="active" data-term="1" onclick="setAdminScheduleTerm('1', this)">الترم الأول</button>
+          <button data-term="2" onclick="setAdminScheduleTerm('2', this)">الترم الثاني</button>
+        </div>
+        <div class="exam-field-label">صورة الجدول</div>
+        <div id="schedule-admin-preview" style="display:none;margin-bottom:14px;position:relative;">
+          <img id="schedule-admin-preview-img" style="width:100%;max-height:300px;object-fit:contain;border-radius:var(--radius-md);border:2px solid var(--border);">
+          <button onclick="removeScheduleAdminImage()" style="position:absolute;top:8px;left:8px;width:32px;height:32px;border-radius:50%;background:rgba(15,23,42,.7);color:#fff;border:none;cursor:pointer;"><i class="fas fa-xmark"></i></button>
+        </div>
+        <input type="file" id="schedule-admin-file-input" accept="image/*" style="display:none">
+        <button onclick="document.getElementById('schedule-admin-file-input').click()" style="width:100%;padding:14px;border-radius:var(--radius-md);border:2px dashed var(--border);background:var(--bg);color:var(--primary);font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;margin-bottom:14px;">
+          <i class="fas fa-image"></i> اختر صورة الجدول
+        </button>
+        <button class="exam-confirm-btn" id="schedule-admin-save-btn" disabled onclick="saveScheduleAdmin()">
+          <i class="fas fa-cloud-arrow-up"></i> حفظ الجدول
+        </button>
+      </div>
+      <div id="schedule-admin-current" style="margin-top:20px;"></div>
+    </section>
+
+    <!-- === جديد: طلبات تغيير الفرقة === -->
+    <section class="view" id="view-yearchanges">
+      <div class="page-title"><i class="fas fa-arrows-rotate"></i> طلبات تغيير الفرقة</div>
+      <div id="yearchanges-container">
+        <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>جاري تحميل الطلبات...</p></div>
+      </div>
+    </section>
+
+    <!-- === جديد: العشرة الأوائل === -->
+    <section class="view" id="view-top10admin">
+      <div class="page-title"><i class="fas fa-trophy"></i> العشرة الأوائل</div>
+      <div id="top10admin-guard" class="guard-banner" style="display:none;">
+        <i class="fas fa-circle-exclamation"></i> برجاء اختيار الفرقة أولاً.
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+        <select id="top10admin-term" class="qselect" style="flex:1;min-width:100px;">
+          <option value="1">الترم الأول</option>
+          <option value="2">الترم الثاني</option>
+        </select>
+        <select id="top10admin-examtype" class="qselect" style="flex:1;min-width:100px;">
+          <option value="quiz">كويز</option>
+          <option value="midterm">ميدترم</option>
+          <option value="final">فاينال</option>
+          <option value="all">الكل</option>
+        </select>
+        <button class="top10-search-btn" onclick="loadTop10Admin()" title="عرض"><i class="fas fa-search"></i></button>
+      </div>
+      <div id="top10admin-container">
+        <div class="empty-state"><i class="fas fa-hand-pointer"></i><p>اختر الترم ونوع الامتحان ثم اضغط بحث</p></div>
+      </div>
+    </section>
+
+    <!-- === جديد: استلام الجايزة === -->
+    <section class="view" id="view-rewardsadmin">
+      <div class="page-title"><i class="fas fa-gift"></i> استلام الجايزة</div>
+      <div style="background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(251,191,36,.06));border:1px solid rgba(245,158,11,.2);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
+        <i class="fas fa-trophy" style="font-size:24px;color:var(--warn);"></i>
+        <div>
+          <div style="font-size:13px;font-weight:800;">جوائز الثلاثة الأوائل (50 جنيه لكل واحد)</div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">هنا هتلاقي رقم الكاش اللي هيتبعت عليه الفلوس</div>
+        </div>
+      </div>
+      <div id="rewardsadmin-container">
+        <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>جاري تحميل الجوائز...</p></div>
+      </div>
+    </section>
+
     <!-- SETTINGS -->
     <section class="view" id="view-settings">
       <div class="page-title"><i class="fas fa-gear"></i> الإعدادات</div>
 
-      <!-- بيانات الحساب -->
       <div style="background:var(--bg-card);border-radius:var(--radius-md);padding:16px;margin-bottom:16px;border:1px solid var(--border);">
         <h4 style="font-weight:700;margin-bottom:14px;"><i class="fas fa-user-pen"></i> بيانات الحساب</h4>
         <div style="text-align:center;margin-bottom:16px;">
@@ -745,30 +729,23 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
         <button class="publish-btn" style="width:100%;justify-content:center;min-width:0;" onclick="saveAdminName()"><i class="fas fa-check"></i> حفظ التعديلات</button>
       </div>
 
+      <div style="background:var(--bg-card);border-radius:var(--radius-md);padding:16px;margin-bottom:16px;border:1px solid var(--border);">
+        <h4 style="font-weight:700;margin-bottom:14px;"><i class="fas fa-key"></i> تغيير كلمة سر بوابة الدخول</h4>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">كلمة السر القديمة</label>
+          <input type="text" id="gate-old-pass" style="width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:14px;background:var(--bg);color:var(--text);outline:none;">
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">كلمة السر الجديدة</label>
+          <input type="text" id="gate-new-pass" style="width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:14px;background:var(--bg);color:var(--text);outline:none;">
+        </div>
+        <div style="margin-bottom:16px;">
+          <label style="display:block;font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">تأكيد كلمة السر الجديدة</label>
+          <input type="text" id="gate-confirm-pass" style="width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:14px;background:var(--bg);color:var(--text);outline:none;">
+        </div>
+        <button class="publish-btn" style="width:100%;justify-content:center;min-width:0;" onclick="changeGateCode()"><i class="fas fa-key"></i> تغيير كلمة السر</button>
+      </div>
 
-<!-- تغيير كلمة سر بوابة الدخول -->
-<div style="background:var(--bg-card);border-radius:var(--radius-md);padding:16px;margin-bottom:16px;border:1px solid var(--border);">
-  <h4 style="font-weight:700;margin-bottom:14px;"><i class="fas fa-key"></i> تغيير كلمة سر بوابة الدخول</h4>
-  <div style="margin-bottom:14px;">
-    <label style="display:block;font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">كلمة السر القديمة</label>
-    <input type="text" id="gate-old-pass" style="width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:14px;background:var(--bg);color:var(--text);outline:none;">
-  </div>
-  <div style="margin-bottom:14px;">
-    <label style="display:block;font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">كلمة السر الجديدة</label>
-    <input type="text" id="gate-new-pass" style="width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:14px;background:var(--bg);color:var(--text);outline:none;">
-  </div>
-  <div style="margin-bottom:16px;">
-    <label style="display:block;font-size:12px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">تأكيد كلمة السر الجديدة</label>
-    <input type="text" id="gate-confirm-pass" style="width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-family);font-size:14px;background:var(--bg);color:var(--text);outline:none;">
-  </div>
-  <button class="publish-btn" style="width:100%;justify-content:center;min-width:0;" onclick="changeGateCode()"><i class="fas fa-key"></i> تغيير كلمة السر</button>
-</div>
-
-
-
-
-      
-      <!-- تغيير لون الأزرار -->
       <div style="background:var(--bg-card);border-radius:var(--radius-md);padding:16px;margin-bottom:16px;border:1px solid var(--border);">
         <h4 style="font-weight:700;margin-bottom:10px;"><i class="fas fa-palette"></i> تغيير لون الأزرار</h4>
         <div style="display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;">
@@ -784,15 +761,14 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
         </div>
       </div>
 
-      <!-- الوضع الداكن / الفاتح -->
       <div style="background:var(--bg-card);border-radius:var(--radius-md);padding:16px;margin-bottom:16px;border:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
         <div><h4 style="font-weight:700;"><i class="fas fa-moon"></i> الوضع الداكن</h4><span style="font-size:12px;color:var(--text-secondary);">فعّل المظهر الداكن أو الفاتح</span></div>
-        <button id="admin-theme-toggle-btn" onclick="toggleAdminTheme()" style="background:var(--bg);border:2px solid var(--border);border-radius:40px;padding:6px 12px;display:flex;align-items:center;gap:8px;font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;color:var(--text);">          <span id="admin-theme-icon"><i class="fas fa-sun"></i></span>
+        <button id="admin-theme-toggle-btn" onclick="toggleAdminTheme()" style="background:var(--bg);border:2px solid var(--border);border-radius:40px;padding:6px 12px;display:flex;align-items:center;gap:8px;font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;color:var(--text);">
+          <span id="admin-theme-icon"><i class="fas fa-sun"></i></span>
           <span id="admin-theme-label">فاتح</span>
         </button>
       </div>
 
-      <!-- تثبيت التطبيق -->
       <div style="background:var(--bg-card);border-radius:var(--radius-md);padding:16px;margin-bottom:16px;border:1px solid var(--border);">
         <h4 style="font-weight:700;margin-bottom:6px;"><i class="fas fa-download"></i> تثبيت التطبيق</h4>
         <p style="font-size:12px;color:var(--text-secondary);margin-bottom:10px;">ثبّت لوحة التحكم كتطبيق على جهازك للوصول السريع.</p>
@@ -801,7 +777,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
         </button>
       </div>
 
-      <!-- روابط سريعة -->
       <div style="display:flex;gap:10px;">
         <button onclick="goToStudentPortal()" style="flex:1;padding:12px 10px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;border:none;border-radius:var(--radius-sm);font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
           <i class="fas fa-graduation-cap"></i> بوابة الطلاب
@@ -814,7 +789,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 
   </main>
 
-  <!-- Year select overlay (opened only manually from the sidebar button now) -->
   <div id="year-select-overlay" class="year-select-overlay">
     <div class="year-select-box">
       <i class="fas fa-layer-group" style="font-size:40px;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></i>
@@ -830,7 +804,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
     </div>
   </div>
 
-  <!-- Stat modal: site stats chart -->
   <div class="center-modal-overlay" id="modal-siteStats">
     <div class="center-modal-box">
       <div class="center-modal-head"><h3><i class="fas fa-chart-line"></i> إحصائيات الفرقة</h3><button onclick="closeStatModal('siteStats')"><i class="fas fa-xmark"></i></button></div>
@@ -840,31 +813,26 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
     </div>
   </div>
 
-  <!-- Stat modal: registered students -->
   <div class="center-modal-overlay" id="modal-registered">
     <div class="center-modal-box">
       <div class="center-modal-head"><h3><i class="fas fa-user-graduate"></i> إجمالي المسجلين</h3><button onclick="closeStatModal('registered')"><i class="fas fa-xmark"></i></button></div>
       <div class="center-modal-body">
         <div class="mega-counter"><div class="num" id="registered-mega-num">0</div><div class="lbl">إجمالي عدد الطلاب المسجلين في بوابة الطلاب</div></div>
         <div id="registered-breakdown"></div>
-        <p style="font-size:11px;color:var(--text-light);margin-top:10px;text-align:center;">التصنيف حسب طريقة التسجيل يحتاج عمود <code>signup_provider</code> في جدول الطلاب — راجع الملاحظات المرفقة بالأسفل.</p>
       </div>
     </div>
   </div>
 
-  <!-- Stat modal: logouts -->
   <div class="center-modal-overlay" id="modal-logouts">
     <div class="center-modal-box">
       <div class="center-modal-head"><h3><i class="fas fa-right-from-bracket"></i> تسجيلات الخروج</h3><button onclick="closeStatModal('logouts')"><i class="fas fa-xmark"></i></button></div>
       <div class="center-modal-body">
         <div class="mega-counter"><div class="num" id="logouts-mega-num">0</div><div class="lbl">إجمالي عمليات تسجيل الخروج المسجّلة</div></div>
         <div id="logouts-breakdown"></div>
-        <p style="font-size:11px;color:var(--text-light);margin-top:10px;text-align:center;">هذا القسم يحتاج جدول <code>login_events</code> يتم تسجيله من صفحة الطالب عند الخروج — راجع الملاحظات المرفقة بالأسفل.</p>
       </div>
     </div>
   </div>
 
-  <!-- Stat modal: views -->
   <div class="center-modal-overlay" id="modal-views">
     <div class="center-modal-box">
       <div class="center-modal-head"><h3><i class="fas fa-eye"></i> مشاهدات المنشورات</h3><button onclick="closeStatModal('views')"><i class="fas fa-xmark"></i></button></div>
@@ -872,7 +840,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
     </div>
   </div>
 
-  <!-- Stat modal: likes -->
   <div class="center-modal-overlay" id="modal-likes">
     <div class="center-modal-box">
       <div class="center-modal-head"><h3><i class="fas fa-heart"></i> إعجابات المنشورات</h3><button onclick="closeStatModal('likes')"><i class="fas fa-xmark"></i></button></div>
@@ -880,7 +847,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
     </div>
   </div>
 
-  <!-- Stat modal: comments moderation -->
   <div class="center-modal-overlay" id="modal-comments">
     <div class="center-modal-box">
       <div class="center-modal-head"><h3><i class="fas fa-comments"></i> إدارة التعليقات</h3><button onclick="closeStatModal('comments')"><i class="fas fa-xmark"></i></button></div>
@@ -888,7 +854,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
     </div>
   </div>
 
-  <!-- Post picker modal (للتعديل أو المسح) -->
   <div class="center-modal-overlay" id="modal-postpicker">
     <div class="center-modal-box">
       <div class="center-modal-head"><h3 id="postpicker-title"><i class="fas fa-list"></i> اختر منشور</h3><button onclick="closePostPicker()"><i class="fas fa-xmark"></i></button></div>
@@ -896,7 +861,6 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
     </div>
   </div>
 
-  <!-- Edit post modal -->
   <div class="center-modal-overlay" id="modal-editpost">
     <div class="center-modal-box">
       <div class="center-modal-head"><h3><i class="fas fa-pen"></i> تعديل المنشور</h3><button onclick="closeEditPostModal()"><i class="fas fa-xmark"></i></button></div>
@@ -913,13 +877,11 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
     </div>
   </div>
 
-  <!-- Image lightbox -->
   <div class="image-lightbox-overlay" id="image-lightbox-overlay" onclick="closeImageLightbox()">
     <button class="image-lightbox-close" onclick="closeImageLightbox(); event.stopPropagation();"><i class="fas fa-xmark"></i></button>
     <img id="image-lightbox-img" src="" onclick="event.stopPropagation();">
   </div>
 
-  <!-- Install instructions modal (fallback) -->
   <div id="install-instructions-overlay" class="center-modal-overlay">
     <div class="center-modal-box" style="max-width:380px;">
       <div class="center-modal-head"><h3><i class="fas fa-download"></i> تثبيت التطبيق</h3><button onclick="closeInstallInstructions()"><i class="fas fa-xmark"></i></button></div>
@@ -937,21 +899,19 @@ body{font-family:var(--font-family);background:var(--bg);color:var(--text);}
 
   <div class="toast-container" id="toast-container"></div>
 </div>
-
 <script>
-/* ================== إعداد Supabase (نفس مشروع الطلاب) ================== */
+/* ================== إعداد Supabase ================== */
 const SUPABASE_URL = 'https://bzkbamohnjjzwxlvnodm.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_u48RJaZLVcDk-rXmzsl0NQ_N9egVFEb';
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-/* رابط بوابة الطلاب - عدّله لو اسم الملف مختلف عندك */
 const STUDENT_PORTAL_URL = 'index.html';
 
 let adminUser = null;
 let adminProfile = null;
 let pendingYearChoice = null;
 let selectedPostImageFile = null;
-let postPickerMode = null; /* 'edit' أو 'delete' */
+let postPickerMode = null;
 let currentEditingPostId = null;
 let editPostImageFile = null;
 let editPostRemoveImage = false;
@@ -968,7 +928,6 @@ async function init(){
     const { data: profile, error } = await _supabase.from('admin_users').select('*').eq('id', adminUser.id).maybeSingle();
     if(error){ await _supabase.auth.signOut(); window.location.href = 'admin-login.html'; return; }
 
-    /* === تعديل: أول مرة يدخل الأدمن، ننشئ صف جديد بالاسم والصورة من جوجل بدل ما نرجعه لصفحة تسجيل الدخول === */
     if(!profile){
       const avatarFromProvider = adminUser?.user_metadata?.avatar_url || adminUser?.user_metadata?.picture || null;
       const nameFromProvider = adminUser?.user_metadata?.full_name || adminUser.email;
@@ -979,7 +938,6 @@ async function init(){
       adminProfile = newProfile;
     } else {
       adminProfile = profile;
-      /* === تعديل: لو الصف موجود بس من غير صورة، نجيبها من جوجل ونحدثها === */
       if(!adminProfile.avatar_url){
         const avatarFromProvider = adminUser?.user_metadata?.avatar_url || adminUser?.user_metadata?.picture;
         if(avatarFromProvider){
@@ -988,7 +946,6 @@ async function init(){
         }
       }
     }
-    /* === نهاية تعديل === */
 
     renderAdminProfileUI();
     updateYearGuard();
@@ -1080,7 +1037,7 @@ async function confirmYearSelection(){
   const { error } = await _supabase.from('admin_users').update({ selected_year: pendingYearChoice }).eq('id', adminUser.id);
   btn.disabled = false; btn.innerText = 'تأكيد الاختيار';
   if(error){
-    console.error('خطأ حفظ الفرقة:', error); /* === تعديل: طباعة تفاصيل الخطأ في الكونسول للتشخيص === */
+    console.error('خطأ حفظ الفرقة:', error);
     showToast('حدث خطأ أثناء حفظ الفرقة: ' + error.message, 'error');
     return;
   }
@@ -1096,6 +1053,8 @@ function toggleSidebar(){
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sidebar-overlay').classList.toggle('open');
 }
+
+/* === ✅ تعديل: تحديث switchView عشان يحمّل الصفحات الجديدة === */
 function switchView(view, el){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view).classList.add('active');
@@ -1103,12 +1062,20 @@ function switchView(view, el){
   if(el) el.classList.add('active');
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebar-overlay').classList.remove('open');
-  if(view === 'exams') renderExamSubjectOptions(); /* === تعديل: تحميل المواد عند فتح صفحة الأسئلة === */
+
+  if(view === 'exams') renderExamSubjectOptions();
+  if(view === 'scheduleadmin') loadAdminSchedule();
+  if(view === 'yearchanges') loadYearChangeRequests();
+  if(view === 'rewardsadmin') loadRewardsAdmin();
+  if(view === 'top10admin'){
+    const guard = document.getElementById('top10admin-guard');
+    if(guard) guard.style.display = adminProfile?.selected_year ? 'none' : 'flex';
+  }
 }
 
-/* ================== زر الانتقال لموقع الطلاب ================== */
+/* === ✅ تعديل: فتح بوابة الطلاب في تاب جديد عشان الـ Session متتعارضش === */
 function goToStudentPortal(){
-  window.location.href = STUDENT_PORTAL_URL;
+  window.open(STUDENT_PORTAL_URL, '_blank');
 }
 
 /* ================== صورة الأدمن ================== */
@@ -1146,7 +1113,7 @@ async function deleteAdminImage(){
   showToast('تم حذف الصورة', 'success');
 }
 
-/* ================== حفظ اسم الأدمن (صفحة الإعدادات) ================== */
+/* ================== حفظ اسم الأدمن ================== */
 async function saveAdminName(){
   const nameInput = document.getElementById('settings-name-input');
   const newName = nameInput.value.trim();
@@ -1158,7 +1125,8 @@ async function saveAdminName(){
   showToast('تم حفظ البيانات بنجاح', 'success');
 }
 
-  async function changeGateCode(){
+/* ================== تغيير كلمة سر بوابة الدخول ================== */
+async function changeGateCode(){
   const oldPass = document.getElementById('gate-old-pass').value.trim().toUpperCase();
   const newPass = document.getElementById('gate-new-pass').value.trim().toUpperCase();
   const confirmPass = document.getElementById('gate-confirm-pass').value.trim().toUpperCase();
@@ -1180,9 +1148,9 @@ async function saveAdminName(){
   document.getElementById('gate-new-pass').value = '';
   document.getElementById('gate-confirm-pass').value = '';
   showToast('تم تغيير كلمة السر بنجاح', 'success');
-  }
+}
 
-/* ================== لون الأزرار (صفحة الإعدادات) ================== */
+/* ================== لون الأزرار ================== */
 function changeAdminColor(color, btn){
   document.querySelectorAll('.admin-color-option').forEach(b => b.style.borderColor = 'transparent');
   if(btn) btn.style.borderColor = 'var(--text)';
@@ -1200,7 +1168,7 @@ function loadSavedAdminColor(){
   }
 }
 
-/* ================== الوضع الداكن (صفحة الإعدادات) ================== */
+/* ================== الوضع الداكن ================== */
 function toggleAdminTheme(){
   const isDark = document.body.classList.toggle('admin-dark');
   applyAdminThemeVars(isDark);
@@ -1239,7 +1207,7 @@ function loadSavedAdminTheme(){
   }
 }
 
-/* ================== تثبيت التطبيق (PWA) ================== */
+/* ================== PWA ================== */
 let adminDeferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e)=>{
   e.preventDefault();
@@ -1313,7 +1281,7 @@ async function cleanOldNotifications(){
 }
 cleanOldNotifications();
 
-/* ================== لوحة الخيارات الإضافية في صندوق النشر ================== */
+/* ================== لوحة الخيارات الإضافية ================== */
 function toggleComposerExtra(){
   const panel = document.getElementById('composer-extra-panel');
   const icon = document.getElementById('composer-toggle-icon');
@@ -1337,8 +1305,7 @@ function removePostImage(e){
   document.getElementById('post-preview').style.display = 'none';
 }
 
-
-  async function publishPost(){
+async function publishPost(){
   if(!adminProfile.selected_year){ showToast('برجاء اختيار الفرقة أولاً', 'error'); return; }
   const text = document.getElementById('post-text').value.trim();
   if(!text && !selectedPostImageFile){ showToast('اكتب محتوى المنشور أو أضف صورة', 'error'); return; }
@@ -1366,7 +1333,6 @@ function removePostImage(e){
     let imageUrl = null;
     if(selectedPostImageFile){
       const ext = selectedPostImageFile.name.split('.').pop();
-      // ✅ التصحيح: المسار بيبدأ بـ adminUser.id
       const path = `${adminUser.id}/post_${Date.now()}.${ext}`;
       const { error: upErr } = await _supabase.storage.from('avatars').upload(path, selectedPostImageFile, { upsert:true });
       if(upErr) throw new Error('فشل رفع الصورة: ' + upErr.message);
@@ -1404,9 +1370,9 @@ function removePostImage(e){
     btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> نشر';
     btn.style.width = '';
   }
-  }
+}
 
-/* ================== Lightbox لعرض الصور ================== */
+/* ================== Lightbox ================== */
 function openImageLightbox(src){
   if(!src) return;
   document.getElementById('image-lightbox-img').src = src;
@@ -1417,7 +1383,7 @@ function closeImageLightbox(){
   document.getElementById('image-lightbox-img').src = '';
 }
 
-/* ================== اختيار منشور للتعديل / المسح ================== */
+/* ================== اختيار منشور ================== */
 async function openPostPicker(mode){
   postPickerMode = mode;
   document.getElementById('postpicker-title').innerHTML = mode === 'edit'
@@ -1490,19 +1456,24 @@ function removeEditPostImage(){
   document.getElementById('edit-post-image-wrap').style.display = 'none';
   document.getElementById('edit-post-image-img').src = '';
 }
+
+/* === ✅ تعديل: تصحيح مسار رفع الصورة عند التعديل + حفظ edited_at === */
 async function saveEditedPost(){
   if(!currentEditingPostId) return;
   const newText = document.getElementById('edit-post-text').value.trim();
   try{
-  const updateData = {
-  content: newText,
-  edited_at: new Date().toISOString()  // ✅ حفظ وقت التعديل
-};
+    const updateData = {
+      content: newText,
+      edited_at: new Date().toISOString()
+    };
     if(editPostImageFile){
       const ext = editPostImageFile.name.split('.').pop();
-      const path = `posts/${Date.now()}.${ext}`;
+      // ✅ التصحيح: المسار بيبدأ بـ adminUser.id
+      const path = `${adminUser.id}/post_${Date.now()}.${ext}`;
       const { error: upErr } = await _supabase.storage.from('avatars').upload(path, editPostImageFile, { upsert:true });
-      if(!upErr){ const { data } = _supabase.storage.from('avatars').getPublicUrl(path); updateData.image_url = data.publicUrl; }
+      if(upErr) throw new Error('فشل رفع الصورة: ' + upErr.message);
+      const { data } = _supabase.storage.from('avatars').getPublicUrl(path);
+      updateData.image_url = data.publicUrl;
     } else if(editPostRemoveImage){
       updateData.image_url = null;
     }
@@ -1512,7 +1483,8 @@ async function saveEditedPost(){
     closeEditPostModal();
     await loadHomeStats();
   }catch(e){
-    showToast('حدث خطأ أثناء حفظ التعديلات', 'error');
+    console.error('خطأ التعديل:', e);
+    showToast('حدث خطأ أثناء حفظ التعديلات: ' + (e.message || ''), 'error');
   }
 }
 
@@ -1699,13 +1671,13 @@ async function adminLogout(){
 function showToast(message, type='info'){
   const container = document.getElementById('toast-container');
   if(!container) return;
-  container.innerHTML = ''; /* === تعديل: مسح أي رسالة قديمة قبل عرض الجديدة === */
+  container.innerHTML = '';
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
   toast.innerText = message;
   container.appendChild(toast);
   setTimeout(()=>toast.remove(), 3500);
-      }
+}
 function escapeHtml(str){
   if(!str) return '';
   const d = document.createElement('div');
@@ -1723,9 +1695,7 @@ function timeAgo(iso){
   }catch(e){ return ''; }
 }
 
-
-
-  /* === صندوق تأكيد جميل بدل confirm() الافتراضي === */
+/* ================== صندوق تأكيد ================== */
 function showAdminConfirm(options){
   return new Promise((resolve) => {
     const {
@@ -1756,12 +1726,7 @@ function showAdminConfirm(options){
   });
 }
 
-
-
-
-
-
-  /* ================== أسئلة الامتحانات ================== */
+/* ================== أسئلة الامتحانات ================== */
 const LECTURE_SUBJECTS_ADMIN = {
   '1': {
     '1': ['مقدمة في الحاسبات', 'مقدمة في نظم التشغيل', 'مراسلات و مصطلحات إنجليزية', 'مبادئ الإقتصاد', 'مبادئ تنظيم وإدارة'],
@@ -1923,14 +1888,14 @@ function selectQformType(btn){
 }
 function renderQformOptionsArea(type, existing){
   const area = document.getElementById('qform-options-area');
-    if(type === 'true_false'){
+  if(type === 'true_false'){
     const correct = existing?.correct_answer || 'true';
     area.innerHTML = `
       <div class="exam-field-label">الإجابة الصحيحة</div>
       <div class="qform-option-row"><input type="radio" name="tf-correct" value="true" ${correct==='true'?'checked':''}> <span style="font-weight:700;">صح</span></div>
       <div class="qform-option-row"><input type="radio" name="tf-correct" value="false" ${correct==='false'?'checked':''}> <span style="font-weight:700;">غلط</span></div>
     `;
-    } else if(type === 'mcq'){
+  } else if(type === 'mcq'){
     const opts = existing?.options || ['','','',''];
     const correctIdx = existing ? opts.indexOf(existing.correct_answer) : 0;
     area.innerHTML = `
@@ -2062,13 +2027,349 @@ async function saveFullExam(){
     document.querySelectorAll('#exam-type-chips .type-chip').forEach(c=>c.classList.remove('active'));
     onExamSetupChange();
   }catch(e){
-    console.error('خطأ حفظ الامتحان:', e); /* === تعديل: طباعة تفاصيل الخطأ === */
+    console.error('خطأ حفظ الامتحان:', e);
     showToast('حدث خطأ: ' + (e.message || e.details || 'غير معروف'), 'error');
   }finally{
     btn.disabled = false; btn.innerHTML = '<i class="fas fa-cloud-arrow-up"></i> حفظ الامتحان (<span id="qcount-label">0</span> سؤال)';
     renderDraftQuestionsList();
   }
+}
+
+/* ============================================================
+   ========== 🆕 الجدول الدراسي (أدمن) ==========
+   ============================================================ */
+let adminScheduleTerm = '1';
+let adminScheduleFile = null;
+
+function setAdminScheduleTerm(term, el){
+  adminScheduleTerm = term;
+  document.querySelectorAll('#schedule-admin-term-toggle button').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  loadAdminSchedule();
+}
+
+document.getElementById('schedule-admin-file-input').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  adminScheduleFile = file;
+  document.getElementById('schedule-admin-preview-img').src = URL.createObjectURL(file);
+  document.getElementById('schedule-admin-preview').style.display = 'block';
+  document.getElementById('schedule-admin-save-btn').disabled = false;
+});
+
+function removeScheduleAdminImage(){
+  adminScheduleFile = null;
+  document.getElementById('schedule-admin-file-input').value = '';
+  document.getElementById('schedule-admin-preview').style.display = 'none';
+  document.getElementById('schedule-admin-save-btn').disabled = true;
+}
+
+async function loadAdminSchedule(){
+  const container = document.getElementById('schedule-admin-current');
+  const guard = document.getElementById('scheduleadmin-guard');
+  const year = adminProfile?.selected_year;
+  if(!year){
+    if(guard) guard.style.display = 'flex';
+    container.innerHTML = '';
+    return;
   }
+  if(guard) guard.style.display = 'none';
+  container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i></div>';
+  const { data } = await _supabase.from('schedule').select('*')
+    .eq('term', adminScheduleTerm).eq('academic_year', year)
+    .order('created_at', { ascending: false }).limit(1).maybeSingle();
+  if(!data){
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>لا يوجد جدول مرفوع لهذا الترم بعد</p></div>';
+    return;
+  }
+  container.innerHTML = `
+    <h4 style="font-size:14px;font-weight:800;margin-bottom:10px;"><i class="fas fa-check-circle" style="color:var(--success);"></i> الجدول الحالي المرفوع</h4>
+    <div class="schedule-box"><img src="${escapeHtml(data.image_url)}"></div>
+    <button onclick="deleteAdminSchedule('${data.id}')" style="width:100%;padding:12px;border-radius:var(--radius-sm);border:none;background:var(--danger);color:#fff;font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;margin-top:10px;">
+      <i class="fas fa-trash"></i> حذف الجدول الحالي
+    </button>
+  `;
+}
+
+async function saveScheduleAdmin(){
+  const year = adminProfile?.selected_year;
+  if(!year){ showToast('اختر الفرقة أولاً', 'error'); return; }
+  if(!adminScheduleFile){ showToast('اختر صورة الجدول', 'error'); return; }
+  const btn = document.getElementById('schedule-admin-save-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الرفع...';
+  try{
+    const ext = adminScheduleFile.name.split('.').pop();
+    const path = `${adminUser.id}/schedule_${Date.now()}.${ext}`;
+    const { error: upErr } = await _supabase.storage.from('avatars').upload(path, adminScheduleFile, { upsert: true });
+    if(upErr) throw upErr;
+    const { data } = _supabase.storage.from('avatars').getPublicUrl(path);
+    await _supabase.from('schedule').delete().eq('term', adminScheduleTerm).eq('academic_year', year);
+    const { error } = await _supabase.from('schedule').insert({
+      image_url: data.publicUrl,
+      term: adminScheduleTerm,
+      academic_year: year,
+      created_at: new Date().toISOString()
+    });
+    if(error) throw error;
+    showToast('تم حفظ الجدول بنجاح', 'success');
+    removeScheduleAdminImage();
+    await loadAdminSchedule();
+    await _supabase.from('notifications').insert({
+      title: 'الجدول الدراسي',
+      message: `تم رفع جدول ${adminScheduleTerm === '1' ? 'الترم الأول' : 'الترم الثاني'}`,
+      academic_year: year
+    });
+  }catch(e){
+    showToast('حدث خطأ: ' + (e.message || 'غير معروف'), 'error');
+  }finally{
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-cloud-arrow-up"></i> حفظ الجدول';
+  }
+}
+
+async function deleteAdminSchedule(id){
+  const confirmed = await showAdminConfirm({
+    title: 'حذف الجدول', message: 'هل أنت متأكد من حذف الجدول؟',
+    confirmText: 'حذف', cancelText: 'إلغاء',
+    icon: 'fas fa-trash-can', iconClass: 'danger'
+  });
+  if(!confirmed) return;
+  await _supabase.from('schedule').delete().eq('id', id);
+  showToast('تم حذف الجدول', 'success');
+  await loadAdminSchedule();
+}
+
+/* ============================================================
+   ========== 🆕 طلبات تغيير الفرقة ==========
+   ============================================================ */
+async function loadYearChangeRequests(){
+  const container = document.getElementById('yearchanges-container');
+  container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i></div>';
+  const { data, error } = await _supabase.from('year_change_requests').select('*')
+    .order('created_at', { ascending: false });
+  if(error || !data || data.length === 0){
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>لا توجد طلبات حالياً</p></div>';
+    return;
+  }
+  const yearMap = { '1': 'الأولى', '2': 'الثانية', '3': 'الثالثة', '4': 'الرابعة' };
+  container.innerHTML = data.map(r => {
+    let badge = '';
+    if(r.status === 'pending') badge = '<span style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;background:#fef9c3;color:#a16207;flex-shrink:0;">قيد المراجعة</span>';
+    else if(r.status === 'approved') badge = '<span style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;background:#dcfce7;color:#15803d;flex-shrink:0;">✓ مقبول</span>';
+    else badge = '<span style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;background:#fee2e2;color:#b91c1c;flex-shrink:0;">✗ مرفوض</span>';
+
+    return `
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px;margin-bottom:12px;box-shadow:var(--shadow-sm);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:10px;">
+          <div style="flex:1;min-width:0;">
+            <div style="font-weight:800;font-size:14px;">${escapeHtml(r.full_name || '-')}</div>
+            <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">${escapeHtml(r.email || '-')}</div>
+          </div>
+          ${badge}
+        </div>
+        <div style="font-size:12px;line-height:1.9;color:var(--text-secondary);">
+          <div><b style="color:var(--text);">📞 الهاتف:</b> ${escapeHtml(r.phone_number || '-')}</div>
+          <div><b style="color:var(--text);">🆔 رقم الكارنيه:</b> ${escapeHtml(r.student_id_number || '-')}</div>
+          <div><b style="color:var(--text);">🎓 الفرقة المطلوبة:</b> الفرقة ${yearMap[r.requested_year] || r.requested_year}</div>
+          <div><b style="color:var(--text);">🕒 تاريخ الطلب:</b> ${timeAgo(r.created_at)}</div>
+        </div>
+        ${r.card_image_url ? `
+          <div style="font-size:11px;color:var(--text-light);margin-top:10px;margin-bottom:6px;">صورة الكارنيه (اضغط للتكبير):</div>
+          <img src="${escapeHtml(r.card_image_url)}" onclick="openImageLightbox(this.src)" style="width:100%;max-height:200px;object-fit:contain;border-radius:var(--radius-sm);cursor:pointer;background:var(--bg);border:1px solid var(--border);">
+        ` : ''}
+        ${r.status === 'pending' ? `
+          <div style="display:flex;gap:8px;margin-top:14px;">
+            <button onclick="approveYearChange('${r.id}', '${r.student_id}', '${r.requested_year}')" style="flex:1;padding:11px;border-radius:var(--radius-sm);border:none;background:var(--success);color:#fff;font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+              <i class="fas fa-check"></i> قبول
+            </button>
+            <button onclick="rejectYearChange('${r.id}', '${r.student_id}')" style="flex:1;padding:11px;border-radius:var(--radius-sm);border:none;background:var(--danger);color:#fff;font-family:var(--font-family);font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+              <i class="fas fa-xmark"></i> رفض
+            </button>
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+async function approveYearChange(requestId, studentId, newYear){
+  const confirmed = await showAdminConfirm({
+    title: 'قبول الطلب',
+    message: 'سيتم نقل الطالب للفرقة الجديدة وإشعاره بالموافقة. هل أنت متأكد؟',
+    confirmText: 'قبول', cancelText: 'إلغاء',
+    icon: 'fas fa-check-circle'
+  });
+  if(!confirmed) return;
+  try{
+    await _supabase.from('yasser_ayman').update({ academic_year: String(newYear) }).eq('id', studentId);
+    await _supabase.from('year_change_requests').update({ status: 'approved' }).eq('id', requestId);
+    const yearMap = { '1': 'الأولى', '2': 'الثانية', '3': 'الثالثة', '4': 'الرابعة' };
+    await _supabase.from('notifications').insert({
+      title: 'تم قبول طلبك',
+      message: `تمت الموافقة على نقل طلبك إلى الفرقة ${yearMap[newYear] || newYear}`,
+      target_user_id: studentId
+    });
+    showToast('تم قبول الطلب بنجاح', 'success');
+    await loadYearChangeRequests();
+  }catch(e){
+    showToast('حدث خطأ: ' + (e.message || ''), 'error');
+  }
+}
+
+async function rejectYearChange(requestId, studentId){
+  const confirmed = await showAdminConfirm({
+    title: 'رفض الطلب',
+    message: 'هل أنت متأكد من رفض هذا الطلب؟ سيتم إشعار الطالب.',
+    confirmText: 'رفض', cancelText: 'إلغاء',
+    icon: 'fas fa-xmark-circle', iconClass: 'danger'
+  });
+  if(!confirmed) return;
+  try{
+    await _supabase.from('year_change_requests').update({ status: 'rejected' }).eq('id', requestId);
+    await _supabase.from('notifications').insert({
+      title: 'تم رفض طلبك',
+      message: 'تم رفض طلب تغيير الفرقة. للاستفسار تواصل مع الإدارة.',
+      target_user_id: studentId
+    });
+    showToast('تم رفض الطلب', 'info');
+    await loadYearChangeRequests();
+  }catch(e){
+    showToast('حدث خطأ', 'error');
+  }
+}
+
+/* ============================================================
+   ========== 🆕 العشرة الأوائل (أدمن) ==========
+   ============================================================ */
+async function loadTop10Admin(){
+  const container = document.getElementById('top10admin-container');
+  const guard = document.getElementById('top10admin-guard');
+  const year = adminProfile?.selected_year;
+  if(!year){
+    if(guard) guard.style.display = 'flex';
+    container.innerHTML = '';
+    return;
+  }
+  if(guard) guard.style.display = 'none';
+  container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>جاري التحميل...</p></div>';
+  const term = document.getElementById('top10admin-term').value;
+  const examType = document.getElementById('top10admin-examtype').value;
+  try{
+    let query = _supabase.from('grades').select('*, yasser_ayman(full_name)')
+      .eq('academic_year', year).eq('term', term);
+    if(examType !== 'all') query = query.eq('exam_type', examType);
+    const { data: grades, error } = await query.order('score', { ascending: false });
+    if(error || !grades || grades.length === 0){
+      container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>لا توجد بيانات</p></div>';
+      return;
+    }
+    const top = grades.slice(0, 10);
+    let html = `<table class="top10-table"><thead><tr><th>#</th><th>الطالب</th><th>المادة</th><th>النوع</th><th>التاريخ</th><th>الدرجة</th><th>النسبة</th></tr></thead><tbody>`;
+    top.forEach((g, i)=>{
+      const rank = i + 1;
+      const rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : '';
+      const percent = Math.round((g.score / g.max_score) * 1000)/10;
+      const studentName = g.yasser_ayman?.full_name || 'طالب';
+      const examTypeLabel = g.exam_type === 'quiz' ? 'كويز' : g.exam_type === 'midterm' ? 'ميدترم' : 'فاينال';
+      html += `<tr>
+        <td><span class="top10-rank ${rankClass}">${rank}</span></td>
+        <td>${escapeHtml(studentName)}</td>
+        <td>${escapeHtml(g.subject_name || '-')}</td>
+        <td>${examTypeLabel}</td>
+        <td>${g.exam_date || '-'}</td>
+        <td>${g.score} / ${g.max_score}</td>
+        <td>${percent}%</td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+    container.innerHTML = html;
+  }catch(e){
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-triangle-exclamation"></i><p>حدث خطأ</p></div>';
+  }
+}
+
+/* ============================================================
+   ========== 🆕 استلام الجايزة (أدمن) ==========
+   ============================================================ */
+async function loadRewardsAdmin(){
+  const container = document.getElementById('rewardsadmin-container');
+  container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i></div>';
+  try{
+    const { data, error } = await _supabase.from('rewards')
+      .select('*, yasser_ayman(full_name, academic_year)')
+      .order('created_at', { ascending: false });
+    if(error || !data || data.length === 0){
+      container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>لا توجد جوائز حالياً</p></div>';
+      return;
+    }
+    const pending = data.filter(r => r.status === 'pending');
+    const paid = data.filter(r => r.status !== 'pending');
+    let html = '';
+    if(pending.length){
+      html += `<h4 style="font-size:13px;font-weight:800;margin-bottom:10px;color:var(--warn);"><i class="fas fa-hourglass-half"></i> في انتظار الصرف (${pending.length})</h4>`;
+      html += pending.map(r => buildRewardCard(r, true)).join('');
+    }
+    if(paid.length){
+      html += `<h4 style="font-size:13px;font-weight:800;margin:20px 0 10px;color:var(--success);"><i class="fas fa-check-circle"></i> تم صرفها (${paid.length})</h4>`;
+      html += paid.map(r => buildRewardCard(r, false)).join('');
+    }
+    container.innerHTML = html;
+  }catch(e){
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-triangle-exclamation"></i><p>حدث خطأ</p></div>';
+  }
+}
+
+function buildRewardCard(r, isPending){
+  const yearMap = { '1': 'الأولى', '2': 'الثانية', '3': 'الثالثة', '4': 'الرابعة' };
+  const studentName = r.yasser_ayman?.full_name || 'طالب';
+  const studentYear = yearMap[r.yasser_ayman?.academic_year] || '';
+  const typeLabel = r.exam_type === 'quiz' ? 'كويز' : r.exam_type === 'midterm' ? 'ميدترم' : 'فاينال';
+  const gradient = isPending ? '#f59e0b,#fbbf24' : '#10b981,#34d399';
+  return `
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;box-shadow:var(--shadow-sm);">
+      <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,${gradient});display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0;">
+        <i class="fas fa-trophy"></i>
+      </div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:800;font-size:14px;">${escapeHtml(studentName)}</div>
+        <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">
+          ${studentYear ? 'الفرقة ' + studentYear + ' • ' : ''}${escapeHtml(r.subject_name || '-')} • ${typeLabel}
+        </div>
+        <div style="margin-top:8px;background:var(--bg);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-phone" style="color:var(--primary);font-size:12px;"></i>
+          <span style="font-weight:800;font-size:14px;color:var(--primary);direction:ltr;letter-spacing:.5px;">${escapeHtml(r.cash_number || '-')}</span>
+          <button onclick="copyCashNumber('${escapeHtml(r.cash_number || '')}')" style="margin-right:auto;background:none;border:none;color:var(--text-light);cursor:pointer;font-size:12px;" title="نسخ الرقم">
+            <i class="fas fa-copy"></i>
+          </button>
+        </div>
+        <div style="font-size:10px;color:var(--text-light);margin-top:6px;">${timeAgo(r.created_at)}</div>
+      </div>
+      ${isPending ? `
+        <button onclick="markRewardPaid('${r.id}')" style="padding:8px 14px;border-radius:var(--radius-sm);border:none;background:var(--success);color:#fff;font-family:var(--font-family);font-weight:700;font-size:11px;cursor:pointer;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;">
+          <i class="fas fa-check"></i><span>تم الصرف</span>
+        </button>
+      ` : `<span style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;background:#dcfce7;color:#15803d;flex-shrink:0;">✓ تم</span>`}
+    </div>
+  `;
+}
+
+function copyCashNumber(num){
+  if(!num) return;
+  navigator.clipboard.writeText(num);
+  showToast('تم نسخ رقم الكاش', 'success');
+}
+
+async function markRewardPaid(rewardId){
+  const confirmed = await showAdminConfirm({
+    title: 'تأكيد الصرف',
+    message: 'هل أنت متأكد إنك صرفت الجايزة للطالب ده؟',
+    confirmText: 'تم الصرف', cancelText: 'إلغاء',
+    icon: 'fas fa-check-circle'
+  });
+  if(!confirmed) return;
+  await _supabase.from('rewards').update({ status: 'paid', paid_at: new Date().toISOString() }).eq('id', rewardId);
+  showToast('تم تسجيل الصرف', 'success');
+  await loadRewardsAdmin();
+}
 </script>
 </body>
 </html>
