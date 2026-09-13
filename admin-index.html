@@ -2699,7 +2699,8 @@ async function loadAttendanceAdminView(){
   }, 30000);
 }
 
-async function createAttendanceSession(){
+
+  async function createAttendanceSession(){
   const year = adminProfile?.selected_year;
   if(!year){ showToast('اختر الفرقة أولاً', 'error'); return; }
 
@@ -2719,6 +2720,12 @@ async function createAttendanceSession(){
   btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإنشاء...';
 
   try {
+    // ✅ التصحيح: نحدد الترم تلقائياً حسب الشهر الحالي
+    const month = new Date().getMonth() + 1; // 1-12
+    // الترم الأول: من سبتمبر (9) لحد يناير (1)
+    // الترم الثاني: من فبراير (2) لحد يونيو (6)
+    const term = (month >= 9 || month <= 1) ? '1' : '2';
+
     const { error } = await _supabase.from('attendance_sessions').insert({
       subject_name: subject,
       doctor_name: doctor,
@@ -2726,6 +2733,7 @@ async function createAttendanceSession(){
       end_time: new Date(end).toISOString(),
       code: code,
       academic_year: year,
+      term: term,  // ✅ التصحيح: بعت الترم
       created_at: new Date().toISOString()
     });
 
@@ -2750,7 +2758,7 @@ async function createAttendanceSession(){
   } finally {
     btn.disabled = false; btn.innerHTML = '<i class="fas fa-check"></i> إنشاء الجلسة';
   }
-}
+  }
 
 async function loadAdminSessions(){
   const container = document.getElementById('attendance-sessions-list');
