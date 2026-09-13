@@ -2484,7 +2484,479 @@ async function markRewardPaid(rewardId){
 
 
 
+/* ============================================================
+   ========== 🆕 درجات الطلاب (أدمن) ==========
+   ============================================================ */
 
+let gradesAdminAllStudents = [];
+
+function gradeInfo(percent){
+  if(percent >= 85) return {label:'امتياز', cls:'excellent'};
+  if(percent >= 75) return {label:'جيد جدًا', cls:'vgood'};
+  if(percent >= 65) return {label:'جيد', cls:'good'};
+  if(percent >= 50) return {label:'مقبول', cls:'pass'};
+  return {label:'ضعيف', cls:'weak'};
+}
+
+async function loadGradesAdminView(){
+  const container = document.getElementById('gradesadmin-container');
+  const guard = document.getElementById('gradesadmin-guard');
+  const year = adminProfile?.selected_year;
+  if(!year){
+    if(guard) guard.style.display = 'flex';
+    container.innerHTML = '';
+    return;
+  }
+  if(guard) guard.style.display = 'none';
+
+  container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>جاري تحميل درجات الطلاب...</p></div>';
+
+  const term = document.getElementById('gradesadmin-term').value;
+  const examType = document.getElementById('gradesadmin-examtype').value;
+
+  try {
+    // جلب كل طلاب الفرقة
+    const { data: students, error: stErr } = await _supabase
+      .from('yasser_ayman')
+      .select('id, full_name, email, avatar_url, academic_year')
+      .eq('academic_year', year)
+      .order('full_name');
+
+    if(stErr) throw stErr;
+
+    if(!students || students.length === 0){
+      document.getElementById('gradesadmin-count').innerText = '0';
+      container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>لا يوجد طلاب في هذه الفرقة</p></div>';
+      return;
+    }
+
+    // جلب كل الدرجات
+    let gradesQuery = _supabase.from('grades').select('*').eq('academic_year', year).eq('term', term);
+    if(examType !== 'all') gradesQuery = gradesQuery.eq('exam_type', examType);
+    const { data: allGrades, error: grErr } = await gradesQuery;
+    if(grErr) throw grErr;
+
+    // تجميع الدرجات حسب الطالب
+    const gradesByStudent = {};
+    (allGrades || []).forEach(g => {
+      if(!gradesByStudent[g.student_id]) gradesByStudent[g.student_id] = [];
+      gradesByStudent[g.student_id].push(g);
+    });
+
+    gradesAdminAllStudents = students.map(s => ({
+      ...s,
+      grades: gradesByStudent[s.id] || []
+    }));
+
+    document.getElementById('gradesadmin-count').innerText = gradesAdminAllStudents.length;
+    filterGradesAdminList();
+
+  } catch(e){
+    console.error('Grades admin error:', e);
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-triangle-exclamation"></i><p>حدث خطأ: ' + (e.message || '') + '</p></div>';
+  }
+}
+
+function filterGradesAdminList(){
+  const q = (document.getElementById('gradesadmin-search').value || '').trim().toLowerCase();
+  const container = document.getElementById('gradesadmin-container');
+
+  let filtered = gradesAdminAllStudents;
+  if(q){
+    filtered = gradesAdminAllStudents.filter(s =>
+      (s.full_name || '').toLowerCase().includes(q) ||
+      (s.email || '').toLowerCase().includes(q)
+    );
+  }
+
+  if(filtered.length === 0){
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i><p>لا نتائج للبحث</p></div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(s => buildStudentGradesCard(s)).join('');
+}
+
+function buildStudentGradesCard(student){
+  const avatar = student.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(student.full_name||'Student')}&backgroundColor=4f46e5,0ea5e9`;
+  const grades = student.grades || [];
+
+  let totalScore = 0, totalMax = 0;
+  grades.forEach(g => { totalScore += (g.score||0); totalMax += (g.max_score||0); });
+  const avgPercent = totalMax > 0 ? Math.round((totalScore/totalMax)*1000)/10 : 0;
+  const avgInfo = gradeInfo(avgPercent);
+  const avgColor = avgInfo.cls === 'excellent' ? 'var(--success)' 
+                  : avgInfo.cls === 'weak' ? 'var(--danger)' 
+                  : avgInfo.cls === 'vgood' ? '#3b82f6' 
+                  : avgInfo.cls === 'good' ? 'var(--warn)' 
+                  : '#f97316';
+
+  let rows = '';
+  if(grades.length === 0){
+    rows = '<tr><td colspan="5" style="text-align:center;color:var(--text-light);padding:16px;font-size:12px;">لا توجد درجات مسجلة بعد</td></tr>';
+  } else {
+    // ترتيب حسب التاريخ الأحدث
+    const sortedGrades = [...grades].sort((a,b) => new Date(b.created_at||0) - new Date(a.created_at||0));
+    sortedGrades.forEach(g => {
+      const percent = g.max_score > 0 ? Math.round((g.score/g.max_score)*1000)/10 : 0;
+      const info = gradeInfo(percent);
+      const examTypeLabel = g.exam_type === 'quiz' ? 'كويز' : g.exam_type === 'midterm' ? 'ميدترم' : 'فاينال';
+      const dateStr = g.exam_date || (g.created_at ? new Date(g.created_at).toLocaleDateString('ar-EG') : '-');
+      rows += `<tr>
+        <td style="padding:8px 10px;text-align:right;font-weight:600;">${escapeHtml(g.subject_name||'-')}</td>
+        <td style="padding:8px 10px;text-align:center;font-size:11px;color:var(--text-secondary);">${examTypeLabel}</td>
+        <td style="padding:8px 10px;text-align:center;font-weight:700;">${g.score} / ${g.max_score}</td>
+        <td style="padding:8px 10px;text-align:center;font-weight:700;color:${percent>=50?'var(--success)':'var(--danger)'};">${percent}%</td>
+        <td style="padding:8px 10px;text-align:center;"><span class="grade-badge ${info.cls}" style="font-size:10px;padding:3px 8px;">${info.label}</span></td>
+      </tr>`;
+    });
+  }
+
+  return `
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);margin-bottom:14px;box-shadow:var(--shadow-sm);overflow:hidden;">
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:linear-gradient(135deg,rgba(79,70,229,.05),rgba(14,165,233,.03));border-bottom:1px solid var(--border);">
+        <img src="${escapeHtml(avatar)}" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--primary-light);flex-shrink:0;" onerror="this.src='${'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(student.full_name||'S')}'">
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:800;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(student.full_name || 'طالب')}</div>
+          <div style="font-size:11px;color:var(--text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(student.email || '-')}</div>
+          <div style="display:flex;gap:6px;margin-top:5px;flex-wrap:wrap;">
+            <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;background:rgba(79,70,229,.1);color:var(--primary);">الفرقة ${student.academic_year}</span>
+            <span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:12px;background:rgba(16,185,129,.1);color:var(--success);">${grades.length} سجل</span>
+          </div>
+        </div>
+        <div style="text-align:center;flex-shrink:0;">
+          <div style="font-size:22px;font-weight:800;color:${avgColor};">${avgPercent}%</div>
+          <div style="font-size:10px;color:var(--text-light);font-weight:700;">المعدل</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;min-width:400px;">
+          <thead>
+            <tr style="background:var(--bg);">
+              <th style="padding:8px 10px;text-align:right;font-weight:700;color:var(--text-secondary);border-bottom:1px solid var(--border);">المادة</th>
+              <th style="padding:8px 10px;text-align:center;font-weight:700;color:var(--text-secondary);border-bottom:1px solid var(--border);">النوع</th>
+              <th style="padding:8px 10px;text-align:center;font-weight:700;color:var(--text-secondary);border-bottom:1px solid var(--border);">الدرجة</th>
+              <th style="padding:8px 10px;text-align:center;font-weight:700;color:var(--text-secondary);border-bottom:1px solid var(--border);">النسبة</th>
+              <th style="padding:8px 10px;text-align:center;font-weight:700;color:var(--text-secondary);border-bottom:1px solid var(--border);">التقدير</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+/* ============================================================
+   ========== 🆕 الحضور والغياب (أدمن) ==========
+   ============================================================ */
+
+let attendanceRefreshInterval = null;
+
+function generateAttCode(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for(let i=0; i<6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
+}
+
+function regenerateAttCode(){
+  const el = document.getElementById('att-code');
+  if(el) el.value = generateAttCode();
+}
+
+function loadAttendanceSubjects(){
+  const year = adminProfile?.selected_year;
+  if(!year) return;
+  const t1 = LECTURE_SUBJECTS_ADMIN[year]?.['1'] || [];
+  const t2 = LECTURE_SUBJECTS_ADMIN[year]?.['2'] || [];
+  const all = [...new Set([...t1, ...t2])];
+  const sel = document.getElementById('att-subject');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">اختر المادة</option>' + all.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+}
+
+async function loadAttendanceAdminView(){
+  const guard = document.getElementById('attendanceadmin-guard');
+  const year = adminProfile?.selected_year;
+  if(!year){
+    if(guard) guard.style.display = 'flex';
+    document.getElementById('attendance-sessions-list').innerHTML = '';
+    return;
+  }
+  if(guard) guard.style.display = 'none';
+
+  if(!document.getElementById('att-code').value) regenerateAttCode();
+  loadAttendanceSubjects();
+
+  await loadAdminSessions();
+
+  if(attendanceRefreshInterval) clearInterval(attendanceRefreshInterval);
+  attendanceRefreshInterval = setInterval(() => {
+    if(document.getElementById('view-attendanceadmin').classList.contains('active')){
+      loadAdminSessions();
+    }
+  }, 30000);
+}
+
+async function createAttendanceSession(){
+  const year = adminProfile?.selected_year;
+  if(!year){ showToast('اختر الفرقة أولاً', 'error'); return; }
+
+  const subject = document.getElementById('att-subject').value.trim();
+  const doctor = document.getElementById('att-doctor').value.trim();
+  const start = document.getElementById('att-start').value;
+  const end = document.getElementById('att-end').value;
+  const code = document.getElementById('att-code').value.trim();
+
+  if(!subject){ showToast('اختر المادة', 'error'); return; }
+  if(!doctor){ showToast('اكتب اسم الدكتور', 'error'); return; }
+  if(!start || !end){ showToast('حدد وقت البداية والنهاية', 'error'); return; }
+  if(new Date(end) <= new Date(start)){ showToast('وقت النهاية يجب أن يكون بعد البداية', 'error'); return; }
+  if(!code){ showToast('كود QR مفقود', 'error'); return; }
+
+  const btn = document.getElementById('att-create-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإنشاء...';
+
+  try {
+    const { error } = await _supabase.from('attendance_sessions').insert({
+      subject_name: subject,
+      doctor_name: doctor,
+      start_time: new Date(start).toISOString(),
+      end_time: new Date(end).toISOString(),
+      code: code,
+      academic_year: year,
+      created_at: new Date().toISOString()
+    });
+
+    if(error) throw error;
+
+    // إشعار للطلاب
+    await _supabase.from('notifications').insert({
+      title: 'جلسة حضور جديدة',
+      message: `تم فتح جلسة حضور لمادة ${subject} - د. ${doctor}`,
+      academic_year: year
+    });
+
+    showToast('تم إنشاء الجلسة بنجاح ✅', 'success');
+    document.getElementById('att-doctor').value = '';
+    document.getElementById('att-start').value = '';
+    document.getElementById('att-end').value = '';
+    regenerateAttCode();
+    await loadAdminSessions();
+  } catch(e){
+    console.error(e);
+    showToast('حدث خطأ: ' + (e.message || ''), 'error');
+  } finally {
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-check"></i> إنشاء الجلسة';
+  }
+}
+
+async function loadAdminSessions(){
+  const container = document.getElementById('attendance-sessions-list');
+  const year = adminProfile?.selected_year;
+  if(!year) return;
+
+  container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i></div>';
+
+  try {
+    const { data: sessions, error } = await _supabase
+      .from('attendance_sessions')
+      .select('*')
+      .eq('academic_year', year)
+      .order('created_at', { ascending: false })
+      .limit(30);
+
+    if(error) throw error;
+
+    if(!sessions || sessions.length === 0){
+      container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>لا توجد جلسات حضور بعد</p></div>';
+      return;
+    }
+
+    const sessionIds = sessions.map(s => s.id);
+    const { data: allRecords } = await _supabase
+      .from('attendance_records')
+      .select('session_id, status, student_id')
+      .in('session_id', sessionIds);
+
+    const recordsBySession = {};
+    (allRecords||[]).forEach(r => {
+      if(!recordsBySession[r.session_id]) recordsBySession[r.session_id] = [];
+      recordsBySession[r.session_id].push(r);
+    });
+
+    container.innerHTML = sessions.map(s => buildSessionCard(s, recordsBySession[s.id] || [])).join('');
+
+    // ارسم الـ QR Codes
+    setTimeout(() => {
+      sessions.forEach(s => {
+        const el = document.getElementById('qr-' + s.id);
+        if(el && typeof QRCode !== 'undefined'){
+          el.innerHTML = '';
+          new QRCode(el, {
+            text: s.code || String(s.id),
+            width: 150,
+            height: 150,
+            colorDark: '#0f172a',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H
+          });
+        }
+      });
+    }, 100);
+
+  } catch(e){
+    console.error(e);
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-triangle-exclamation"></i><p>حدث خطأ</p></div>';
+  }
+}
+
+function buildSessionCard(session, records){
+  const now = new Date();
+  const start = new Date(session.start_time);
+  const end = new Date(session.end_time);
+  const isActive = now >= start && now <= end;
+  const isEnded = now > end;
+
+  let statusBadge = '';
+  if(isActive) statusBadge = '<span class="session-status-badge active"><i class="fas fa-circle" style="font-size:6px;"></i> نشطة الآن</span>';
+  else if(isEnded) statusBadge = '<span class="session-status-badge ended">انتهت</span>';
+  else statusBadge = '<span class="session-status-badge pending">لم تبدأ</span>';
+
+  const presentCount = records.filter(r => r.status === 'present').length;
+  const lateCount = records.filter(r => r.status === 'late').length;
+  const absentCount = records.filter(r => r.status === 'absent').length;
+
+  const dateStr = start.toLocaleString('ar-EG', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
+  const endStr = end.toLocaleString('ar-EG', { hour:'2-digit', minute:'2-digit' });
+
+  return `
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px;margin-bottom:14px;box-shadow:var(--shadow-sm);">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px;">
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:800;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(session.subject_name)}</div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:3px;">
+            <i class="fas fa-user-tie"></i> ${escapeHtml(session.doctor_name||'-')}
+          </div>
+          <div style="font-size:11px;color:var(--text-light);margin-top:3px;">
+            <i class="far fa-clock"></i> ${dateStr} → ${endStr}
+          </div>
+        </div>
+        ${statusBadge}
+      </div>
+
+      <div class="att-qr-container">
+        <div>
+          <div id="qr-${session.id}"></div>
+        </div>
+      </div>
+      <div class="att-code-text">${escapeHtml(session.code||'-')}</div>
+      <div style="font-size:11px;color:var(--text-light);text-align:center;margin-bottom:12px;">اطلب من الطلاب مسح الكود بالبوابة</div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
+        <div style="text-align:center;background:rgba(16,185,129,.08);border-radius:10px;padding:10px 6px;">
+          <div style="font-size:18px;font-weight:800;color:var(--success);">${presentCount}</div>
+          <div style="font-size:10px;color:var(--text-secondary);font-weight:700;">حاضر</div>
+        </div>
+        <div style="text-align:center;background:rgba(245,158,11,.08);border-radius:10px;padding:10px 6px;">
+          <div style="font-size:18px;font-weight:800;color:var(--warn);">${lateCount}</div>
+          <div style="font-size:10px;color:var(--text-secondary);font-weight:700;">متأخر</div>
+        </div>
+        <div style="text-align:center;background:rgba(239,68,68,.08);border-radius:10px;padding:10px 6px;">
+          <div style="font-size:18px;font-weight:800;color:var(--danger);">${absentCount}</div>
+          <div style="font-size:10px;color:var(--text-secondary);font-weight:700;">غائب</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;">
+        <button onclick="viewSessionRecords('${session.id}')" style="flex:1;padding:11px;border-radius:var(--radius-sm);border:2px solid var(--primary);background:none;color:var(--primary);font-family:var(--font-family);font-weight:700;font-size:12px;cursor:pointer;">
+          <i class="fas fa-users"></i> السجلات (${records.length})
+        </button>
+        <button onclick="deleteAttendanceSession('${session.id}')" style="padding:11px 14px;border-radius:var(--radius-sm);border:none;background:var(--danger);color:#fff;font-family:var(--font-family);font-weight:700;font-size:12px;cursor:pointer;">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+async function deleteAttendanceSession(sessionId){
+  const confirmed = await showAdminConfirm({
+    title: 'حذف الجلسة',
+    message: 'سيتم حذف الجلسة وكل سجلات الحضور المرتبطة بها. هل أنت متأكد؟',
+    confirmText: 'حذف', cancelText: 'إلغاء',
+    icon: 'fas fa-trash-can', iconClass: 'danger'
+  });
+  if(!confirmed) return;
+
+  try {
+    await _supabase.from('attendance_records').delete().eq('session_id', sessionId);
+    await _supabase.from('attendance_sessions').delete().eq('id', sessionId);
+    showToast('تم حذف الجلسة', 'success');
+    await loadAdminSessions();
+  } catch(e){
+    showToast('حدث خطأ', 'error');
+  }
+}
+
+async function viewSessionRecords(sessionId){
+  const modal = document.createElement('div');
+  modal.className = 'center-modal-overlay open';
+  modal.id = 'session-records-modal';
+  modal.onclick = (e) => { if(e.target === modal) modal.remove(); };
+  modal.innerHTML = `
+    <div class="center-modal-box">
+      <div class="center-modal-head">
+        <h3><i class="fas fa-users"></i> سجلات الحضور</h3>
+        <button onclick="document.getElementById('session-records-modal').remove()"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="center-modal-body" id="session-records-body">
+        <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>جاري التحميل...</p></div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  try {
+    const { data: records } = await _supabase
+      .from('attendance_records')
+      .select('*, yasser_ayman(full_name, email, avatar_url)')
+      .eq('session_id', sessionId)
+      .order('scan_time', { ascending: false });
+
+    const body = document.getElementById('session-records-body');
+
+    if(!records || records.length === 0){
+      body.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>لا يوجد حضور مسجل بعد</p></div>';
+      return;
+    }
+
+    body.innerHTML = records.map(r => {
+      const student = r.yasser_ayman || {};
+      const avatar = student.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(student.full_name||'Student')}&backgroundColor=4f46e5,0ea5e9`;
+      const statusInfo = r.status === 'present' 
+        ? { label: 'حاضر', bg: '#dcfce7', color: '#15803d' }
+        : r.status === 'late' 
+          ? { label: 'متأخر', bg: '#fef9c3', color: '#a16207' }
+          : { label: 'غائب', bg: '#fee2e2', color: '#b91c1c' };
+      const scanTime = r.scan_time ? new Date(r.scan_time).toLocaleString('ar-EG', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) : '-';
+
+      return `
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--border);">
+          <img src="${escapeHtml(avatar)}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;">
+          <div style="flex:1;min-width:0;">
+            <div style="font-weight:700;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(student.full_name||'طالب')}</div>
+            <div style="font-size:10px;color:var(--text-light);margin-top:2px;">${scanTime}</div>
+          </div>
+          <span style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:12px;background:${statusInfo.bg};color:${statusInfo.color};flex-shrink:0;">${statusInfo.label}</span>
+        </div>
+      `;
+    }).join('');
+  } catch(e){
+    document.getElementById('session-records-body').innerHTML = '<div class="empty-state"><i class="fas fa-triangle-exclamation"></i><p>حدث خطأ</p></div>';
+  }
+  }
 
 </script>
 </body>
