@@ -1168,10 +1168,12 @@ function switchView(view, el){
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebar-overlay').classList.remove('open');
 
-  if(view === 'exams') renderExamSubjectOptions();
+    if(view === 'exams') renderExamSubjectOptions();
   if(view === 'scheduleadmin') loadAdminSchedule();
   if(view === 'yearchanges') loadYearChangeRequests();
   if(view === 'rewardsadmin') loadRewardsAdmin();
+  if(view === 'gradesadmin') loadGradesAdminView();
+  if(view === 'attendanceadmin') loadAttendanceAdminView();
   if(view === 'top10admin'){
     const guard = document.getElementById('top10admin-guard');
     if(guard) guard.style.display = adminProfile?.selected_year ? 'none' : 'flex';
