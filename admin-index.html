@@ -620,6 +620,7 @@ body.admin-dark select:-webkit-autofill {
       <div class="menu-item" onclick="switchView('exams', this)"><i class="fas fa-file-circle-question"></i><span>أسئلة الامتحانات</span></div>
       <div class="menu-item" onclick="switchView('gradesadmin', this)"><i class="fas fa-chart-simple"></i><span>درجات الطلاب</span></div>
       <div class="menu-item" onclick="switchView('attendanceadmin', this)"><i class="fas fa-qrcode"></i><span>الحضور و الغياب</span></div>
+      <div class="menu-item" onclick="switchView('lecturesadmin', this)"><i class="fas fa-chalkboard-user"></i><span>المحاضرات</span></div>
       <!-- === جديد: الأزرار الجديدة === -->
       <div class="menu-item" onclick="switchView('scheduleadmin', this)"><i class="fas fa-calendar-days"></i><span>الجدول الدراسي</span></div>
       <div class="menu-item" onclick="switchView('yearchanges', this)"><i class="fas fa-arrows-rotate"></i><span>طلبات تغيير الفرقة</span></div>
@@ -1315,6 +1316,7 @@ function switchView(view, el){
   if(view === 'rewardsadmin') loadRewardsAdmin();
   if(view === 'gradesadmin') loadGradesAdminView();
   if(view === 'attendanceadmin') loadAttendanceAdminView();
+  if(view === 'lecturesadmin') loadLecturesAdminView();
   if(view === 'top10admin'){
     const guard = document.getElementById('top10admin-guard');
     if(guard) guard.style.display = adminProfile?.selected_year ? 'none' : 'flex';
@@ -3107,6 +3109,259 @@ async function viewSessionRecords(sessionId){
   }
   }
 
+
+
+
+
+
+
+
+
+  /* ============================================================
+   ========== 🎓 المحاضرات (أدمن) ==========
+   ============================================================ */
+
+let lectureAdminCat = 'lecture';
+let lectureAdminTerm = '1';
+let lectureAdminPdfFile = null;
+let lectureAdminVideoFile = null;
+
+function setLectureAdminCat(cat, el){
+  lectureAdminCat = cat;
+  document.querySelectorAll('#view-lecturesadmin .exam-type-tabs button').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+
+  const termWrap = document.getElementById('lecture-admin-term-wrap');
+  if(cat === 'programming'){
+    termWrap.style.display = 'none';
+  } else {
+    termWrap.style.display = 'block';
+  }
+  loadLectureAdminSubjects();
+}
+
+function setLectureAdminTerm(term, el){
+  lectureAdminTerm = term;
+  document.querySelectorAll('#lecture-admin-term-toggle button').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  loadLectureAdminSubjects();
+}
+
+function loadLectureAdminSubjects(){
+  const year = adminProfile?.selected_year;
+  const sel = document.getElementById('lecture-admin-subject');
+  if(!sel) return;
+
+  let subjects = [];
+  if(lectureAdminCat === 'programming'){
+    subjects = PROGRAMMING_LANGUAGES_ADMIN;
+  } else {
+    if(!year){ sel.innerHTML = '<option value="">اختر الفرقة أولاً</option>'; return; }
+    subjects = LECTURE_SUBJECTS_ADMIN[year]?.[lectureAdminTerm] || [];
+  }
+
+  sel.innerHTML = '<option value="">اختر المادة</option>' + subjects.map(s => `<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
+}
+
+// قائمة لغات البرمجة (نفسها اللي في البوابة)
+const PROGRAMMING_LANGUAGES_ADMIN = [
+  'HTML', 'CSS', 'JavaScript', 'Java', 'PHP',
+  'Python', 'C#', 'C++', 'TypeScript', 'SQL'
+];
+
+async function loadLecturesAdminView(){
+  const guard = document.getElementById('lecturesadmin-guard');
+  const year = adminProfile?.selected_year;
+  if(!year){
+    if(guard) guard.style.display = 'flex';
+    document.getElementById('lecturesadmin-list').innerHTML = '';
+    return;
+  }
+  if(guard) guard.style.display = 'none';
+
+  loadLectureAdminSubjects();
+  await loadLecturesAdminList();
+}
+
+// رفع الملفات
+document.getElementById('lecture-admin-pdf-file').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  lectureAdminPdfFile = file;
+  document.getElementById('lecture-admin-pdf-label').innerText = file.name.length > 40 ? file.name.slice(0,40)+'...' : file.name;
+});
+
+document.getElementById('lecture-admin-video-file').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  lectureAdminVideoFile = file;
+  document.getElementById('lecture-admin-video-label').innerText = file.name.length > 40 ? file.name.slice(0,40)+'...' : file.name;
+});
+
+async function saveLectureAdmin(){
+  const year = adminProfile?.selected_year;
+  if(!year){ showToast('اختر الفرقة أولاً', 'error'); return; }
+
+  const subject = document.getElementById('lecture-admin-subject').value.trim();
+  const title = document.getElementById('lecture-admin-title').value.trim();
+  const pdfUrlInput = document.getElementById('lecture-admin-pdf-url').value.trim();
+  const videoUrlInput = document.getElementById('lecture-admin-video-url').value.trim();
+
+  if(!subject){ showToast('اختر المادة أو اللغة', 'error'); return; }
+  if(!title){ showToast('اكتب عنوان المحتوى', 'error'); return; }
+  if(!lectureAdminPdfFile && !pdfUrlInput && !lectureAdminVideoFile && !videoUrlInput){
+    showToast('ارفع PDF أو فيديو أو ضع رابط', 'error'); return;
+  }
+
+  const btn = document.getElementById('lecture-admin-save-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+
+  try {
+    let pdfUrl = pdfUrlInput || null;
+    let videoUrl = videoUrlInput || null;
+
+    // رفع PDF
+    if(lectureAdminPdfFile){
+      showToast('جاري رفع PDF...', 'info');
+      const ext = lectureAdminPdfFile.name.split('.').pop();
+      const path = `${adminUser.id}/lectures/pdf_${Date.now()}.${ext}`;
+      const { error: upErr } = await _supabase.storage.from('avatars').upload(path, lectureAdminPdfFile, { upsert: true });
+      if(upErr) throw new Error('فشل رفع PDF: ' + upErr.message);
+      const { data } = _supabase.storage.from('avatars').getPublicUrl(path);
+      pdfUrl = data.publicUrl;
+    }
+
+    // رفع الفيديو
+    if(lectureAdminVideoFile){
+      showToast('جاري رفع الفيديو (قد يأخذ وقت)...', 'info');
+      const ext = lectureAdminVideoFile.name.split('.').pop();
+      const path = `${adminUser.id}/lectures/video_${Date.now()}.${ext}`;
+      const { error: upErr } = await _supabase.storage.from('avatars').upload(path, lectureAdminVideoFile, { upsert: true });
+      if(upErr) throw new Error('فشل رفع الفيديو: ' + upErr.message);
+      const { data } = _supabase.storage.from('avatars').getPublicUrl(path);
+      videoUrl = data.publicUrl;
+    }
+
+    // حفظ في الجدول
+    const insertData = {
+      category: lectureAdminCat,
+      subject_name: subject,
+      lecture_title: title,
+      pdf_url: pdfUrl,
+      video_url: videoUrl,
+      created_at: new Date().toISOString()
+    };
+
+    if(lectureAdminCat !== 'programming'){
+      insertData.academic_year = year;
+      insertData.term = lectureAdminTerm;
+    }
+
+    const { error } = await _supabase.from('lectures').insert(insertData);
+    if(error) throw error;
+
+    // إشعار للطلاب
+    await _supabase.from('notifications').insert({
+      title: 'محتوى جديد',
+      message: `تم إضافة "${title}" في مادة ${subject}`,
+      academic_year: year
+    });
+
+    showToast('تم حفظ المحتوى بنجاح ✅', 'success');
+
+    // تصفير الفورم
+    document.getElementById('lecture-admin-title').value = '';
+    document.getElementById('lecture-admin-pdf-url').value = '';
+    document.getElementById('lecture-admin-video-url').value = '';
+    document.getElementById('lecture-admin-pdf-file').value = '';
+    document.getElementById('lecture-admin-video-file').value = '';
+    document.getElementById('lecture-admin-pdf-label').innerText = 'اختر ملف PDF';
+    document.getElementById('lecture-admin-video-label').innerText = 'اختر ملف فيديو';
+    lectureAdminPdfFile = null;
+    lectureAdminVideoFile = null;
+
+    await loadLecturesAdminList();
+  } catch(e){
+    console.error('Lecture save error:', e);
+    showToast('حدث خطأ: ' + (e.message || ''), 'error');
+  } finally {
+    btn.disabled = false; btn.innerHTML = '<i class="fas fa-cloud-arrow-up"></i> حفظ المحتوى';
+  }
+}
+
+async function loadLecturesAdminList(){
+  const container = document.getElementById('lecturesadmin-list');
+  const year = adminProfile?.selected_year;
+  if(!year) return;
+
+  container.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i></div>';
+
+  try {
+    // نجيب كل المحاضرات الخاصة بالفرقة + كل كورسات البرمجة
+    const { data, error } = await _supabase
+      .from('lectures')
+      .select('*')
+      .or(`academic_year.eq.${year},category.eq.programming`)
+      .order('created_at', { ascending: false })
+      .limit(100);
+
+    if(error) throw error;
+
+    if(!data || data.length === 0){
+      container.innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i><p>لا يوجد محتوى منشور بعد</p></div>';
+      return;
+    }
+
+    const catNames = { lecture:'محاضرة', section:'سكشن', course:'كورس', programming:'كورس برمجة' };
+
+    container.innerHTML = data.map(l => {
+      const catLabel = catNames[l.category] || l.category;
+      const termLabel = l.term ? (l.term === '1' ? 'الترم الأول' : 'الترم الثاني') : '';
+      return `
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px;margin-bottom:12px;box-shadow:var(--shadow-sm);">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px;">
+            <div style="flex:1;min-width:0;">
+              <div style="font-weight:800;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(l.lecture_title||'بدون عنوان')}</div>
+              <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;">
+                <span style="padding:2px 8px;border-radius:12px;background:rgba(79,70,229,.1);color:var(--primary);font-weight:700;">${catLabel}</span>
+                <span style="padding:2px 8px;border-radius:12px;background:var(--bg);color:var(--text-secondary);font-weight:700;">${escapeHtml(l.subject_name||'-')}</span>
+                ${termLabel ? `<span style="padding:2px 8px;border-radius:12px;background:var(--bg);color:var(--text-secondary);font-weight:700;">${termLabel}</span>` : ''}
+              </div>
+              <div style="font-size:10px;color:var(--text-light);margin-top:6px;">
+                <i class="far fa-clock"></i> ${timeAgo(l.created_at)}
+              </div>
+            </div>
+            <button onclick="deleteLectureAdmin('${l.id}')" style="width:36px;height:36px;border-radius:50%;border:none;background:rgba(239,68,68,.1);color:var(--danger);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            ${l.pdf_url ? `<a href="${escapeHtml(l.pdf_url)}" target="_blank" style="padding:7px 14px;border-radius:8px;background:#ef4444;color:#fff;text-decoration:none;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;"><i class="fas fa-file-pdf"></i> PDF</a>` : ''}
+            ${l.video_url ? `<a href="${escapeHtml(l.video_url)}" target="_blank" style="padding:7px 14px;border-radius:8px;background:#0ea5e9;color:#fff;text-decoration:none;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;"><i class="fas fa-video"></i> فيديو</a>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+  } catch(e){
+    console.error('Load lectures error:', e);
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-triangle-exclamation"></i><p>حدث خطأ في التحميل</p></div>';
+  }
+}
+
+async function deleteLectureAdmin(lectureId){
+  const confirmed = await showAdminConfirm({
+    title: 'حذف المحتوى',
+    message: 'سيتم حذف هذا المحتوى نهائياً من كل الطلاب. هل أنت متأكد؟',
+    confirmText: 'حذف', cancelText: 'إلغاء',
+    icon: 'fas fa-trash-can', iconClass: 'danger'
+  });
+  if(!confirmed) return;
+
+  await _supabase.from('lectures').delete().eq('id', lectureId);
+  showToast('تم حذف المحتوى', 'success');
+  await loadLecturesAdminList();
+  }
 </script>
 </body>
 </html>
